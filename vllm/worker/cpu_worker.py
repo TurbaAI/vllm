@@ -1,8 +1,15 @@
 """A CPU worker class."""
+import os
+import socket
+import time
+from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Type
+
 
 import torch
 import torch.distributed
+from torch._C._profiler import _ExperimentalConfig
+from torch.profiler import ExecutionTraceObserver
 
 import vllm.envs as envs
 from vllm.attention import get_attn_backend
@@ -192,21 +199,31 @@ class CPUWorker(LoraNotSupportedWorkerBase, LocalOrDistributedWorkerBase):
                 activities=[
                     torch.profiler.ProfilerActivity.CPU,
                 ],
-                with_stack=True,
+                with_stack=False,
                 on_trace_ready=torch.profiler.tensorboard_trace_handler(
-                    torch_profiler_trace_dir, use_gzip=True))
+                    torch_profiler_trace_dir, use_gzip=True),
+                experimental_config=_ExperimentalConfig(enable_cuda_sync_events=True),
+                execution_trace_observer=ExecutionTraceObserver())
         else:
             self.profiler = None
 
     def start_profile(self):
         if self.profiler is None:
             raise RuntimeError("Profiler is not enabled.")
+        worker_name = f"{socket.gethostname()}_{os.getpid()}"
+        # Use nanosecond here to avoid naming clash when exporting the trace
+        file_name = f"{worker_name}.{time.time_ns()}.et.trace.json"
+        self.profiler.execution_trace_observer.register_callback(
+            Path(envs.VLLM_TORCH_PROFILER_DIR, file_name).as_posix())
         self.profiler.start()
+        self.profiler.step()
 
     def stop_profile(self):
         if self.profiler is None:
             raise RuntimeError("Profiler is not enabled.")
+        self.profiler.step()
         self.profiler.stop()
+        self.profiler.execution_trace_observer.cleanup()
 
     def _is_encoder_decoder_model(self):
         return self.model_config.is_encoder_decoder_model
