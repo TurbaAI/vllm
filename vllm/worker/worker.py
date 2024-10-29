@@ -134,6 +134,8 @@ class Worker(LocalOrDistributedWorkerBase):
                     torch.profiler.ProfilerActivity.CUDA,
                 ],
                 with_stack=False,
+                with_flops=True,
+                profile_memory=True,
                 on_trace_ready=torch.profiler.tensorboard_trace_handler(
                     torch_profiler_trace_dir, use_gzip=True),
                 experimental_config=_ExperimentalConfig(enable_cuda_sync_events=True),
