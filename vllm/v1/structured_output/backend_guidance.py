@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from dataclasses import dataclass
@@ -29,6 +30,7 @@ else:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GuidanceBackend(StructuredOutputBackend):
 
     def __init__(self, vllm_config: VllmConfig):
@@ -75,6 +77,7 @@ class GuidanceBackend(StructuredOutputBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GuidanceGrammar(StructuredOutputGrammar):
     ll_matcher: llguidance.LLMatcher
     ll_tokenizer: llguidance.LLTokenizer

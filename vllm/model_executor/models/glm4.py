@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2025 The Zhipu AI team.
 # Copyright 2023 The vLLM team.
@@ -48,6 +49,7 @@ from .llama import LlamaModel
 from .utils import AutoWeightsLoader, PPMissingLayer, maybe_prefix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Glm4Attention(nn.Module):
 
     def __init__(self,
@@ -134,6 +136,7 @@ class Glm4Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Glm4DecoderLayer(nn.Module):
 
     def __init__(
@@ -220,6 +223,7 @@ ALL_DECODER_LAYER_TYPES = {
         "intermediate_tensors": 0,
         "inputs_embeds": 0,
     })
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Glm4Model(LlamaModel):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -228,6 +232,7 @@ class Glm4Model(LlamaModel):
                          layer_type=Glm4DecoderLayer)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Glm4ForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

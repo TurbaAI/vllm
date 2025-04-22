@@ -3,6 +3,7 @@
     and PagedAttention."""
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Type
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -21,6 +22,7 @@ logger = init_logger(__name__)
 _PARTITION_SIZE = 512
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IpexAttnBackend(AttentionBackend):
 
     @staticmethod
@@ -70,6 +72,7 @@ class IpexAttnBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IpexAttnMetadata(AttentionMetadata, PagedAttentionMetadata):
     """Metadata for IpexAttnBackend.
     """
@@ -108,6 +111,7 @@ class IpexAttnMetadata(AttentionMetadata, PagedAttentionMetadata):
         return self
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IpexAttnBackendImpl(AttentionImpl[IpexAttnMetadata]):
 
     def __init__(

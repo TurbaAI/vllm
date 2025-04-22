@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 import re
@@ -20,6 +21,7 @@ logger = init_logger(__name__)
 
 
 @ToolParserManager.register_module("phi4_mini_json")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi4MiniJsonToolParser(ToolParser):
     """
     Tool call parser for phi-4-mini models intended for use with the

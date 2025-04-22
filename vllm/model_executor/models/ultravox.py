@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from https://github.com/fixie-ai/ultravox/blob/ecd58c4041030bae2ad15aa6bcf04ab43199ea02/ultravox/model/ultravox_model.py
 """PyTorch Ultravox model."""
@@ -46,6 +47,7 @@ _AUDIO_TOKENS_PER_SECOND = 6.25
 _MAX_ENCODER_BATCH_SIZE = 16
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UltravoxAudioFeatureInputs(TypedDict):
     type: Literal["audio_features"]
     data: Union[torch.Tensor, list[torch.Tensor], list[list[torch.Tensor]]]
@@ -62,6 +64,7 @@ class UltravoxAudioFeatureInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UltravoxAudioEmbeddingInputs(TypedDict):
     type: Literal["audio_embeds"]
     data: NestedTensors
@@ -72,6 +75,7 @@ UltravoxAudioInputs = Union[UltravoxAudioFeatureInputs,
                             UltravoxAudioEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UltravoxProcessingInfo(BaseProcessingInfo):
 
     def get_hf_processor(
@@ -107,6 +111,7 @@ class UltravoxProcessingInfo(BaseProcessingInfo):
         return {"audio": None}
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UltravoxDummyInputsBuilder(BaseDummyInputsBuilder[UltravoxProcessingInfo]
                                  ):
 
@@ -133,6 +138,7 @@ class UltravoxDummyInputsBuilder(BaseDummyInputsBuilder[UltravoxProcessingInfo]
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UltravoxMultiModalProcessor(
         BaseMultiModalProcessor[UltravoxProcessingInfo]):
 
@@ -231,6 +237,7 @@ class UltravoxMultiModalProcessor(
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StackAudioFrames(nn.Module):
     """
     Stack the audio embedding frames to reduce the sequence length by a factor
@@ -252,6 +259,7 @@ class StackAudioFrames(nn.Module):
         return audio_embeds
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UltravoxProjector(nn.Module):
 
     def __init__(self, config: UltravoxConfig):
@@ -292,6 +300,7 @@ class UltravoxProjector(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModifiedWhisperEncoder(WhisperEncoder):
     """
     Encoder portion of OpenAI's Whisper model.
@@ -392,6 +401,7 @@ class ModifiedWhisperEncoder(WhisperEncoder):
     UltravoxMultiModalProcessor,
     info=UltravoxProcessingInfo,
     dummy_inputs=UltravoxDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UltravoxModel(nn.Module, SupportsMultiModal, SupportsPP, SupportsLoRA):
 
     packed_modules_mapping = {

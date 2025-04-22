@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Callable, Dict, List, Optional, Set, Union
 
@@ -33,6 +34,7 @@ from vllm.scalar_type import scalar_types
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPTQMarlinConfig(QuantizationConfig):
     """Config class for GPTQ Marlin"""
 
@@ -191,6 +193,7 @@ class GPTQMarlinConfig(QuantizationConfig):
                                       group_size=group_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPTQMarlinLinearMethod(LinearMethodBase):
     """Linear method for GPTQ Marlin.
 
@@ -344,6 +347,7 @@ class GPTQMarlinLinearMethod(LinearMethodBase):
         return self.kernel.apply_weights(layer, x, bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPTQMarlinMoEMethod(FusedMoEMethodBase):
     """MoE Marlin method with quantization."""
 

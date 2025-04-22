@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://github.com/deepseek-ai/DeepSeek-VL2/blob/faf18023f24b962b32d9f0a2d89e402a8d383a78/deepseek_vl2/models/modeling_deepseek_vl_v2.py#L115-L268
 from typing import Tuple
@@ -6,6 +7,7 @@ from typing import Tuple
 from transformers.configuration_utils import PretrainedConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionEncoderConfig(PretrainedConfig):
     model_type: str = "vision"
 
@@ -55,6 +57,7 @@ class VisionEncoderConfig(PretrainedConfig):
         super().__init__(**kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MlpProjectorConfig(PretrainedConfig):
     model_type = "mlp_projector"
     projector_type: str = "downsample_mlp_gelu"
@@ -83,6 +86,7 @@ class MlpProjectorConfig(PretrainedConfig):
         super().__init__(**kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV2Config(PretrainedConfig):
 
     model_type = "deepseek_v2"
@@ -184,6 +188,7 @@ class DeepseekV2Config(PretrainedConfig):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekVLV2Config(PretrainedConfig):
     model_type = "deepseek_vl_v2"
     vision_config: VisionEncoderConfig

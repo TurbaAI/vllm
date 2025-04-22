@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Tuple
@@ -11,6 +12,7 @@ from vllm.model_executor.models.constant_size_cache import ConstantSizeCache
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MambaCacheParams:
     conv_state: torch.Tensor = torch.Tensor()
     ssm_state: torch.Tensor = torch.Tensor()
@@ -22,6 +24,7 @@ class MambaCacheParams:
                                 self.state_indices_tensor)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MambaCacheManager(ConstantSizeCache):
 
     def __init__(self, vllm_config: VllmConfig, dtype: torch.dtype,

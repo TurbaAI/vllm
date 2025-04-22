@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -54,6 +55,7 @@ from .utils import (AutoWeightsLoader, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralMoE(nn.Module):
     """A tensor-parallel MoE implementation for Mixtral that shards each expert
     across all ranks.
@@ -107,6 +109,7 @@ class MixtralMoE(nn.Module):
         return final_hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralAttention(nn.Module):
 
     def __init__(
@@ -189,6 +192,7 @@ class MixtralAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralDecoderLayer(nn.Module):
 
     def __init__(
@@ -250,6 +254,7 @@ class MixtralDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -408,6 +413,7 @@ class MixtralModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     fall_back_to_pt_during_load = False
 

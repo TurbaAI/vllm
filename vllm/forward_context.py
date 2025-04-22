@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from collections import defaultdict
@@ -26,11 +27,13 @@ batchsize_forward_time: defaultdict = defaultdict(list)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DPMetadata:
     cu_tokens_across_dp_cpu: torch.Tensor
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ForwardContext:
     # copy from vllm_config.compilation_config.static_forward_context
     no_compile_layers: dict[str, Any]

@@ -3,6 +3,7 @@
     and PagedAttention."""
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Type
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch.nn.functional import scaled_dot_product_attention
@@ -26,6 +27,7 @@ from vllm.worker.cpu_model_runner import ModelInputForCPUBuilder
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TorchSDPABackend(AttentionBackend):
 
     @staticmethod
@@ -75,6 +77,7 @@ class TorchSDPABackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TorchSDPAMetadata(AttentionMetadata, PagedAttentionMetadata):
     """Metadata for TorchSDPABackend.
     """
@@ -283,6 +286,7 @@ class TorchSDPAMetadata(AttentionMetadata, PagedAttentionMetadata):
             raise AttributeError(f"Invalid attention type {str(attn_type)}")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TorchSDPAMetadataBuilder(AttentionMetadataBuilder[TorchSDPAMetadata]):
 
     def __init__(self, input_builder: ModelInputForCPUBuilder) -> None:
@@ -390,6 +394,7 @@ class TorchSDPAMetadataBuilder(AttentionMetadataBuilder[TorchSDPAMetadata]):
         return attn_metadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TorchSDPABackendImpl(AttentionImpl[TorchSDPAMetadata]):
 
     def __init__(

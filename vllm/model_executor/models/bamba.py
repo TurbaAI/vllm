@@ -2,6 +2,7 @@
 """Inference-only Bamba model."""
 # Added by the IBM Team, 2024
 from typing import Iterable, Optional, Set, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -41,6 +42,7 @@ from .utils import (AutoWeightsLoader, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BambaMLP(nn.Module):
 
     def __init__(
@@ -74,6 +76,7 @@ class BambaMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BambaMixerDecoderLayer(nn.Module):
 
     def __init__(self,
@@ -128,6 +131,7 @@ class BambaMixerDecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BambaAttentionDecoderLayer(nn.Module):
 
     def __init__(
@@ -255,6 +259,7 @@ ALL_DECODER_LAYER_TYPES = {
 }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BambaModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -410,6 +415,7 @@ class BambaModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BambaForCausalLM(nn.Module, HasInnerState, SupportsLoRA, SupportsPP,
                        IsHybrid, SupportsV0Only, SupportsQuant):
     packed_modules_mapping = {

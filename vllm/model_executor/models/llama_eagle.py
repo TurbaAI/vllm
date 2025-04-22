@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Iterable, Set, Tuple
 
@@ -20,6 +21,7 @@ from .utils import AutoWeightsLoader, maybe_prefix
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlamaDecoderLayer(LlamaDecoderLayer):
 
     def __init__(
@@ -37,6 +39,7 @@ class LlamaDecoderLayer(LlamaDecoderLayer):
             self.input_layernorm = nn.Identity()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlamaModel(nn.Module):
 
     def __init__(
@@ -114,6 +117,7 @@ class LlamaModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EagleLlamaForCausalLM(LlamaForCausalLM):
 
     def __init__(self, *, model_config: ModelConfig, start_layer_id: int = 0):

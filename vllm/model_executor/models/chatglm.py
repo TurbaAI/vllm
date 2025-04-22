@@ -4,6 +4,7 @@
 """Inference-only ChatGLM model compatible with THUDM weights."""
 import json
 from typing import Iterable, Optional, Set, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -35,6 +36,7 @@ from .utils import (AutoWeightsLoader, WeightsMapper, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLMAttention(nn.Module):
 
     def __init__(
@@ -119,6 +121,7 @@ class GLMAttention(nn.Module):
         return attn_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLMMLP(nn.Module):
     """MLP.
 
@@ -166,6 +169,7 @@ class GLMMLP(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLMBlock(nn.Module):
     """A single transformer layer.
 
@@ -241,6 +245,7 @@ class GLMBlock(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLMTransformer(nn.Module):
     """Transformer class."""
 
@@ -295,6 +300,7 @@ class GLMTransformer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatGLMModel(nn.Module, SupportsQuant):
     packed_modules_mapping = {
         "linear_proj.merged_proj":
@@ -398,6 +404,7 @@ class ChatGLMModel(nn.Module, SupportsQuant):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatGLMBaseModel(nn.Module):
     hf_to_vllm_mapper = WeightsMapper(
         orig_to_new_substr={".word_embeddings": ""}, )
@@ -455,6 +462,7 @@ class ChatGLMBaseModel(nn.Module):
         return loader.load_weights(weights, mapper=self.hf_to_vllm_mapper)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatGLMForCausalLM(ChatGLMBaseModel, SupportsLoRA, SupportsPP,
                          SupportsQuant):
     packed_modules_mapping = {

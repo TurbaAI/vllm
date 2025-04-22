@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import copy
 from collections import defaultdict
@@ -17,6 +18,7 @@ from vllm.profiler.utils import (TablePrinter, event_has_module,
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _ModuleTreeNode:
     event: _ProfilerEvent
     parent: Optional['_ModuleTreeNode'] = None
@@ -38,6 +40,7 @@ class _ModuleTreeNode:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SummaryStatsEntry:
     name: str
     cuda_time_us: float
@@ -46,6 +49,7 @@ class SummaryStatsEntry:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelStatsEntry:
     name: str
     cpu_time_us: float
@@ -58,6 +62,7 @@ StatsEntry: TypeAlias = Union[ModelStatsEntry, SummaryStatsEntry]
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _StatsTreeNode:
     entry: StatsEntry
     children: List[StatsEntry]
@@ -65,6 +70,7 @@ class _StatsTreeNode:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LayerwiseProfileResults(profile):
     _kineto_results: _ProfilerResult
     _kineto_event_correlation_map: Dict[int,
@@ -344,6 +350,7 @@ class LayerwiseProfileResults(profile):
         return root_dicts
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class layerwise_profile(profile):
 
     def __init__(self, num_running_seqs: Optional[int] = None):

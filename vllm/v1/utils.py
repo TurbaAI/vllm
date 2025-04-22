@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 import weakref
@@ -22,6 +23,7 @@ logger = init_logger(__name__)
 T = TypeVar("T")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConstantList(Generic[T], Sequence):
 
     def __init__(self, x: list[T]) -> None:
@@ -90,6 +92,7 @@ class ConstantList(Generic[T], Sequence):
         return f"ConstantList({self._x})"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BackgroundProcHandle:
     """
     Utility class to handle creation, readiness, and shutdown

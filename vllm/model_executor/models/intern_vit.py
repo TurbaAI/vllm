@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://huggingface.co/OpenGVLab/InternVL2-4B/blob/main/modeling_intern_vit.py
 # --------------------------------------------------------
@@ -33,6 +34,7 @@ NORM2FN = {
 }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVisionEmbeddings(nn.Module):
 
     def __init__(self, config: PretrainedConfig):
@@ -94,6 +96,7 @@ class InternVisionEmbeddings(nn.Module):
         return embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVisionPatchModel(nn.Module):
 
     def __init__(self, config: PretrainedConfig):
@@ -125,6 +128,7 @@ class InternVisionPatchModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternParallelAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -212,6 +216,7 @@ class InternParallelAttention(nn.Module):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternSdpaAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -279,6 +284,7 @@ class InternSdpaAttention(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternMLP(nn.Module):
 
     def __init__(
@@ -310,6 +316,7 @@ class InternMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVisionEncoderLayer(nn.Module):
 
     def __init__(
@@ -377,6 +384,7 @@ class InternVisionEncoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVisionEncoder(nn.Module):
 
     def __init__(
@@ -414,6 +422,7 @@ class InternVisionEncoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVisionModel(nn.Module):
 
     def __init__(

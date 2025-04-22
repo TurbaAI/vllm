@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://huggingface.co/Skywork/Skywork-R1V-38B/blob/main/modeling_skywork_chat.py
 # --------------------------------------------------------
@@ -49,6 +50,7 @@ IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SkyworkR1VImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values_flat: torch.Tensor
@@ -61,6 +63,7 @@ class SkyworkR1VImagePixelInputs(TypedDict):
     """Shape: `(batch_size * num_images)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SkyworkR1VImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: Union[torch.Tensor, list[torch.Tensor]]
@@ -232,6 +235,7 @@ def image_to_pixel_values_skyworkr1v(
     return pixel_values
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseSkyworkR1VProcessor(ABC):
     """
     This model doesn't define its own HF processor,
@@ -426,6 +430,7 @@ class BaseSkyworkR1VProcessor(ABC):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SkyworkR1VProcessor(BaseSkyworkR1VProcessor):
 
     @property
@@ -443,6 +448,7 @@ class SkyworkR1VProcessor(BaseSkyworkR1VProcessor):
         return PromptUpdateDetails.select_text(repl_full, IMG_CONTEXT)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseSkyworkR1VProcessingInfo(BaseProcessingInfo):
 
     @abstractmethod
@@ -503,6 +509,7 @@ class BaseSkyworkR1VProcessingInfo(BaseProcessingInfo):
 _I = TypeVar("_I", bound=BaseSkyworkR1VProcessingInfo)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SkyworkR1VDummyInputsBuilder(BaseDummyInputsBuilder[_I]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -527,6 +534,7 @@ class SkyworkR1VDummyInputsBuilder(BaseDummyInputsBuilder[_I]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SkyworkR1VMultiModalProcessor(BaseMultiModalProcessor[_I]):
 
     def _call_hf_processor(
@@ -615,6 +623,7 @@ class SkyworkR1VMultiModalProcessor(BaseMultiModalProcessor[_I]):
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SkyworkR1VProcessingInfo(BaseSkyworkR1VProcessingInfo):
 
     def get_hf_processor(
@@ -644,6 +653,7 @@ class SkyworkR1VProcessingInfo(BaseSkyworkR1VProcessingInfo):
     SkyworkR1VMultiModalProcessor,
     info=SkyworkR1VProcessingInfo,
     dummy_inputs=SkyworkR1VDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SkyworkR1VChatModel(nn.Module, SupportsMultiModal, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = "") -> None:

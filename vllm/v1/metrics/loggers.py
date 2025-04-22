@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from abc import ABC, abstractmethod
@@ -19,6 +20,7 @@ logger = init_logger(__name__)
 _LOCAL_LOGGING_INTERVAL_SEC = 5.0
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StatLoggerBase(ABC):
 
     @abstractmethod
@@ -30,6 +32,7 @@ class StatLoggerBase(ABC):
         pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoggingStatLogger(StatLoggerBase):
 
     def __init__(self, engine_index: int = 0):
@@ -115,6 +118,7 @@ class LoggingStatLogger(StatLoggerBase):
             self.spec_decoding_metrics.log(log_fn=log_fn)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrometheusStatLogger(StatLoggerBase):
 
     def __init__(self, vllm_config: VllmConfig, engine_index: int = 0):

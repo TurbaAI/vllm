@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 
@@ -18,6 +19,7 @@ from .inductor_pass import InductorPass
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VllmInductorPass(InductorPass):
     """
     An inductor pass with access to vLLM PassConfig.
@@ -51,6 +53,7 @@ class VllmInductorPass(InductorPass):
         logger.debug("%s completed in %.1f ms", self.pass_name, duration_ms)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrinterInductorPass(VllmInductorPass):
 
     def __init__(self,

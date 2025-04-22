@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 from typing import Any, Dict, List, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn.functional as F
@@ -11,6 +12,7 @@ from vllm.model_executor.layers.quantization.base_config import (
 from vllm.model_executor.utils import set_weight_attrs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TorchAOConfig(QuantizationConfig):
     """Config class for torchao."""
 
@@ -81,6 +83,7 @@ def torchao_quantize_param_data(param: torch.Tensor,
     return dummy_linear.weight
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TorchAOLinearMethod(LinearMethodBase):
     """Linear method for torchao.
 

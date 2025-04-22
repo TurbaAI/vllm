@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import ast
 import json
@@ -20,11 +21,13 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _UnexpectedAstError(Exception):
     pass
 
 
 @ToolParserManager.register_module("pythonic")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PythonicToolParser(ToolParser):
     """
     Tool call parser for models that produce tool calls in a pythonic style,

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 ###############################################################################
 # Copyright (C) 2024 Habana Labs, Ltd. an Intel Company
@@ -25,6 +26,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUAttentionBackend(AttentionBackend):
 
     @staticmethod
@@ -70,6 +72,7 @@ class HPUAttentionBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUAttentionMetadata(HPUPagedAttentionMetadata, AttentionMetadata):
     """Metadata for HPUAttentionbackend."""
     # Currently, input sequences can only contain all prompts
@@ -79,6 +82,7 @@ class HPUAttentionMetadata(HPUPagedAttentionMetadata, AttentionMetadata):
     seq_lens_tensor: Optional[torch.Tensor]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUAttentionImpl(AttentionImpl, torch.nn.Module):
     """
     If the input tensors contain prompt tokens, the layout is as follows:

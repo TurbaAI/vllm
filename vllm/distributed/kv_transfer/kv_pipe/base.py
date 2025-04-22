@@ -9,6 +9,7 @@ All classes instantiated from this interface are assumed to be a FIFO pipe.
 If your distributed communication platform already supports key-value lookup,
 you can bypass this interface and directly start from `kv_lookup_buffer`.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import Optional
@@ -16,6 +17,7 @@ from typing import Optional
 import torch
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVPipeBase(ABC):
     """
     This class provides an interface for sending and receiving tensors, or

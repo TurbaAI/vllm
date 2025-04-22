@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from copy import copy
 from typing import Optional
@@ -8,6 +9,7 @@ from vllm.sampling_params import RequestOutputKind, SamplingParams
 from vllm.v1.metrics.stats import IterationStats
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParentRequest:
     """Info, state & processing for parallel sampling request.
 

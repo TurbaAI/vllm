@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import abstractmethod
 from collections.abc import Iterable, Mapping, Sequence
@@ -46,6 +47,7 @@ from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
 from .vision import get_vision_encoder_info
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: torch.Tensor
@@ -57,6 +59,7 @@ class LlavaImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFImagePixelInputs(TypedDict):
     type: Literal["pixel_values_pixtral"]
     pixel_values: Union[torch.Tensor, list[torch.Tensor]]
@@ -68,6 +71,7 @@ class PixtralHFImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: torch.Tensor
@@ -81,6 +85,7 @@ LlavaImageInputs = Union[LlavaImagePixelInputs, PixtralHFImagePixelInputs,
                          LlavaImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaMultiModalProjector(nn.Module):
 
     def __init__(self,
@@ -111,6 +116,7 @@ class LlavaMultiModalProjector(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaLikeConfig(Protocol):
     vision_config: Final[PretrainedConfig]
     image_token_index: Final[int]
@@ -118,10 +124,12 @@ class LlavaLikeConfig(Protocol):
     vision_feature_layer: Final[Union[int, list[int]]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaLikeProcessor(Protocol):
     image_token: Final[str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseLlavaProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self) -> LlavaLikeConfig:
@@ -184,6 +192,7 @@ class BaseLlavaProcessingInfo(BaseProcessingInfo):
 _I = TypeVar("_I", bound=BaseLlavaProcessingInfo)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaDummyInputsBuilder(BaseDummyInputsBuilder[_I]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -212,6 +221,7 @@ class LlavaDummyInputsBuilder(BaseDummyInputsBuilder[_I]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaProcessingInfo(BaseLlavaProcessingInfo):
 
     def get_hf_processor(self, **kwargs: object):
@@ -224,6 +234,7 @@ class LlavaProcessingInfo(BaseLlavaProcessingInfo):
         return hf_processor
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseLlavaMultiModalProcessor(BaseMultiModalProcessor[_I]):
 
     # Copied from BaseMultiModalProcessor
@@ -268,6 +279,7 @@ class BaseLlavaMultiModalProcessor(BaseMultiModalProcessor[_I]):
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaMultiModalProcessor(
         BaseLlavaMultiModalProcessor[LlavaProcessingInfo]):
 
@@ -282,12 +294,14 @@ class LlavaMultiModalProcessor(
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFProcessingInfo(BaseLlavaProcessingInfo):
 
     def get_hf_processor(self, **kwargs: object):
         return self.ctx.get_hf_processor(PixtralProcessor, **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFMultiModalProcessor(
         BaseMultiModalProcessor[PixtralHFProcessingInfo]):
 
@@ -497,6 +511,7 @@ def init_vision_tower_for_llava(
 @MULTIMODAL_REGISTRY.register_processor(_build_llava_or_pixtral_hf_processor,
                                         info=_build_llava_or_pixtral_hf_info,
                                         dummy_inputs=LlavaDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaForConditionalGeneration(nn.Module, SupportsMultiModal, SupportsPP):
 
     packed_modules_mapping = {
@@ -776,6 +791,7 @@ class LlavaForConditionalGeneration(nn.Module, SupportsMultiModal, SupportsPP):
         return loader.load_weights(weights)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MantisProcessingInfo(LlavaProcessingInfo):
 
     def get_hf_processor(self, **kwargs: object):
@@ -798,6 +814,7 @@ class MantisProcessingInfo(LlavaProcessingInfo):
         return self.ctx.get_hf_processor(LlavaProcessor, **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MantisMultiModalProcessor(LlavaMultiModalProcessor):
 
     def apply(
@@ -881,5 +898,6 @@ class MantisMultiModalProcessor(LlavaMultiModalProcessor):
 @MULTIMODAL_REGISTRY.register_processor(MantisMultiModalProcessor,
                                         info=MantisProcessingInfo,
                                         dummy_inputs=LlavaDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MantisForConditionalGeneration(LlavaForConditionalGeneration):
     pass

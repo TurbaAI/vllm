@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import fnmatch
 import os
@@ -94,6 +95,7 @@ def list_files(
     return bucket_name, prefix, paths
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class S3Model:
     """
     A class representing a S3 model mirrored into a temporary directory.

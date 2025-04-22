@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import enum
 import heapq
@@ -6,6 +7,7 @@ from abc import ABC, abstractmethod
 from typing import Dict, List, Tuple
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EvictionPolicy(enum.Enum):
     """Enum for eviction policy used by make_evictor to instantiate the correct
        Evictor subclass.
@@ -13,6 +15,7 @@ class EvictionPolicy(enum.Enum):
     LRU = enum.auto()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Evictor(ABC):
     """The Evictor subclasses should be used by the BlockAllocator class to
     handle eviction of freed Blocks.
@@ -55,6 +58,7 @@ class Evictor(ABC):
         pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockMetaData:
     """Data structure for storing key data describe cached block, so that
     evitor could use to make its decision which one to choose for eviction
@@ -70,6 +74,7 @@ class BlockMetaData:
         self.last_accessed = last_accessed
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LRUEvictor(Evictor):
     """Evicts in a least-recently-used order using the last_accessed timestamp
     that's recorded in the Block. If there are multiple blocks with

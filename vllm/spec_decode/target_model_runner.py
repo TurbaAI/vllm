@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List, Optional
 
@@ -8,6 +9,7 @@ from vllm.worker.model_runner_base import (ModelRunnerBase,
                                            ModelRunnerWrapperBase)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TargetModelRunner(ModelRunnerWrapperBase):
     """Specialized model runner for speculative decoding target model.
     In speculative decoding, the log probabilities selected finally may not

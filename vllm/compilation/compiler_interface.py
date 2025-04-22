@@ -6,6 +6,7 @@ import os
 from contextlib import ExitStack
 from typing import Any, Callable, Dict, List, Optional, Tuple
 from unittest.mock import patch
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch._inductor.compile_fx
@@ -15,6 +16,7 @@ from vllm.config import VllmConfig
 from vllm.utils import is_torch_equal_or_newer
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompilerInterface:
     """
     The interface for a compiler that can be used by vLLM.
@@ -86,6 +88,7 @@ class CompilerInterface:
         raise NotImplementedError("caching is not supported")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AlwaysHitShapeEnv:
     """
     Why do we need this class:
@@ -124,6 +127,7 @@ class AlwaysHitShapeEnv:
         return ""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InductorAdaptor(CompilerInterface):
     """
     The adaptor for the Inductor compiler, version 2.5 and 2.6.
@@ -398,6 +402,7 @@ class InductorAdaptor(CompilerInterface):
             return contextlib.nullcontext()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EagerAdaptor(CompilerInterface):
     name = "eager"
 

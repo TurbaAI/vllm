@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 from functools import lru_cache
 from typing import (AbstractSet, Callable, Dict, List, Optional, Tuple, Type,
                     TypeVar, Union)
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import cloudpickle
 import torch.nn as nn
@@ -272,6 +273,7 @@ class _ModelInfo:
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _BaseRegisteredModel(ABC):
 
     @abstractmethod
@@ -353,6 +355,7 @@ def _try_inspect_model_cls(
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _ModelRegistry:
     # Keyed by model_arch
     models: Dict[str, _BaseRegisteredModel] = field(default_factory=dict)

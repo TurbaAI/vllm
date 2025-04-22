@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """PyTorch MAMBA2 model."""
 from typing import Iterable, Optional, Set, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -39,6 +40,7 @@ from .utils import (is_pp_missing_parameter,
 KVCache = Tuple[torch.Tensor, torch.Tensor]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mamba2DecoderLayer(nn.Module):
 
     def __init__(self,
@@ -82,6 +84,7 @@ class Mamba2DecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mamba2Model(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -169,6 +172,7 @@ class Mamba2Model(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mamba2ForCausalLM(nn.Module, HasInnerState, IsAttentionFree,
                         SupportsV0Only):
 

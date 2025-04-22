@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import abstractmethod
 from enum import Enum
@@ -35,6 +36,7 @@ else:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FusedMoeWeightScaleSupported(Enum):
     TENSOR = "tensor"
     CHANNEL = "channel"
@@ -42,6 +44,7 @@ class FusedMoeWeightScaleSupported(Enum):
     BLOCK = "block"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FusedMoEMethodBase(QuantizeMethodBase):
 
     @abstractmethod
@@ -73,6 +76,7 @@ class FusedMoEMethodBase(QuantizeMethodBase):
 
 
 @CustomOp.register("unquantized_fused_moe")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UnquantizedFusedMoEMethod(FusedMoEMethodBase, CustomOp):
     """MoE method without quantization."""
 
@@ -374,6 +378,7 @@ def determine_expert_map(
     return (local_num_experts, expert_map)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FusedMoE(torch.nn.Module):
     """FusedMoE layer for MoE models.
 

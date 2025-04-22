@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 from dataclasses import dataclass
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -7,6 +8,7 @@ from vllm.model_executor.models.constant_size_cache import ConstantSizeCache
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MinimaxCacheParams:
     minimax_cache: torch.Tensor = torch.Tensor()
     state_indices_tensor: torch.Tensor = torch.Tensor()
@@ -16,6 +18,7 @@ class MinimaxCacheParams:
                                   self.state_indices_tensor)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MinimaxCacheManager(ConstantSizeCache):
 
     def __init__(self, dtype, cache_shape):

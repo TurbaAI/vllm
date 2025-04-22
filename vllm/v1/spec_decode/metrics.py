@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 
@@ -10,6 +11,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpecDecodingStats:
     num_draft_tokens: int = 0
     num_accepted_tokens: int = 0
@@ -29,6 +31,7 @@ class SpecDecodingStats:
         self.num_accepted_tokens += num_accepted_tokens
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpecDecodingMetrics:
 
     def __init__(self):

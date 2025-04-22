@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2022 EleutherAI and the HuggingFace Inc. team. All rights reserved.
 #
@@ -26,6 +27,7 @@ from transformers.utils import logging
 logger = logging.get_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SolarConfig(PretrainedConfig):
     r"""
     This is the configuration class to store

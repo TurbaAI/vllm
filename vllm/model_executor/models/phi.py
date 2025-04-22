@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://huggingface.co/microsoft/phi-1_5/blob/main/modeling_phi.py
@@ -66,6 +67,7 @@ from .utils import (AutoWeightsLoader, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiAttention(nn.Module):
 
     def __init__(self,
@@ -135,6 +137,7 @@ class PhiAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiMLP(nn.Module):
 
     def __init__(self,
@@ -164,6 +167,7 @@ class PhiMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiLayer(nn.Module):
 
     def __init__(self,
@@ -197,6 +201,7 @@ class PhiLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -293,6 +298,7 @@ class PhiModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

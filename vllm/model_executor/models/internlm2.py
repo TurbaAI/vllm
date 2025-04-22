@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from functools import partial
 from typing import Any, Dict, Iterable, Optional, Set, Tuple, Type, Union
@@ -37,6 +38,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternLM2MLP(nn.Module):
 
     def __init__(
@@ -74,6 +76,7 @@ class InternLM2MLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternLM2Attention(nn.Module):
 
     def __init__(
@@ -184,6 +187,7 @@ class InternLM2Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternLMDecoderLayer(nn.Module):
 
     def __init__(
@@ -246,6 +250,7 @@ class InternLMDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternLM2Model(nn.Module):
 
     def __init__(
@@ -307,6 +312,7 @@ class InternLM2Model(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternLM2ForCausalLM(nn.Module, SupportsPP, SupportsLoRA):
     packed_modules_mapping = {
         "wqkv": ["wqkv"],
@@ -410,6 +416,7 @@ class InternLM2ForCausalLM(nn.Module, SupportsPP, SupportsLoRA):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternLM2ForRewardModel(InternLM2ForCausalLM):
 
     def __init__(

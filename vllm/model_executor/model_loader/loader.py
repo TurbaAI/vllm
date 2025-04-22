@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # ruff: noqa: SIM117
 import collections
@@ -190,6 +191,7 @@ def _process_weights_after_loading(model: nn.Module, model_config: ModelConfig,
             module.process_weights_after_loading(model_config.dtype)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseModelLoader(ABC):
     """Base class for model loaders."""
 
@@ -207,10 +209,12 @@ class BaseModelLoader(ABC):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DefaultModelLoader(BaseModelLoader):
     """Model loader that can load different file types from disk."""
 
     @dataclasses.dataclass
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Source:
         """A source for weights."""
 
@@ -473,6 +477,7 @@ class DefaultModelLoader(BaseModelLoader):
         return model.eval()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DummyModelLoader(BaseModelLoader):
     """Model loader that will set model weights to random values."""
 
@@ -500,6 +505,7 @@ class DummyModelLoader(BaseModelLoader):
         return model.eval()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TensorizerLoader(BaseModelLoader):
     """Model loader using CoreWeave's tensorizer library."""
 
@@ -600,6 +606,7 @@ class TensorizerLoader(BaseModelLoader):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ShardedStateLoader(BaseModelLoader):
     """
     Model loader that directly loads each worker's model state dict, which
@@ -768,6 +775,7 @@ class ShardedStateLoader(BaseModelLoader):
             )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BitsAndBytesModelLoader(BaseModelLoader):
     """Model loader to load model weights with BitAndBytes quantization."""
 
@@ -1293,6 +1301,7 @@ class BitsAndBytesModelLoader(BaseModelLoader):
         return model.eval()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GGUFModelLoader(BaseModelLoader):
     """
     Model loader that can load GGUF files. This is useful for loading models
@@ -1391,6 +1400,7 @@ class GGUFModelLoader(BaseModelLoader):
         return model
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RunaiModelStreamerLoader(BaseModelLoader):
     """
         Model loader that can load safetensors

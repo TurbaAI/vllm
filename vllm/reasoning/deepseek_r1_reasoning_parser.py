@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections.abc import Sequence
 from typing import Optional, Union
@@ -14,6 +15,7 @@ logger = init_logger(__name__)
 
 
 @ReasoningParserManager.register_module("deepseek_r1")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepSeekR1ReasoningParser(ReasoningParser):
     """
     Reasoning parser for DeepSeek R1 model.

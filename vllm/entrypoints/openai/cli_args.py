@@ -4,6 +4,7 @@ This file contains the command line arguments for the vLLM's
 OpenAI-compatible server. It is kept in a separate file for documentation
 purposes.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import argparse
 import json
@@ -20,6 +21,7 @@ from vllm.entrypoints.openai.tool_parsers import ToolParserManager
 from vllm.utils import FlexibleArgumentParser
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAParserAction(argparse.Action):
 
     def __call__(
@@ -56,6 +58,7 @@ class LoRAParserAction(argparse.Action):
         setattr(namespace, self.dest, lora_list)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptAdapterParserAction(argparse.Action):
 
     def __call__(

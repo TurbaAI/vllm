@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type, cast
@@ -55,6 +56,7 @@ class EncoderDecoderModelInputForCPU(ModelInputForCPUWithSamplingMetadata):
             super().from_broadcasted_tensor_dict(tensor_dict, attn_backend))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CPUEncoderDecoderModelRunner(
         CPUModelRunnerBase[EncoderDecoderModelInputForCPU]):
     _model_input_cls: Type[EncoderDecoderModelInputForCPU] = (

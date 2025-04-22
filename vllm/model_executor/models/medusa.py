@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Iterable, List, Optional, Set, Tuple
 
@@ -14,6 +15,7 @@ from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ResidualBlock(nn.Module):
 
     def __init__(self, config: VllmConfig, hidden_size: int,
@@ -34,6 +36,7 @@ class ResidualBlock(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Medusa(nn.Module):
     """This class implements the Medusa draft model from the paper: https://arxiv.org/abs/2401.10774
     Reference implementation: https://github.com/FasterDecoding/Medusa

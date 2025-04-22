@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 from abc import ABC, abstractmethod
@@ -23,6 +24,7 @@ from vllm.utils import Device, collect_from_async_generator, random_uuid
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineClient(ABC):
     """Protocol class for Clients to Engine"""
 

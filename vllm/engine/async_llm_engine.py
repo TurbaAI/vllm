@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import copy
@@ -41,6 +42,7 @@ logger = init_logger(__name__)
 ENGINE_ITERATION_TIMEOUT_S = envs.VLLM_ENGINE_ITERATION_TIMEOUT_S
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncEngineDeadError(RuntimeError):
     pass
 
@@ -76,6 +78,7 @@ def _log_task_completion(task: asyncio.Task,
 STOP_ITERATION = Exception()  # Sentinel
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncStream:
     """A stream of RequestOutputs or PoolingRequestOutputs for a request
     that can be iterated over asynchronously via an async generator."""
@@ -126,6 +129,7 @@ class AsyncStream:
                  issubclass(value, BaseException))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestTracker:
     """Synchronous abstraction for tracking requests."""
 
@@ -260,6 +264,7 @@ class RequestTracker:
         return not self._new_requests.empty()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _AsyncLLMEngine(LLMEngine):
     """Extension of LLMEngine to add async methods."""
 
@@ -573,6 +578,7 @@ async def build_guided_decoding_logits_processor_async(
     return sampling_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncLLMEngine(EngineClient):
     """An asynchronous wrapper for :class:`LLMEngine`.
 

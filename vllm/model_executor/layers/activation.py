@@ -2,6 +2,7 @@
 """Custom activation functions."""
 import math
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -16,6 +17,7 @@ from vllm.utils import LazyDict
 
 
 @CustomOp.register("fatrelu_and_mul")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FatreluAndMul(CustomOp):
     """An activation function for FATReLU.
 
@@ -52,6 +54,7 @@ class FatreluAndMul(CustomOp):
 
 
 @CustomOp.register("silu_and_mul")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiluAndMul(CustomOp):
     """An activation function for SwiGLU.
 
@@ -98,6 +101,7 @@ class SiluAndMul(CustomOp):
 
 
 @CustomOp.register("mul_and_silu")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MulAndSilu(CustomOp):
     """An activation function for SwiGLU.
 
@@ -135,6 +139,7 @@ class MulAndSilu(CustomOp):
 
 
 @CustomOp.register("gelu_and_mul")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GeluAndMul(CustomOp):
     """An activation function for GeGLU.
 
@@ -186,6 +191,7 @@ class GeluAndMul(CustomOp):
 
 
 @CustomOp.register("gelu_new")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NewGELU(CustomOp):
 
     def __init__(self):
@@ -212,6 +218,7 @@ class NewGELU(CustomOp):
 
 
 @CustomOp.register("gelu_fast")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FastGELU(CustomOp):
 
     def __init__(self):
@@ -237,6 +244,7 @@ class FastGELU(CustomOp):
 
 
 @CustomOp.register("quick_gelu")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuickGELU(CustomOp):
     # https://github.com/huggingface/transformers/blob/main/src/transformers/activations.py#L90
     def __init__(self):
@@ -266,6 +274,7 @@ class QuickGELU(CustomOp):
 
 
 @CustomOp.register("relu2")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ReLUSquaredActivation(CustomOp):
     """
     Applies the relu^2 activation introduced in https://arxiv.org/abs/2109.08668v2
@@ -279,6 +288,7 @@ class ReLUSquaredActivation(CustomOp):
         return self.forward_native(x)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScaledActivation(nn.Module):
     """An activation function with post-scale parameters.
 

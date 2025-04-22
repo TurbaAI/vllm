@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -55,6 +56,7 @@ from .utils import (PPMissingLayer, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SolarMLP(nn.Module):
 
     def __init__(
@@ -93,6 +95,7 @@ class SolarMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SolarAttention(nn.Module):
 
     def __init__(
@@ -181,6 +184,7 @@ class SolarAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SolarDecoderLayer(nn.Module):
 
     def __init__(
@@ -258,6 +262,7 @@ class SolarDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SolarModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -361,6 +366,7 @@ class SolarModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SolarForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

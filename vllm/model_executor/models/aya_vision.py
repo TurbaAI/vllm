@@ -3,6 +3,7 @@
 from functools import cached_property
 from typing import (Iterable, Literal, Mapping, Optional, Sequence, Set, Tuple,
                     TypedDict, Union, cast)
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -37,6 +38,7 @@ from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
                     maybe_prefix, merge_multimodal_embeddings)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AyaVisionImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: torch.Tensor
@@ -51,6 +53,7 @@ class AyaVisionImagePixelInputs(TypedDict):
     """Shape: `(batch_size * num_images)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AyaVisionMultiModalProjector(nn.Module):
 
     def __init__(self, config: AyaVisionConfig):
@@ -106,6 +109,7 @@ class AyaVisionMultiModalProjector(nn.Module):
         return image_features
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AyaVisionProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self) -> AyaVisionConfig:
@@ -143,6 +147,7 @@ class AyaVisionProcessingInfo(BaseProcessingInfo):
         return num_blocks if num_blocks == 1 else num_blocks + 1
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AyaVisionDummyInputsBuilder(
         BaseDummyInputsBuilder[AyaVisionProcessingInfo]):
 
@@ -171,6 +176,7 @@ class AyaVisionDummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AyaVisionMultiModalProcessor(
         BaseMultiModalProcessor[AyaVisionProcessingInfo]):
 
@@ -286,6 +292,7 @@ def _get_layer_index(feature_layer_index: int, num_hidden_layers: int) -> int:
     AyaVisionMultiModalProcessor,
     info=AyaVisionProcessingInfo,
     dummy_inputs=AyaVisionDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AyaVisionForConditionalGeneration(nn.Module, SupportsMultiModal,
                                         SupportsPP):
 

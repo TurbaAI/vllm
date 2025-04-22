@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # yapf: disable
 import argparse
@@ -122,6 +123,7 @@ def optional_dict(val: str) -> Optional[dict[str, int]]:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineArgs:
     """Arguments for vLLM engine."""
     model: str = 'facebook/opt-125m'
@@ -1716,6 +1718,7 @@ class EngineArgs:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncEngineArgs(EngineArgs):
     """Arguments for asynchronous vLLM engine."""
     disable_log_requests: bool = False

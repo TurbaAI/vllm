@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 The Qwen team.
 # Copyright 2023 The vLLM team.
@@ -53,6 +54,7 @@ from .utils import (AutoWeightsLoader, init_vllm_registered_model,
 
 
 # # === Audio Inputs === #
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2AudioInputs(TypedDict):
     input_features: torch.Tensor
     """Shape: `(num_audios, num_mel_bins, 3000)`"""
@@ -64,6 +66,7 @@ class Qwen2AudioInputs(TypedDict):
 # === Audio Encoder === #
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2AudioMultiModalProjector(nn.Module):
 
     def __init__(self, audio_hidden_size: int, text_hidden_size: int):
@@ -82,6 +85,7 @@ def _get_feat_extract_output_lengths(input_lengths: torch.Tensor):
     return feat_lengths, output_lengths
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2AudioProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -111,6 +115,7 @@ class Qwen2AudioProcessingInfo(BaseProcessingInfo):
         return {"audio": None}
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2AudioDummyInputsBuilder(
         BaseDummyInputsBuilder[Qwen2AudioProcessingInfo]):
 
@@ -139,6 +144,7 @@ class Qwen2AudioDummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2AudioMultiModalProcessor(
         BaseMultiModalProcessor[Qwen2AudioProcessingInfo]):
 
@@ -240,6 +246,7 @@ class Qwen2AudioMultiModalProcessor(
     Qwen2AudioMultiModalProcessor,
     info=Qwen2AudioProcessingInfo,
     dummy_inputs=Qwen2AudioDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2AudioForConditionalGeneration(nn.Module, SupportsMultiModal,
                                          SupportsPP):
 

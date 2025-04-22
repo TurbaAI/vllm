@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections.abc import Iterable
 from functools import lru_cache, partial
@@ -10,6 +11,7 @@ from vllm.sampling_params import LogitsProcessor
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AllowedTokenIdsLogitsProcessor:
     """Logits processor for constraining generated tokens to a
     specific set of token ids."""

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import enum
 from enum import Enum
@@ -21,6 +22,7 @@ from vllm.model_executor.parameter import (ChannelQuantScaleParameter,
                                            RowvLLMParameter)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPTQConfig(QuantizationConfig):
     """Config class for GPTQ.
 
@@ -113,6 +115,7 @@ class GPTQConfig(QuantizationConfig):
         return get_linear_quant_method(self, layer, prefix, GPTQLinearMethod)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExllamaState(Enum):
 
     UNUSED = enum.auto()
@@ -120,6 +123,7 @@ class ExllamaState(Enum):
     READY = enum.auto()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPTQLinearMethod(LinearMethodBase):
     """Linear method for GPTQ.
 

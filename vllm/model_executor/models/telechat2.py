@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2023 The vLLM team.
 # Copyright 2022 EleutherAI and the HuggingFace Inc. team. All rights reserved.
@@ -33,6 +34,7 @@ from .utils import (AutoWeightsLoader, PPMissingLayer, WeightsMapper,
                     is_pp_missing_parameter)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TeleChat2Model(LlamaModel):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -107,6 +109,7 @@ class TeleChat2Model(LlamaModel):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TeleChat2ForCausalLM(LlamaForCausalLM):
 
     hf_to_vllm_mapper = WeightsMapper(

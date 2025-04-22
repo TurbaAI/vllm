@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import (TYPE_CHECKING, ClassVar, Dict, List, Literal, Optional,
                     Protocol, Type, Union, overload, runtime_checkable)
@@ -31,6 +32,7 @@ The output embeddings must be one of the following formats:
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsMultiModal(Protocol):
     """The interface required for all multi-modal models."""
 
@@ -96,6 +98,7 @@ class SupportsMultiModal(Protocol):
 # We can't use runtime_checkable with ClassVar for issubclass checks
 # so we need to treat the class as an instance and use isinstance instead
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _SupportsMultiModalType(Protocol):
     supports_multimodal: Literal[True]
 
@@ -121,6 +124,7 @@ def supports_multimodal(
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsLoRA(Protocol):
     """The interface required for all models that support LoRA."""
 
@@ -142,6 +146,7 @@ class SupportsLoRA(Protocol):
 # We can't use runtime_checkable with ClassVar for issubclass checks
 # so we need to treat the class as an instance and use isinstance instead
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _SupportsLoRAType(Protocol):
     supports_lora: Literal[True]
 
@@ -199,6 +204,7 @@ def _supports_lora(model: Union[Type[object], object]) -> bool:
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsPP(Protocol):
     """The interface required for all models that support pipeline parallel."""
 
@@ -236,6 +242,7 @@ class SupportsPP(Protocol):
 # We can't use runtime_checkable with ClassVar for issubclass checks
 # so we need to treat the class as an instance and use isinstance instead
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _SupportsPPType(Protocol):
     supports_pp: Literal[True]
 
@@ -314,6 +321,7 @@ def _supports_pp_inspect(model: Union[Type[object], object]) -> bool:
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HasInnerState(Protocol):
     """The interface required for all models that has inner state."""
 
@@ -326,6 +334,7 @@ class HasInnerState(Protocol):
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _HasInnerStateType(Protocol):
     has_inner_state: ClassVar[Literal[True]]
 
@@ -350,6 +359,7 @@ def has_inner_state(
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IsAttentionFree(Protocol):
     """The interface required for all models like Mamba that lack attention,
     but do have state whose size is constant wrt the number of tokens."""
@@ -363,6 +373,7 @@ class IsAttentionFree(Protocol):
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _IsAttentionFreeType(Protocol):
     is_attention_free: ClassVar[Literal[True]]
 
@@ -387,6 +398,7 @@ def is_attention_free(
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IsHybrid(Protocol):
     """The interface required for all models like Jamba that have both
     attention and mamba blocks, indicates that 
@@ -400,6 +412,7 @@ class IsHybrid(Protocol):
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _IsHybridType(Protocol):
     is_hybrid: ClassVar[Literal[True]]
 
@@ -424,11 +437,13 @@ def is_hybrid(
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HasNoOps(Protocol):
     has_noops: ClassVar[Literal[True]] = True
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _HasNoOpsType(Protocol):
     has_noops: ClassVar[Literal[True]]
 
@@ -453,6 +468,7 @@ def has_noops(
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsCrossEncoding(Protocol):
     """The interface required for all models that support cross encoding."""
 
@@ -486,6 +502,7 @@ def supports_cross_encoding(
     return is_pooling_model(model) and _supports_cross_encoding(model)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsQuant:
     """The interface required for all models that support quantization."""
 
@@ -517,6 +534,7 @@ class SupportsQuant:
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsTranscription(Protocol):
     """The interface required for all models that support transcription."""
 
@@ -544,6 +562,7 @@ def supports_transcription(
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsV0Only(Protocol):
     """Models with this interface are not compatible with V1 vLLM."""
 

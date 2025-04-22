@@ -2,6 +2,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, Optional, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 if TYPE_CHECKING:
     from vllm.v1.core.sched.output import SchedulerOutput
@@ -11,6 +12,7 @@ if TYPE_CHECKING:
     from vllm.v1.request import Request, RequestStatus
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerInterface(ABC):
 
     @abstractmethod

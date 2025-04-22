@@ -4,6 +4,7 @@ import re
 from functools import lru_cache
 from typing import (Dict, Iterable, List, Literal, Mapping, Optional, Tuple,
                     TypedDict, Union)
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 import scipy.signal
@@ -366,6 +367,7 @@ def get_navit_vision_model(layer_idx: int = -1, **kwargs):
     return vision_model
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi4MMImageEncoder(nn.Module):
     """Image embedding."""
 
@@ -661,12 +663,14 @@ class Phi4MMImageEncoder(nn.Module):
         return img_set_tensor
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi4MMAudioFeatureInputs(TypedDict):
     type: Literal["audio_features"]
     data: Tuple[NestedTensors]
     """Shape: `((batch_size, num_audios, 80, M), )"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi4MMAudioEmbeddingInputs(TypedDict):
     type: Literal["audio_embeds"]
     data: NestedTensors
@@ -736,6 +740,7 @@ def speechlib_mel(sample_rate, n_fft, n_mels, fmin=None, fmax=None):
     return matrix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LogFbankProcessor:
 
     def __init__(self):
@@ -1433,6 +1438,7 @@ def cat_with_pad(tensors, dim, padding_value=0):
     "image", get_max_phi4mm_image_tokens)
 @INPUT_REGISTRY.register_dummy_data(dummy_data_for_phi4mm)
 @INPUT_REGISTRY.register_input_processor(input_processor_for_phi4mm)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi4MMForCausalLM(nn.Module, SupportsLoRA, SupportsMultiModal,
                         SupportsV0Only):
     """

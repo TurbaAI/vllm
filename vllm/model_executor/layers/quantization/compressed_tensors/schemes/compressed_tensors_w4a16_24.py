@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Callable, List, Optional
 
@@ -23,6 +24,7 @@ W4A16SPARSE24_SUPPORTED_TYPES_MAP = {
 W4A16SPARSE24_SUPPORTED_BITS = list(W4A16SPARSE24_SUPPORTED_TYPES_MAP.keys())
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsW4A16Sparse24(CompressedTensorsScheme):
 
     def __init__(self,

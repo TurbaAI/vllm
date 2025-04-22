@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 from typing import Dict, Optional, Tuple
@@ -12,6 +13,7 @@ from vllm.worker.tpu_worker import TPUWorker
 from vllm.worker.worker_base import WorkerInput
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiStepTPUWorker(TPUWorker):
 
     def __init__(self, *args, **kwargs):

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -46,6 +47,7 @@ from .utils import (is_pp_missing_parameter,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoeMoE(nn.Module):
     """A tensor-parallel MoE implementation for Olmoe that shards each expert
     across all ranks.
@@ -95,6 +97,7 @@ class OlmoeMoE(nn.Module):
         return final_hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoeAttention(nn.Module):
 
     def __init__(
@@ -179,6 +182,7 @@ class OlmoeAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoeDecoderLayer(nn.Module):
 
     def __init__(
@@ -245,6 +249,7 @@ class OlmoeDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoeModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -309,6 +314,7 @@ class OlmoeModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoeForCausalLM(nn.Module, SupportsPP):
 
     fall_back_to_pt_during_load = False

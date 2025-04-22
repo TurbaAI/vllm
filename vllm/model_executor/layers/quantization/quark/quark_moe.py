@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Callable, Dict, Optional
 
@@ -19,6 +20,7 @@ logger = init_logger(__name__)
 __all__ = ["QuarkMoEMethod", "QuarkW8A8Fp8MoEMethod"]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuarkMoEMethod(FusedMoEMethodBase):
 
     @staticmethod
@@ -43,6 +45,7 @@ class QuarkMoEMethod(FusedMoEMethodBase):
             raise RuntimeError("Unsupported FusedMoe scheme")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuarkW8A8Fp8MoEMethod(QuarkMoEMethod):
 
     def __init__(self, weight_config: Dict[str, Any], input_config: Dict[str,

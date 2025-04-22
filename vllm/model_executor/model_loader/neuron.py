@@ -4,6 +4,7 @@ import copy
 import importlib
 import os
 from typing import Dict, List, Optional, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -38,6 +39,7 @@ _NEURON_SUPPORTED_MODELS: Dict[str, Tuple[str, str, str]] = {
 }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NeuronCausalLM(nn.Module):
 
     def __init__(self,

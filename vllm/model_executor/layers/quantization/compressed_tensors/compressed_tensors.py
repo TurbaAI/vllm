@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from contextlib import suppress
 from typing import Any, Dict, List, Literal, Optional, Tuple, cast
@@ -39,6 +40,7 @@ SPARSITY_CONFIG_NAME: Literal["sparsity_config"] = "sparsity_config"
 QUANTIZATION_SCHEME_MAP_TYPE = Dict[str, Optional[Dict[str, QuantizationArgs]]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsConfig(QuantizationConfig):
 
     def __init__(
@@ -535,6 +537,7 @@ class CompressedTensorsConfig(QuantizationConfig):
         return weight_quant.num_bits == input_quant.num_bits == 8
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsLinearMethod(LinearMethodBase):
 
     def __init__(self, quantization_config: CompressedTensorsConfig):
@@ -580,6 +583,7 @@ class CompressedTensorsLinearMethod(LinearMethodBase):
         return scheme.apply_weights(layer, x, bias=bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsKVCacheMethod(BaseKVCacheMethod):
     """
     Supports loading kv-cache scaling factors from compressed-tensors

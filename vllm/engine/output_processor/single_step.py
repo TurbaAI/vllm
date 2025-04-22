@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List
 
@@ -54,6 +55,7 @@ def single_step_process_prompt_logprob(
         seq_group.prompt_logprobs.extend(prompt_logprobs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SingleStepOutputProcessor(SequenceGroupOutputProcessor):
     """SequenceGroupOutputProcessor which handles "output processing" logic,
     which happens after the model returns generated token ids and before

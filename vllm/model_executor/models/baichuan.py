@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2022 EleutherAI and the HuggingFace Inc. team. All rights reserved.
 #
@@ -76,6 +77,7 @@ def _get_alibi_slopes(total_num_heads: int) -> torch.Tensor:
     return slopes
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaiChuanMLP(nn.Module):
 
     def __init__(
@@ -106,6 +108,7 @@ class BaiChuanMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaiChuanAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -192,6 +195,7 @@ class BaiChuanAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaiChuanDecoderLayer(nn.Module):
 
     def __init__(self,
@@ -252,6 +256,7 @@ class BaiChuanDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaiChuanModel(nn.Module):
 
     def __init__(
@@ -361,6 +366,7 @@ class BaiChuanModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaiChuanBaseForCausalLM(nn.Module, SupportsLoRA, SupportsPP,
                               SupportsQuant):
     packed_modules_mapping = {
@@ -451,6 +457,7 @@ class BaiChuanBaseForCausalLM(nn.Module, SupportsLoRA, SupportsPP,
         default_weight_loader(param, loaded_weight)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaichuanForCausalLM(BaiChuanBaseForCausalLM):
     """Baichuan 13B and Baichuan2 7B/13B.
     NOTE: the class name has a lower case 'c'.
@@ -468,6 +475,7 @@ class BaichuanForCausalLM(BaiChuanBaseForCausalLM):
                              position_embedding="ALIBI")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaiChuanForCausalLM(BaiChuanBaseForCausalLM):
     """Baichuan 7B.
     NOTE: the class name has an upper case 'C'.

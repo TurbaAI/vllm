@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from collections.abc import Iterable, Mapping, Sequence
@@ -42,11 +43,13 @@ from .utils import (AutoWeightsLoader, WeightsMapper, cast_overflow_tensors,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperAudioInputs(TypedDict):
     input_features: NestedTensors
     """Shape: `(batch_size, 128, M)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperPositionalEmbedding(nn.Embedding):
 
     def __init__(self, num_positions: int, embedding_dim: int):
@@ -56,6 +59,7 @@ class WhisperPositionalEmbedding(nn.Embedding):
         return self.weight[position_ids]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperAttention(nn.Module):
 
     def __init__(
@@ -144,6 +148,7 @@ class WhisperAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperCrossAttention(WhisperAttention):
 
     def __init__(
@@ -211,6 +216,7 @@ class WhisperCrossAttention(WhisperAttention):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperMLP(nn.Module):
 
     def __init__(
@@ -244,6 +250,7 @@ class WhisperMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperEncoderLayer(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -289,6 +296,7 @@ class WhisperEncoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperDecoderLayer(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -349,6 +357,7 @@ class WhisperDecoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperEncoder(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -400,6 +409,7 @@ class WhisperEncoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperDecoder(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -450,6 +460,7 @@ class WhisperDecoder(nn.Module):
         return self.embed_tokens(input_ids)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -519,6 +530,7 @@ class WhisperModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self) -> WhisperConfig:
@@ -542,6 +554,7 @@ class WhisperProcessingInfo(BaseProcessingInfo):
         return self.get_hf_config().max_source_positions
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperDummyInputsBuilder(BaseDummyInputsBuilder[WhisperProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -566,6 +579,7 @@ class WhisperDummyInputsBuilder(BaseDummyInputsBuilder[WhisperProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperMultiModalProcessor(
         EncDecMultiModalProcessor[WhisperProcessingInfo]):
 
@@ -636,6 +650,7 @@ class WhisperMultiModalProcessor(
 @MULTIMODAL_REGISTRY.register_processor(WhisperMultiModalProcessor,
                                         info=WhisperProcessingInfo,
                                         dummy_inputs=WhisperDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WhisperForConditionalGeneration(nn.Module, SupportsTranscription,
                                       SupportsMultiModal, SupportsV0Only):
     packed_modules_mapping = {

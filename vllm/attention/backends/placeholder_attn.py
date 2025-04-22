@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections import defaultdict
 from dataclasses import dataclass
@@ -22,6 +23,7 @@ from vllm.utils import async_tensor_h2d
 # lack attention.
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PlaceholderAttentionBackend(AttentionBackend):
     """Placeholder backend for when no attention is needed."""
 
@@ -71,6 +73,7 @@ class PlaceholderAttentionBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PlaceholderAttentionMetadata(AttentionMetadata):
     """Attention metadata for prefill and decode batched together."""
     # (batch_size,). The sequence length per sequence. Sequence length means
@@ -260,6 +263,7 @@ class PlaceholderAttentionMetadata(AttentionMetadata):
                 mask, sampled_token_ids[:num_queries])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PlaceholderAttentionMetadataBuilder(
         AttentionMetadataBuilder[PlaceholderAttentionMetadata]):
 
@@ -390,6 +394,7 @@ class PlaceholderAttentionMetadataBuilder(
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PlaceholderAttentionImpl(AttentionImpl):
 
     def __init__(self, *args, **kwargs) -> None:

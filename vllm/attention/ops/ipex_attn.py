@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Dict, List, Optional, Tuple
 
@@ -13,6 +14,7 @@ import torch
 from vllm import _custom_ops as ops
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _PagedAttention:
 
     @staticmethod
@@ -126,6 +128,7 @@ class _PagedAttention:
         ops.copy_blocks(key_caches, value_caches, src_to_dists)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _IPEXPagedAttention(_PagedAttention):
 
     @staticmethod

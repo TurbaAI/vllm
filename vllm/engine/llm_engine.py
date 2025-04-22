@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import copy
 import time
@@ -72,6 +73,7 @@ _R = TypeVar("_R", default=Any)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerOutputState:
     """Caches the scheduler outputs for a virtual engine. Used for Multi-Step"""
     seq_group_metadata_list: Optional[List[SequenceGroupMetadata]] = None
@@ -80,6 +82,7 @@ class SchedulerOutputState:
     last_output: Optional[SamplerOutput] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OutputData(NamedTuple):
     outputs: List[SamplerOutput]
     seq_group_metadata_list: List[SequenceGroupMetadata]
@@ -95,6 +98,7 @@ class OutputData(NamedTuple):
     skip: List[int]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerContext:
 
     def __init__(self, multi_step_stream_outputs: bool = False):
@@ -122,6 +126,7 @@ class SchedulerContext:
                        skip=[]))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LLMEngine:
     """An LLM engine that receives requests and generates texts.
 

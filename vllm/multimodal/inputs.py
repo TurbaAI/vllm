@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from collections import UserDict, defaultdict
@@ -88,6 +89,7 @@ The number of data items allowed per modality is restricted by
 
 
 @final
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalDataBuiltins(TypedDict, total=False):
     """Type annotations for modality types predefined by vLLM."""
 
@@ -366,6 +368,7 @@ class MultiModalSharedField(BaseMultiModalField):
         return batch[0]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalFieldConfig:
 
     @staticmethod
@@ -520,6 +523,7 @@ class MultiModalFieldConfig:
         return self.field.build_elems(self.modality, key, batch)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalKwargsItem(UserDict[str, MultiModalFieldElem]):
     """
     A collection of :class:`MultiModalFieldElem`
@@ -539,6 +543,7 @@ class MultiModalKwargsItem(UserDict[str, MultiModalFieldElem]):
 
 # NOTE: UserDict is for V0 compatibility.
 # V1 should access individual items via `get_item`.
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalKwargs(UserDict[str, NestedTensors]):
     """
     A dictionary that represents the keyword arguments to
@@ -747,6 +752,7 @@ A dictionary containing placeholder ranges for each modality.
 """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalInputs(TypedDict):
     """
     Represents the outputs of
@@ -779,6 +785,7 @@ class MultiModalInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalEncDecInputs(MultiModalInputs):
     """
     Represents the outputs of :class:`vllm.multimodal.EncDecMultiModalProcessor`

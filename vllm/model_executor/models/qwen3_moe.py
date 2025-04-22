@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 The Qwen team.
 # Copyright 2023 The vLLM team.
@@ -60,6 +61,7 @@ from .utils import (AutoWeightsLoader, extract_layer_index,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3MoeMLP(nn.Module):
 
     def __init__(
@@ -95,6 +97,7 @@ class Qwen3MoeMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3MoeSparseMoeBlock(nn.Module):
 
     def __init__(
@@ -144,6 +147,7 @@ class Qwen3MoeSparseMoeBlock(nn.Module):
         return final_hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3MoeAttention(nn.Module):
 
     def __init__(
@@ -239,6 +243,7 @@ class Qwen3MoeAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3MoeDecoderLayer(nn.Module):
 
     def __init__(
@@ -316,6 +321,7 @@ class Qwen3MoeDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3MoeModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -476,6 +482,7 @@ class Qwen3MoeModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3MoeForCausalLM(nn.Module, SupportsPP):
 
     fall_back_to_pt_during_load = False

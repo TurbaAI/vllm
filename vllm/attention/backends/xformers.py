@@ -2,6 +2,7 @@
 """Attention layer with xFormers and PagedAttention."""
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Type
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from xformers import ops as xops
@@ -24,6 +25,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XFormersBackend(AttentionBackend):
 
     @staticmethod
@@ -73,6 +75,7 @@ class XFormersBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XFormersMetadata(AttentionMetadata, PagedAttentionMetadata):
     """Metadata for XFormersbackend.
 
@@ -346,11 +349,13 @@ def _set_attn_bias(
         raise AttributeError(f"Invalid attention type {str(attn_type)}")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XFormersMetadataBuilder(CommonMetadataBuilder[XFormersMetadata]):
 
     _metadata_cls = XFormersMetadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XFormersImpl(AttentionImpl[XFormersMetadata]):
     """
     If the input tensors contain prompt tokens, the layout is as follows:

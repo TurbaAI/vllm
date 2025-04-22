@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from collections import UserDict
@@ -23,6 +24,7 @@ _T = TypeVar("_T")
 _I = TypeVar("_I")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModalityDataItems(ABC, Generic[_T, _I]):
     """
     Represents data items for a modality in :class:`MultiModalDataItems`.
@@ -74,6 +76,7 @@ class ModalityDataItems(ABC, Generic[_T, _I]):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ProcessorBatchItems(ModalityDataItems[Sequence[_T], _T]):
     """Base class for data items that are arranged in a list."""
 
@@ -90,6 +93,7 @@ class ProcessorBatchItems(ModalityDataItems[Sequence[_T], _T]):
         return {}
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EmbeddingItems(ModalityDataItems[Union[torch.Tensor, list[torch.Tensor]],
                                        torch.Tensor]):
     """
@@ -113,6 +117,7 @@ class EmbeddingItems(ModalityDataItems[Union[torch.Tensor, list[torch.Tensor]],
         return len(self.get(item_idx))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DictEmbeddingItems(ModalityDataItems[Mapping[str, torch.Tensor],
                                            Mapping[str, torch.Tensor]]):
     """
@@ -171,6 +176,7 @@ class DictEmbeddingItems(ModalityDataItems[Mapping[str, torch.Tensor],
         return self.data
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AudioProcessorItems(ProcessorBatchItems[HfAudioItem]):
 
     def __init__(self, data: Sequence[HfAudioItem]) -> None:
@@ -181,17 +187,20 @@ class AudioProcessorItems(ProcessorBatchItems[HfAudioItem]):
         return len(audio)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AudioEmbeddingItems(EmbeddingItems):
 
     def __init__(self, data: Union[torch.Tensor, list[torch.Tensor]]) -> None:
         super().__init__(data, "audio")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ImageSize(NamedTuple):
     width: int
     height: int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ImageProcessorItems(ProcessorBatchItems[HfImageItem]):
 
     def __init__(self, data: Sequence[HfImageItem]) -> None:
@@ -209,12 +218,14 @@ class ImageProcessorItems(ProcessorBatchItems[HfImageItem]):
         assert_never(image)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ImageEmbeddingItems(EmbeddingItems):
 
     def __init__(self, data: Union[torch.Tensor, list[torch.Tensor]]) -> None:
         super().__init__(data, "image")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VideoProcessorItems(ProcessorBatchItems[HfVideoItem]):
 
     def __init__(self, data: Sequence[HfVideoItem]) -> None:
@@ -235,6 +246,7 @@ class VideoProcessorItems(ProcessorBatchItems[HfVideoItem]):
         assert_never(image)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VideoEmbeddingItems(EmbeddingItems):
 
     def __init__(self, data: Union[torch.Tensor, list[torch.Tensor]]) -> None:
@@ -244,6 +256,7 @@ class VideoEmbeddingItems(EmbeddingItems):
 _D = TypeVar("_D", bound=ModalityDataItems[Any, Any])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalDataItems(UserDict[str, ModalityDataItems[Any, Any]]):
     """
     As :data:`~vllm.multimodal.inputs.MultiModalDataDict`, but normalized
@@ -298,6 +311,7 @@ ModalityDataParser: TypeAlias = Callable[[ModalityData[Any]],
                                          Optional[ModalityDataItems[Any, Any]]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalDataParser:
     """
     Parses :data:`~vllm.multimodal.inputs.MultiModalDataDict` into

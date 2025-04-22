@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """A Neuron worker class."""
 from typing import List, Optional, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.distributed
@@ -17,6 +18,7 @@ from vllm.worker.worker_base import (LocalOrDistributedWorkerBase,
                                      WorkerInput)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NeuronWorker(LoRANotSupportedWorkerBase, LocalOrDistributedWorkerBase):
     """A worker class that executes the model on a group of neuron cores.
     """

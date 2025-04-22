@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from fractions import Fraction
 from typing import Callable, Optional, Union
@@ -19,6 +20,7 @@ __all__ = [
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BasevLLMParameter(Parameter):
     """
     Base parameter for vLLM linear layers. Extends the torch.nn.parameter
@@ -81,6 +83,7 @@ class BasevLLMParameter(Parameter):
         self._assert_and_load(loaded_weight)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _ColumnvLLMParameter(BasevLLMParameter):
     """
     Private class defining weight loading functionality 
@@ -155,6 +158,7 @@ class _ColumnvLLMParameter(BasevLLMParameter):
         param_data.copy_(loaded_weight)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RowvLLMParameter(BasevLLMParameter):
     """
     Parameter class defining weight_loading functionality
@@ -184,6 +188,7 @@ class RowvLLMParameter(BasevLLMParameter):
         self.data.copy_(loaded_weight)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelWeightParameter(_ColumnvLLMParameter, RowvLLMParameter):
     """
     Parameter class for linear layer weights. Uses both column and
@@ -192,6 +197,7 @@ class ModelWeightParameter(_ColumnvLLMParameter, RowvLLMParameter):
     pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GroupQuantScaleParameter(_ColumnvLLMParameter, RowvLLMParameter):
     """
     Parameter class for weight scales loaded for weights with
@@ -200,6 +206,7 @@ class GroupQuantScaleParameter(_ColumnvLLMParameter, RowvLLMParameter):
     pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChannelQuantScaleParameter(_ColumnvLLMParameter):
     """
     Parameter class for weight scales loaded for weights with
@@ -208,6 +215,7 @@ class ChannelQuantScaleParameter(_ColumnvLLMParameter):
     pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PerTensorScaleParameter(BasevLLMParameter):
     """
     Parameter class for scales where the number of scales is
@@ -271,6 +279,7 @@ class PerTensorScaleParameter(BasevLLMParameter):
         param_data.copy_(loaded_weight)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PackedColumnParameter(_ColumnvLLMParameter):
     """
     Parameter for model parameters which are packed on disk
@@ -308,6 +317,7 @@ class PackedColumnParameter(_ColumnvLLMParameter):
             marlin_tile_size=self.marlin_tile_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PackedvLLMParameter(ModelWeightParameter):
     """
     Parameter for model weights which are packed on disk.
@@ -349,6 +359,7 @@ class PackedvLLMParameter(ModelWeightParameter):
             marlin_tile_size=self.marlin_tile_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockQuantScaleParameter(_ColumnvLLMParameter, RowvLLMParameter):
     """
     Parameter class for weight scales loaded for weights with

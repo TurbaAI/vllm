@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List, Optional, Set, Tuple
 
@@ -12,6 +13,7 @@ from vllm.spec_decode.proposer_worker_base import ProposerWorkerBase
 from vllm.spec_decode.util import sampler_output_to_torch
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Top1Proposer(SpeculativeProposer):
     """Helper class which separates out sequences which would exceed the max
     model length when speculated upon.

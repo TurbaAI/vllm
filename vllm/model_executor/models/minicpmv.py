@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -73,6 +74,7 @@ from .utils import (AutoWeightsLoader, flatten_bn, maybe_prefix,
 _MAX_FRAMES_PER_VIDEO = 16
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: list[torch.Tensor]
@@ -94,6 +96,7 @@ class MiniCPMVImagePixelInputs(TypedDict):
     """Shape: `(batch_size * num_images)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     image_embeds: Union[torch.Tensor, list[torch.Tensor]]
@@ -111,6 +114,7 @@ MiniCPMVImageInputs = Union[MiniCPMVImagePixelInputs,
 DEFAULT_LN = partial(nn.LayerNorm, eps=1e-6)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Resampler2_5(BaseResampler):
 
     def __init__(self,
@@ -238,6 +242,7 @@ def _minicpmv_field_config(hf_inputs: Mapping[str, torch.Tensor]):
     )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVImageEmbeddingItems(DictEmbeddingItems):
 
     def __init__(
@@ -260,6 +265,7 @@ class MiniCPMVImageEmbeddingItems(DictEmbeddingItems):
         return ImageSize(width=image_size[0], height=image_size[1])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVVideoEmbeddingItems(DictEmbeddingItems):
 
     def __init__(
@@ -285,6 +291,7 @@ class MiniCPMVVideoEmbeddingItems(DictEmbeddingItems):
         return len(self.get(index)["video_image_sizes"])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVMultiModalDataParser(MultiModalDataParser):
 
     def _parse_image_data(
@@ -312,6 +319,7 @@ class MiniCPMVMultiModalDataParser(MultiModalDataParser):
         return super()._parse_video_data(data)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVProcessingInfo(BaseProcessingInfo):
     image_pattern = "(<image>./</image>)"
     video_pattern = "(<video>./</video>)"
@@ -470,6 +478,7 @@ _I = TypeVar("_I",
              default=MiniCPMVProcessingInfo)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVDummyInputsBuilder(BaseDummyInputsBuilder[_I]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -509,6 +518,7 @@ class MiniCPMVDummyInputsBuilder(BaseDummyInputsBuilder[_I]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVMultiModalProcessor(BaseMultiModalProcessor[_I]):
 
     def _get_data_parser(self) -> MultiModalDataParser:
@@ -720,6 +730,7 @@ class MiniCPMVMultiModalProcessor(BaseMultiModalProcessor[_I]):
         return _minicpmv_field_config(hf_inputs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMVBaseModel(nn.Module, SupportsMultiModal, SupportsPP):
     """
     The abstract class of MiniCPMV can only be inherited, but cannot be
@@ -994,6 +1005,7 @@ class MiniCPMVBaseModel(nn.Module, SupportsMultiModal, SupportsPP):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMV2_0(MiniCPMVBaseModel):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -1080,6 +1092,7 @@ class MiniCPMV2_0(MiniCPMVBaseModel):
         return torch.vstack(res)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMV2_5(MiniCPMVBaseModel, SupportsLoRA):
     packed_modules_mapping = {
         "qkv_proj": [
@@ -1170,6 +1183,7 @@ class MiniCPMV2_5(MiniCPMVBaseModel, SupportsLoRA):
         return self.resampler(vision_embedding, tgt_sizes)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMV2_6(MiniCPMVBaseModel, SupportsLoRA):
     packed_modules_mapping = {
         "qkv_proj": [
@@ -1272,6 +1286,7 @@ _SUPPORT_VERSION = {
     MiniCPMVMultiModalProcessor,
     info=MiniCPMVProcessingInfo,
     dummy_inputs=MiniCPMVDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMV(MiniCPMVBaseModel, SupportsMultiModal, SupportsLoRA):
     """
     Different versions of MiniCPMV use different visual encoders and LLMs,

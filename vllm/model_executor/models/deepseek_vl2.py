@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://github.com/deepseek-ai/DeepSeek-VL2/blob/faf18023f24b962b32d9f0a2d89e402a8d383a78/deepseek_vl2/models/modeling_deepseek_vl_v2.py
 """Inference-only Deepseek-VL2 model compatible with HuggingFace weights."""
@@ -45,6 +46,7 @@ from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
 _IMAGE_TOKEN = "<image>"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekVL2ImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: Union[torch.Tensor, List[torch.Tensor]]
@@ -57,6 +59,7 @@ class DeepseekVL2ImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekVL2VImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: Union[torch.Tensor, List[torch.Tensor]]
@@ -70,6 +73,7 @@ DeepseekVL2ImageInputs = Union[DeepseekVL2ImagePixelInputs,
                                DeepseekVL2VImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MlpProjector(nn.Module):
 
     def __init__(self, cfg: MlpProjectorConfig):
@@ -125,6 +129,7 @@ class MlpProjector(nn.Module):
         return self.layers(x)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekVL2ProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -169,6 +174,7 @@ class DeepseekVL2ProcessingInfo(BaseProcessingInfo):
         return ImageSize(width=width, height=height)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekVL2DummyInputsBuilder(
         BaseDummyInputsBuilder[DeepseekVL2ProcessingInfo]):
 
@@ -197,6 +203,7 @@ class DeepseekVL2DummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekVL2MultiModalProcessor(
         BaseMultiModalProcessor[DeepseekVL2ProcessingInfo]):
 
@@ -306,6 +313,7 @@ class DeepseekVL2MultiModalProcessor(
     DeepseekVL2MultiModalProcessor,
     info=DeepseekVL2ProcessingInfo,
     dummy_inputs=DeepseekVL2DummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekVLV2ForCausalLM(nn.Module, SupportsMultiModal, SupportsPP):
 
     hf_to_vllm_mapper = WeightsMapper(orig_to_new_prefix={

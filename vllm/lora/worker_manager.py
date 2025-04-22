@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from contextlib import contextmanager
 from typing import Any, Dict, List, Literal, Optional, Set, Type, Union
@@ -21,6 +22,7 @@ from vllm.lora.utils import get_adapter_absolute_path
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WorkerLoRAManager(AbstractWorkerManager):
     """WorkerLoRAManager that manages LoRA models on the worker side.
 
@@ -188,6 +190,7 @@ class WorkerLoRAManager(AbstractWorkerManager):
         return list_adapters_worker(self._adapter_manager.list_adapters)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LRUCacheWorkerLoRAManager(WorkerLoRAManager):
     """WorkerLoRAManager that manages LoRA models on the worker side.
 

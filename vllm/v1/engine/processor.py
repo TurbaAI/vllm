@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from collections.abc import Mapping, Sequence
@@ -26,6 +27,7 @@ from vllm.v1.structured_output.backend_xgrammar import (
     validate_xgrammar_grammar)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Processor:
 
     def __init__(

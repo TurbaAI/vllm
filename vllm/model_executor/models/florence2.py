@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from collections import OrderedDict
@@ -36,6 +37,7 @@ from .interfaces import (MultiModalEmbeddings, SupportsMultiModal,
 from .utils import AutoWeightsLoader, flatten_bn, merge_multimodal_embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Florence2ImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: torch.Tensor
@@ -44,6 +46,7 @@ class Florence2ImagePixelInputs(TypedDict):
 
 # ViT implementation are all copied from
 # https://huggingface.co/microsoft/Florence-2-base/blob/main/modeling_florence2.py
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LearnedAbsolutePositionEmbedding2D(nn.Module):
     """
     This module learns positional embeddings up to a fixed maximum size.
@@ -83,6 +86,7 @@ class LearnedAbsolutePositionEmbedding2D(nn.Module):
         return pos
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PositionalEmbeddingCosine1D(nn.Module):
     """
     This class implements a very simple positional encoding. It follows closely
@@ -139,6 +143,7 @@ class PositionalEmbeddingCosine1D(nn.Module):
         return pos_embeds
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MySequential(nn.Sequential):
 
     def forward(self, *inputs):
@@ -150,6 +155,7 @@ class MySequential(nn.Sequential):
         return inputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PreNorm(nn.Module):
 
     def __init__(self, norm, fn):
@@ -169,6 +175,7 @@ class PreNorm(nn.Module):
         return x, size
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mlp(nn.Module):
 
     def __init__(
@@ -190,6 +197,7 @@ class Mlp(nn.Module):
         return self.net(x), size
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DepthWiseConv2d(nn.Module):
 
     def __init__(
@@ -220,6 +228,7 @@ class DepthWiseConv2d(nn.Module):
         return x, size
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConvEmbed(nn.Module):
     """ Image to Patch Embedding
     """
@@ -263,6 +272,7 @@ class ConvEmbed(nn.Module):
         return x, (H, W)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChannelAttention(nn.Module):
 
     def __init__(self, dim, groups=8, qkv_bias=True):
@@ -288,6 +298,7 @@ class ChannelAttention(nn.Module):
         return x, size
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChannelBlock(nn.Module):
 
     def __init__(self,
@@ -347,6 +358,7 @@ def window_reverse(windows, batch_size: int, window_size: int, H: int, W: int):
     return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WindowAttention(nn.Module):
 
     def __init__(self, dim, num_heads, window_size, qkv_bias=True):
@@ -407,6 +419,7 @@ class WindowAttention(nn.Module):
         return x, size
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpatialBlock(nn.Module):
 
     def __init__(self,
@@ -448,6 +461,7 @@ class SpatialBlock(nn.Module):
         return x, size
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DaViT(nn.Module):
 
     def __init__(
@@ -583,6 +597,7 @@ class DaViT(nn.Module):
 
 
 # Language backbone and processor implementation
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Florence2LanguageModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -653,6 +668,7 @@ class Florence2LanguageModel(nn.Module):
         return decoder_outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Florence2LanguageForConditionalGeneration(nn.Module, SupportsV0Only):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -754,6 +770,7 @@ class Florence2LanguageForConditionalGeneration(nn.Module, SupportsV0Only):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Florence2ProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -770,6 +787,7 @@ class Florence2ProcessingInfo(BaseProcessingInfo):
         return processor_config["image_seq_length"]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Florence2DummyInputsBuilder(
         BaseDummyInputsBuilder[Florence2ProcessingInfo]):
 
@@ -793,6 +811,7 @@ class Florence2DummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Florence2MultiModalProcessor(
         EncDecMultiModalProcessor[Florence2ProcessingInfo]):
 
@@ -879,6 +898,7 @@ class Florence2MultiModalProcessor(
     Florence2MultiModalProcessor,
     info=Florence2ProcessingInfo,
     dummy_inputs=Florence2DummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Florence2ForConditionalGeneration(nn.Module, SupportsMultiModal,
                                         SupportsV0Only):
 

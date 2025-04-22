@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 import sys
@@ -16,6 +17,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TorchCompileWrapperWithCustomDispatcher:
     """
     A wrapper class for torch.compile, with a custom dispatch logic.

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from itertools import groupby
 from pathlib import Path
@@ -26,6 +27,7 @@ if TYPE_CHECKING:
     from .inputs import MultiModalKwargs, MultiModalPlaceholderDict
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MediaConnector:
 
     def __init__(

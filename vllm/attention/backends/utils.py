@@ -4,6 +4,7 @@ from collections import defaultdict
 from contextlib import contextmanager
 from itertools import accumulate
 from typing import TYPE_CHECKING, Any, Dict, List, Tuple, Type, TypeVar, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 import torch
@@ -121,6 +122,7 @@ def compute_slot_mapping(is_profile_run: bool, slot_mapping: List[int],
 TAttentionMetadata = TypeVar("TAttentionMetadata", bound='AttentionMetadata')
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CommonMetadataBuilder(AttentionMetadataBuilder[TAttentionMetadata]):
 
     _metadata_cls: Type[TAttentionMetadata]
@@ -285,6 +287,7 @@ class CommonMetadataBuilder(AttentionMetadataBuilder[TAttentionMetadata]):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CommonAttentionState(AttentionState):
 
     def __init__(self, runner: "ModelRunnerBase"):

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://www.modelscope.cn/models/TeleAI/TeleChat2-3B/resolve/master/configuration_telechat2.py
 """ Telechat configuration compatible with LlamaConfig. """
@@ -6,6 +7,7 @@
 from transformers.configuration_utils import PretrainedConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Telechat2Config(PretrainedConfig):
 
     model_type = "telechat"

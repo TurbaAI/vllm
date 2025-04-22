@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 import argparse
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import vllm.entrypoints.cli.benchmark.latency
 import vllm.entrypoints.cli.benchmark.serve
@@ -14,6 +15,7 @@ BENCHMARK_CMD_MODULES = [
 ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BenchmarkSubcommand(CLISubcommand):
     """ The `bench` subcommand for the vLLM CLI. """
 

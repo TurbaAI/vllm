@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import functools
 import struct
@@ -8,6 +9,7 @@ from typing import Optional, Union
 
 
 # Mirrors enum in `core/scalar_type.hpp`
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NanRepr(Enum):
     NONE = 0  # nans are not supported
     IEEE_754 = 1  # nans are: Exp all 1s, mantissa not all 0s
@@ -308,6 +310,7 @@ class ScalarType:
 #  - if bias is not present it means its zero
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class scalar_types:
     int4 = ScalarType.int_(4, None)
     uint4 = ScalarType.uint(4, None)

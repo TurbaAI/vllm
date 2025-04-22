@@ -26,6 +26,7 @@ from .pass_manager import PostGradPassManager
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompilerManager:
     """
     A manager to manage the compilation process, including
@@ -151,6 +152,7 @@ class CompilerManager:
 
 
 @dataclasses.dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SplitItem:
     submod_name: str
     graph_id: int
@@ -212,6 +214,7 @@ global_graph_pool = None
 compilation_start_time = 0.0
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PiecewiseCompileInterpreter(torch.fx.Interpreter):
     """Code adapted from `torch.fx.passes.shape_prop.ShapeProp`.
     It runs the given graph with fake inputs, and compile some
@@ -277,6 +280,7 @@ class PiecewiseCompileInterpreter(torch.fx.Interpreter):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VllmBackend:
     """The compilation backend for `torch.compile` with vLLM.
     It is used for compilation level of `CompilationLevel.PIECEWISE`,
@@ -465,6 +469,7 @@ class VllmBackend:
             src = src.replace("<lambda>", "GraphModule")
             with open(graph_path, "w") as f:
                 f.write(src)
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
             logger.debug("Computation graph saved to %s", graph_path)
 
@@ -518,6 +523,7 @@ class VllmBackend:
 
 
 @dataclasses.dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConcreteSizeEntry:
     runtime_shape: int
     need_to_compile: bool  # the size is in compile_sizes
@@ -534,6 +540,7 @@ class ConcreteSizeEntry:
     input_addresses: Optional[List[int]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PiecewiseBackend:
 
     def __init__(self, graph: fx.GraphModule, vllm_config: VllmConfig,

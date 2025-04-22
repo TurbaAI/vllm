@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 ###############################################################################
 # Copyright (C) 2025 Habana Labs, Ltd. an Intel Company
@@ -16,6 +17,7 @@ from vllm.worker.hpu_worker import HPUWorker
 from vllm.worker.worker_base import WorkerInput
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiStepHPUWorker(HPUWorker):
 
     def __init__(self, *args, **kwargs):

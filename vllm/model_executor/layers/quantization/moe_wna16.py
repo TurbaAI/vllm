@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Callable, Dict, List, Optional
 
@@ -17,6 +18,7 @@ from vllm.model_executor.utils import set_weight_attrs
 from vllm.platforms import current_platform
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MoeWNA16Config(QuantizationConfig):
     """Config class for MOE WNA16 (W8A16/W4A16) quantization."""
 
@@ -166,6 +168,7 @@ def is_layer_skipped_quant(prefix: str, modules_to_not_convert: List[str]):
     return any(module_name in prefix for module_name in modules_to_not_convert)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MoeWNA16Method(FusedMoEMethodBase):
     """Linear method for MOE WNA16 (W8A16/W4A16) quantization.
 

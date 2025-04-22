@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from collections.abc import Sequence
@@ -15,6 +16,7 @@ from vllm.utils import import_from_path, is_list_of
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ToolParser:
     """
     Abstract ToolParser class that should not be used directly. Provided
@@ -79,6 +81,7 @@ class ToolParser:
             "implemented!")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ToolParserManager:
     tool_parsers: dict[str, type] = {}
 

@@ -6,6 +6,7 @@ This implementation is a shim wrapper on two APIs exposed by `kv_connector`:
 2. `recv_kv_caches_and_hidden_states
 """
 from typing import TYPE_CHECKING, List, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 if TYPE_CHECKING:
     from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata
@@ -21,6 +22,7 @@ from vllm.sequence import IntermediateTensors
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVTransferAgent:
     """
     A class designated for distributed KV transfer

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import base64
 from io import BytesIO
@@ -22,6 +23,7 @@ if TYPE_CHECKING:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ImagePlugin(MultiModalPlugin):
     """Plugin for image data."""
 
@@ -100,6 +102,7 @@ def rescale_image_size(image: Image.Image,
     return image
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ImageMediaIO(MediaIO[Image.Image]):
 
     def __init__(self, *, image_mode: str = "RGB") -> None:
@@ -136,6 +139,7 @@ class ImageMediaIO(MediaIO[Image.Image]):
         return base64.b64encode(data).decode('utf-8')
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ImageEmbeddingMediaIO(MediaIO[torch.Tensor]):
 
     def __init__(self) -> None:

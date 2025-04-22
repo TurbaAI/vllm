@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.jit
@@ -7,6 +8,7 @@ from vllm.model_executor.layers.spec_decode_base_sampler import (
     SpecDecodeDeterministicBaseSampler)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TypicalAcceptanceSampler(SpecDecodeDeterministicBaseSampler):
     """Apply typical acceptance sampling as described in section 3.3.1 in 
         "MEDUSA: Simple LLM Inference Acceleration Framework with 

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copied from
 # https://huggingface.co/mosaicml/mpt-7b/blob/main/configuration_mpt.py
@@ -33,6 +34,7 @@ init_config_defaults: Dict = {
 }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPTConfig(PretrainedConfig):
     model_type = 'mpt'
     attribute_map = {

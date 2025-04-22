@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Any, Optional
@@ -20,6 +21,7 @@ from vllm.v1.attention.backends.mla.common import (MLACommonBackend,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLABackend(MLACommonBackend):
 
     @staticmethod
@@ -40,16 +42,19 @@ class FlashMLABackend(MLACommonBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLADecodeMetadata(MLACommonDecodeMetadata):
     tile_scheduler_metadata: tuple[torch.Tensor, torch.Tensor]
     num_splits: torch.Tensor
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLAMetadata(MLACommonMetadata[FlashMLADecodeMetadata]):
     pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLAMetadataBuilder(MLACommonMetadataBuilder[FlashMLAMetadata]):
 
     def __init__(self, runner):
@@ -77,6 +82,7 @@ class FlashMLAMetadataBuilder(MLACommonMetadataBuilder[FlashMLAMetadata]):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLAImpl(MLACommonImpl[FlashMLAMetadata]):
 
     def __init__(

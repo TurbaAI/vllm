@@ -3,6 +3,7 @@
 It avoids the need to compile a separate shared library, and is
 convenient for use when we just need to call a few functions.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import ctypes
 from dataclasses import dataclass
@@ -24,11 +25,13 @@ cudaError_t = ctypes.c_int
 cudaMemcpyKind = ctypes.c_int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class cudaIpcMemHandle_t(ctypes.Structure):
     _fields_ = [("internal", ctypes.c_byte * 128)]
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Function:
     name: str
     restype: Any
@@ -61,6 +64,7 @@ def find_loaded_library(lib_name) -> Optional[str]:
     return path
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CudaRTLibrary:
     exported_functions = [
         # ​cudaError_t cudaSetDevice ( int  device )

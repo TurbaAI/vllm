@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/lm-sys/FastChat/blob/168ccc29d3f7edc50823016105c024fe2282732a/fastchat/protocol/openai_api_protocol.py
@@ -42,6 +43,7 @@ assert _LONG_INFO.min == _MOCK_LONG_INFO.min
 assert _LONG_INFO.max == _MOCK_LONG_INFO.max
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OpenAIBaseModel(BaseModel):
     # OpenAI API does allow extra fields
     model_config = ConfigDict(extra="allow")
@@ -75,6 +77,7 @@ class OpenAIBaseModel(BaseModel):
         return result
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ErrorResponse(OpenAIBaseModel):
     object: str = "error"
     message: str
@@ -83,6 +86,7 @@ class ErrorResponse(OpenAIBaseModel):
     code: int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelPermission(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"modelperm-{random_uuid()}")
     object: str = "model_permission"
@@ -98,6 +102,7 @@ class ModelPermission(OpenAIBaseModel):
     is_blocking: bool = False
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelCard(OpenAIBaseModel):
     id: str
     object: str = "model"
@@ -109,15 +114,18 @@ class ModelCard(OpenAIBaseModel):
     permission: list[ModelPermission] = Field(default_factory=list)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelList(OpenAIBaseModel):
     object: str = "list"
     data: list[ModelCard] = Field(default_factory=list)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptTokenUsageInfo(OpenAIBaseModel):
     cached_tokens: Optional[int] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UsageInfo(OpenAIBaseModel):
     prompt_tokens: int = 0
     total_tokens: int = 0
@@ -125,11 +133,13 @@ class UsageInfo(OpenAIBaseModel):
     prompt_tokens_details: Optional[PromptTokenUsageInfo] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestResponseMetadata(BaseModel):
     request_id: str
     final_usage_info: Optional[UsageInfo] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JsonSchemaResponseFormat(OpenAIBaseModel):
     name: str
     description: Optional[str] = None
@@ -139,37 +149,44 @@ class JsonSchemaResponseFormat(OpenAIBaseModel):
     strict: Optional[bool] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ResponseFormat(OpenAIBaseModel):
     # type must be "json_schema", "json_object" or "text"
     type: Literal["text", "json_object", "json_schema"]
     json_schema: Optional[JsonSchemaResponseFormat] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StreamOptions(OpenAIBaseModel):
     include_usage: Optional[bool] = True
     continuous_usage_stats: Optional[bool] = False
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FunctionDefinition(OpenAIBaseModel):
     name: str
     description: Optional[str] = None
     parameters: Optional[dict[str, Any]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionToolsParam(OpenAIBaseModel):
     type: Literal["function"] = "function"
     function: FunctionDefinition
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionNamedFunction(OpenAIBaseModel):
     name: str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionNamedToolChoiceParam(OpenAIBaseModel):
     function: ChatCompletionNamedFunction
     type: Literal["function"] = "function"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LogitsProcessorConstructor(BaseModel):
     qualname: str
     args: Optional[list[Any]] = None
@@ -210,6 +227,7 @@ def get_logits_processors(processors: Optional[LogitsProcessors],
     return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionRequest(OpenAIBaseModel):
     # Ordered by official OpenAI API documentation
     # https://platform.openai.com/docs/api-reference/chat/create
@@ -696,6 +714,7 @@ class ChatCompletionRequest(OpenAIBaseModel):
         return data
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompletionRequest(OpenAIBaseModel):
     # Ordered by official OpenAI API documentation
     # https://platform.openai.com/docs/api-reference/completions/create
@@ -974,6 +993,7 @@ class CompletionRequest(OpenAIBaseModel):
         return data
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EmbeddingCompletionRequest(OpenAIBaseModel):
     # Ordered by official OpenAI API documentation
     # https://platform.openai.com/docs/api-reference/embeddings
@@ -1010,6 +1030,7 @@ class EmbeddingCompletionRequest(OpenAIBaseModel):
                              additional_data=self.additional_data)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EmbeddingChatRequest(OpenAIBaseModel):
     model: Optional[str] = None
     messages: list[ChatCompletionMessageParam]
@@ -1080,6 +1101,7 @@ PoolingChatRequest = EmbeddingChatRequest
 PoolingRequest = Union[PoolingCompletionRequest, PoolingChatRequest]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScoreRequest(OpenAIBaseModel):
     model: Optional[str] = None
     text_1: Union[list[str], str]
@@ -1105,6 +1127,7 @@ class ScoreRequest(OpenAIBaseModel):
         return PoolingParams(additional_data=self.additional_data)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RerankRequest(OpenAIBaseModel):
     model: Optional[str] = None
     query: str
@@ -1131,20 +1154,24 @@ class RerankRequest(OpenAIBaseModel):
         return PoolingParams(additional_data=self.additional_data)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RerankDocument(BaseModel):
     text: str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RerankResult(BaseModel):
     index: int
     document: RerankDocument
     relevance_score: float
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RerankUsage(BaseModel):
     total_tokens: int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RerankResponse(OpenAIBaseModel):
     id: str
     model: str
@@ -1152,6 +1179,7 @@ class RerankResponse(OpenAIBaseModel):
     results: list[RerankResult]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompletionLogProbs(OpenAIBaseModel):
     text_offset: list[int] = Field(default_factory=list)
     token_logprobs: list[Optional[float]] = Field(default_factory=list)
@@ -1160,6 +1188,7 @@ class CompletionLogProbs(OpenAIBaseModel):
                                      float]]] = Field(default_factory=list)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompletionResponseChoice(OpenAIBaseModel):
     index: int
     text: str
@@ -1175,6 +1204,7 @@ class CompletionResponseChoice(OpenAIBaseModel):
     prompt_logprobs: Optional[list[Optional[dict[int, Logprob]]]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompletionResponse(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"cmpl-{random_uuid()}")
     object: str = "text_completion"
@@ -1184,6 +1214,7 @@ class CompletionResponse(OpenAIBaseModel):
     usage: UsageInfo
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompletionResponseStreamChoice(OpenAIBaseModel):
     index: int
     text: str
@@ -1198,6 +1229,7 @@ class CompletionResponseStreamChoice(OpenAIBaseModel):
     )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompletionStreamResponse(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"cmpl-{random_uuid()}")
     object: str = "text_completion"
@@ -1207,12 +1239,14 @@ class CompletionStreamResponse(OpenAIBaseModel):
     usage: Optional[UsageInfo] = Field(default=None)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EmbeddingResponseData(OpenAIBaseModel):
     index: int
     object: str = "embedding"
     embedding: Union[list[float], str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EmbeddingResponse(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"embd-{random_uuid()}")
     object: str = "list"
@@ -1222,12 +1256,14 @@ class EmbeddingResponse(OpenAIBaseModel):
     usage: UsageInfo
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingResponseData(OpenAIBaseModel):
     index: int
     object: str = "pooling"
     data: Union[list[list[float]], list[float], str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingResponse(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"pool-{random_uuid()}")
     object: str = "list"
@@ -1237,12 +1273,14 @@ class PoolingResponse(OpenAIBaseModel):
     usage: UsageInfo
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScoreResponseData(OpenAIBaseModel):
     index: int
     object: str = "score"
     score: float
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScoreResponse(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"embd-{random_uuid()}")
     object: str = "list"
@@ -1252,23 +1290,27 @@ class ScoreResponse(OpenAIBaseModel):
     usage: UsageInfo
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FunctionCall(OpenAIBaseModel):
     name: str
     arguments: str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ToolCall(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"chatcmpl-tool-{random_uuid()}")
     type: Literal["function"] = "function"
     function: FunctionCall
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeltaFunctionCall(BaseModel):
     name: Optional[str] = None
     arguments: Optional[str] = None
 
 
 # a tool call delta where everything is optional
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeltaToolCall(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"chatcmpl-tool-{random_uuid()}")
     type: Literal["function"] = "function"
@@ -1276,6 +1318,7 @@ class DeltaToolCall(OpenAIBaseModel):
     function: Optional[DeltaFunctionCall] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExtractedToolCallInformation(BaseModel):
     # indicate if tools were called
     tools_called: bool
@@ -1288,6 +1331,7 @@ class ExtractedToolCallInformation(BaseModel):
     content: Optional[str] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatMessage(OpenAIBaseModel):
     role: str
     reasoning_content: Optional[str] = None
@@ -1295,12 +1339,14 @@ class ChatMessage(OpenAIBaseModel):
     tool_calls: list[ToolCall] = Field(default_factory=list)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionLogProb(OpenAIBaseModel):
     token: str
     logprob: float = -9999.0
     bytes: Optional[list[int]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionLogProbsContent(ChatCompletionLogProb):
     # Workaround: redefine fields name cache so that it's not
     # shared with the super class.
@@ -1308,10 +1354,12 @@ class ChatCompletionLogProbsContent(ChatCompletionLogProb):
     top_logprobs: list[ChatCompletionLogProb] = Field(default_factory=list)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionLogProbs(OpenAIBaseModel):
     content: Optional[list[ChatCompletionLogProbsContent]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionResponseChoice(OpenAIBaseModel):
     index: int
     message: ChatMessage
@@ -1322,6 +1370,7 @@ class ChatCompletionResponseChoice(OpenAIBaseModel):
     stop_reason: Optional[Union[int, str]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionResponse(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"chatcmpl-{random_uuid()}")
     object: Literal["chat.completion"] = "chat.completion"
@@ -1332,6 +1381,7 @@ class ChatCompletionResponse(OpenAIBaseModel):
     prompt_logprobs: Optional[list[Optional[dict[int, Logprob]]]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeltaMessage(OpenAIBaseModel):
     role: Optional[str] = None
     content: Optional[str] = None
@@ -1339,6 +1389,7 @@ class DeltaMessage(OpenAIBaseModel):
     tool_calls: list[DeltaToolCall] = Field(default_factory=list)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionResponseStreamChoice(OpenAIBaseModel):
     index: int
     delta: DeltaMessage
@@ -1347,6 +1398,7 @@ class ChatCompletionResponseStreamChoice(OpenAIBaseModel):
     stop_reason: Optional[Union[int, str]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionStreamResponse(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"chatcmpl-{random_uuid()}")
     object: Literal["chat.completion.chunk"] = "chat.completion.chunk"
@@ -1356,12 +1408,14 @@ class ChatCompletionStreamResponse(OpenAIBaseModel):
     usage: Optional[UsageInfo] = Field(default=None)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TranscriptionResponseStreamChoice(OpenAIBaseModel):
     delta: DeltaMessage
     finish_reason: Optional[str] = None
     stop_reason: Optional[Union[int, str]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TranscriptionStreamResponse(OpenAIBaseModel):
     id: str = Field(default_factory=lambda: f"trsc-{random_uuid()}")
     object: Literal["transcription.chunk"] = "transcription.chunk"
@@ -1371,6 +1425,7 @@ class TranscriptionStreamResponse(OpenAIBaseModel):
     usage: Optional[UsageInfo] = Field(default=None)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BatchRequestInput(OpenAIBaseModel):
     """
     The per-line object of the batch input file.
@@ -1408,6 +1463,7 @@ class BatchRequestInput(OpenAIBaseModel):
                                  ScoreRequest]).validate_python(value)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BatchResponseData(OpenAIBaseModel):
     # HTTP status code of the response.
     status_code: int = 200
@@ -1420,6 +1476,7 @@ class BatchResponseData(OpenAIBaseModel):
                          ScoreResponse]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BatchRequestOutput(OpenAIBaseModel):
     """
     The per-line object of the batch output and error files
@@ -1438,6 +1495,7 @@ class BatchRequestOutput(OpenAIBaseModel):
     error: Optional[Any]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenizeCompletionRequest(OpenAIBaseModel):
     model: Optional[str] = None
     prompt: str
@@ -1450,6 +1508,7 @@ class TokenizeCompletionRequest(OpenAIBaseModel):
     )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenizeChatRequest(OpenAIBaseModel):
     model: Optional[str] = None
     messages: list[ChatCompletionMessageParam]
@@ -1510,26 +1569,31 @@ class TokenizeChatRequest(OpenAIBaseModel):
 TokenizeRequest = Union[TokenizeCompletionRequest, TokenizeChatRequest]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenizeResponse(OpenAIBaseModel):
     count: int
     max_model_len: int
     tokens: list[int]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DetokenizeRequest(OpenAIBaseModel):
     model: Optional[str] = None
     tokens: list[int]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DetokenizeResponse(OpenAIBaseModel):
     prompt: str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoadLoRAAdapterRequest(BaseModel):
     lora_name: str
     lora_path: str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UnloadLoRAAdapterRequest(BaseModel):
     lora_name: str
     lora_int_id: Optional[int] = Field(default=None)
@@ -1540,6 +1604,7 @@ AudioResponseFormat: TypeAlias = Literal["json", "text", "srt", "verbose_json",
                                          "vtt"]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TranscriptionRequest(OpenAIBaseModel):
     # Ordered by official OpenAI API documentation
     # https://platform.openai.com/docs/api-reference/audio/createTranscription
@@ -1643,11 +1708,13 @@ class TranscriptionRequest(OpenAIBaseModel):
 
 
 # Transcription response objects
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TranscriptionResponse(OpenAIBaseModel):
     text: str
     """The transcribed text."""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TranscriptionWord(OpenAIBaseModel):
     end: float
     """End time of the word in seconds."""
@@ -1659,6 +1726,7 @@ class TranscriptionWord(OpenAIBaseModel):
     """The text content of the word."""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TranscriptionSegment(OpenAIBaseModel):
     id: int
     """Unique identifier of the segment."""
@@ -1701,6 +1769,7 @@ class TranscriptionSegment(OpenAIBaseModel):
     """Array of token IDs for the text content."""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TranscriptionResponseVerbose(OpenAIBaseModel):
     duration: str
     """The duration of the input audio."""

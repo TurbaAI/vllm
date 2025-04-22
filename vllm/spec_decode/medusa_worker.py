@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import weakref
 from typing import List, Optional, Set, Tuple
@@ -14,6 +15,7 @@ from vllm.spec_decode.top1_proposer import Top1Proposer
 from vllm.worker.worker_base import DelegateWorkerBase
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MedusaWorker(NonLLMProposerWorkerBase, DelegateWorkerBase):
     """Worker for Medusa.
     """

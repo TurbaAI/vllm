@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import logging
 from typing import Any, Optional, Set, Type
@@ -20,6 +21,7 @@ from vllm.prompt_adapter.request import PromptAdapterRequest
 logger = logging.getLogger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WorkerPromptAdapterManager(AbstractWorkerManager):
     """WorkerPromptAdapterManager that manages 
     prompt_adapter models on the worker side.
@@ -116,6 +118,7 @@ class WorkerPromptAdapterManager(AbstractWorkerManager):
         return list_adapters_worker(self._adapter_manager.list_adapters)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LRUCacheWorkerPromptAdapterManager(WorkerPromptAdapterManager):
     """WorkerPromptAdapterManager that manages 
     prompt_adapter models on the worker side.

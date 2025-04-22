@@ -3,6 +3,7 @@ import torch
 import triton
 import triton.language as tl
 from einops import rearrange
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 
 @triton.jit
@@ -320,6 +321,7 @@ def _fwd_none_diag_kernel(
              mask=q_index[:, None] < n)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _attention(torch.autograd.Function):
 
     @staticmethod

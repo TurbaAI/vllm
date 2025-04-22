@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from collections import defaultdict
@@ -43,6 +44,7 @@ _T = TypeVar("_T")
 N = TypeVar("N", bound=type[nn.Module])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalPlugin(ABC):
     """
     Base class that defines data processing logic for a specific modality.
@@ -239,11 +241,13 @@ class MultiModalPlugin(ABC):
         return max_mm_tokens
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalPlaceholderMap:
     """
     Relates multi-modal embeddings to their corresponding placeholders.
     """
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class IndexMap(NamedTuple):
         src: list[int]
         dest: list[int]
@@ -449,6 +453,7 @@ class MultiModalPlaceholderMap:
                                                  dest=dest_indices)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MediaIO(ABC, Generic[_T]):
 
     @abstractmethod

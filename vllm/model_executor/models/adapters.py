@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, Any, Optional, TypeVar
@@ -44,6 +45,7 @@ def _create_pooling_model_cls(
 
     from .utils import AutoWeightsLoader, WeightsMapper
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class ModelForPooling(orig_cls, VllmModelForPooling):
 
         def __init__(
@@ -175,6 +177,7 @@ def as_classification_model(cls: _T) -> _T:
         default_softmax=True,
     )
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class ModelForClassification(ModelForPooling):
 
         def __init__(

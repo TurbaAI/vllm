@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import argparse
 
@@ -11,6 +12,7 @@ from vllm.entrypoints.openai.cli_args import (make_arg_parser,
 from vllm.utils import FlexibleArgumentParser
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ServeSubcommand(CLISubcommand):
     """The `serve` subcommand for the vLLM CLI. """
 

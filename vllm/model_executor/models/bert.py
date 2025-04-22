@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Iterable, Optional, Set, Tuple
 
@@ -31,6 +32,7 @@ from .interfaces import SupportsCrossEncoding, SupportsQuant, SupportsV0Only
 from .utils import WeightsMapper, maybe_prefix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertEmbedding(nn.Module):
 
     def __init__(self, config: BertConfig):
@@ -87,6 +89,7 @@ class BertEmbedding(nn.Module):
         return embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertPooler(nn.Module):
 
     def __init__(self, config: BertConfig):
@@ -104,6 +107,7 @@ class BertPooler(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertEncoder(nn.Module):
 
     def __init__(self,
@@ -133,6 +137,7 @@ class BertEncoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertLayer(nn.Module):
 
     def __init__(self,
@@ -172,6 +177,7 @@ class BertLayer(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertAttention(nn.Module):
 
     def __init__(
@@ -207,6 +213,7 @@ class BertAttention(nn.Module):
         return self.output(self_output, hidden_states)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertSelfAttention(nn.Module):
 
     def __init__(
@@ -273,6 +280,7 @@ class BertSelfAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertSelfOutput(nn.Module):
 
     def __init__(self,
@@ -295,6 +303,7 @@ class BertSelfOutput(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertIntermediate(nn.Module):
 
     def __init__(self,
@@ -317,6 +326,7 @@ class BertIntermediate(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertOutput(nn.Module):
 
     def __init__(self,
@@ -342,6 +352,7 @@ class BertOutput(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertModel(nn.Module, SupportsQuant):
     packed_modules_mapping = {"qkv_proj": ["query", "key", "value"]}
 
@@ -417,6 +428,7 @@ class BertModel(nn.Module, SupportsQuant):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertEmbeddingModel(nn.Module, SupportsV0Only, SupportsQuant):
     """A model that uses Bert to provide embedding functionalities.
 
@@ -476,6 +488,7 @@ class BertEmbeddingModel(nn.Module, SupportsV0Only, SupportsQuant):
                                                 softmax=False)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BertForSequenceClassification(nn.Module, SupportsCrossEncoding,
                                     SupportsQuant):
     """A model that uses Bert to provide embedding functionalities.

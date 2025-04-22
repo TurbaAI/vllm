@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional
 
@@ -29,6 +30,7 @@ GPTQ_MARLIN_24_SUPPORTED_QUANT_TYPES = [
 GPTQ_MARLIN_24_SUPPORTED_GROUP_SIZES = [-1, 128]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPTQMarlin24Config(QuantizationConfig):
     """Config class for Marlin24.
     """
@@ -131,6 +133,7 @@ class GPTQMarlin24Config(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPTQMarlin24LinearMethod(LinearMethodBase):
     """Linear method for Marlin24.
 

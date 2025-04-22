@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Dict, FrozenSet, List, Optional, Tuple
 
@@ -10,6 +11,7 @@ from vllm.platforms import current_platform
 from vllm.utils import Device
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CpuGpuBlockAllocator(DeviceAwareBlockAllocator):
     """A block allocator that can allocate blocks on both CPU and GPU memory.
 
@@ -370,6 +372,7 @@ class CpuGpuBlockAllocator(DeviceAwareBlockAllocator):
         return self._allocators[device].find_cached_blocks_prefix(block_hashes)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NullBlock(Block):
     """
     Null blocks are used as a placeholders for KV cache blocks that have

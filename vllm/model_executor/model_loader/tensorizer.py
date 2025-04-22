@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import argparse
 import dataclasses
@@ -58,6 +59,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TensorizerConfig:
     tensorizer_uri: str
     vllm_tensorized: Optional[bool] = False
@@ -123,6 +125,7 @@ def load_with_tensorizer(tensorizer_config: TensorizerConfig,
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TensorizerArgs:
     tensorizer_uri: Union[io.BufferedIOBase, io.RawIOBase, BinaryIO, str,
                           bytes, os.PathLike, int]
@@ -267,6 +270,7 @@ class TensorizerArgs:
         return tensorizer_args
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TensorizerAgent:
     """
     A class for performing tensorizer deserializations specifically for

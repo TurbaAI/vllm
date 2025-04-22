@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://huggingface.co/OrionStarAI/Orion-14B-Base/blob/main/modeling_orion.py
@@ -35,6 +36,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OrionMLP(nn.Module):
 
     def __init__(
@@ -65,6 +67,7 @@ class OrionMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OrionAttention(nn.Module):
 
     def __init__(
@@ -145,6 +148,7 @@ class OrionAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OrionDecoderLayer(nn.Module):
 
     def __init__(
@@ -207,6 +211,7 @@ class OrionDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OrionModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -261,6 +266,7 @@ class OrionModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OrionForCausalLM(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

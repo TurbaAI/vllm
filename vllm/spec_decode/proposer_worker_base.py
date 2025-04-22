@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import List, Optional, Set, Tuple
@@ -9,6 +10,7 @@ from vllm.spec_decode.interfaces import SpeculativeProposer
 from vllm.worker.worker_base import LoRANotSupportedWorkerBase
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ProposerWorkerBase(LoRANotSupportedWorkerBase, SpeculativeProposer):
     """Interface for proposer workers"""
 
@@ -36,6 +38,7 @@ class ProposerWorkerBase(LoRANotSupportedWorkerBase, SpeculativeProposer):
         pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NonLLMProposerWorkerBase(ProposerWorkerBase, ABC):
     """Proposer worker which does not use a model with kvcache"""
 

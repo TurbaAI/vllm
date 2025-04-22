@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional
 
@@ -13,6 +14,7 @@ from vllm.model_executor.parameter import (GroupQuantScaleParameter,
                                            PackedvLLMParameter)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AWQConfig(QuantizationConfig):
     """Config class for AWQ.
 
@@ -85,6 +87,7 @@ def is_layer_skipped_awq(prefix: str, modules_to_not_convert: List[str]):
     return any(module_name in prefix for module_name in modules_to_not_convert)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AWQLinearMethod(LinearMethodBase):
     """Linear method for AWQ.
 

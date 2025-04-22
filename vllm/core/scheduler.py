@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import enum
 import os
@@ -31,6 +32,7 @@ ARTIFICIAL_PREEMPTION_PROB = 0.5
 ARTIFICIAL_PREEMPTION_MAX_CNT = 500
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PreemptionMode(enum.Enum):
     """Preemption modes.
 
@@ -46,6 +48,7 @@ class PreemptionMode(enum.Enum):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulingBudget:
     """The available slots for scheduling.
 
@@ -123,6 +126,7 @@ class SchedulingBudget:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScheduledSequenceGroup:
     # A sequence group that's scheduled.
     seq_group: SequenceGroup
@@ -133,6 +137,7 @@ class ScheduledSequenceGroup:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerOutputs:
     """The scheduling decision made from a scheduler."""
 
@@ -203,6 +208,7 @@ class SchedulerOutputs:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerRunningOutputs:
     """The requests that are scheduled from a running queue.
 
@@ -246,6 +252,7 @@ class SchedulerRunningOutputs:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerSwappedInOutputs:
     """The requests that are scheduled from a swap queue.
 
@@ -280,6 +287,7 @@ class SchedulerSwappedInOutputs:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerPrefillOutputs:
     """The requests that are scheduled from a waiting queue.
 
@@ -329,6 +337,7 @@ def scheduled_seq_group_builder():
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PartialPrefillMetadata:
     """Holds information about the partial prefills that are currently running
     during a single iteration of the Scheduler.

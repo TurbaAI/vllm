@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from abc import abstractmethod
@@ -15,6 +16,7 @@ from vllm.utils import import_from_path, is_list_of
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ReasoningParser:
     """
     Abstract reasoning parser class that should not be used directly.
@@ -102,6 +104,7 @@ class ReasoningParser:
         """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ReasoningParserManager:
     reasoning_parsers: dict[str, type] = {}
 

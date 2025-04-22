@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # Adapted from https://huggingface.co/moonshotai/Kimi-VL-A3B-Instruct/blob/main/configuration_kimi_vl.py
 from transformers.configuration_utils import PretrainedConfig
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MoonViTConfig(PretrainedConfig):
     model_type = "moonvit"
 

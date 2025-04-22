@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import TYPE_CHECKING, List, Optional, Tuple, Union, final
 
@@ -16,6 +17,7 @@ if TYPE_CHECKING:
 
 
 @final
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PunicaWrapperHPU(PunicaWrapperBase):
 
     def __init__(self, max_num_batched_tokens: int, max_batches: int,

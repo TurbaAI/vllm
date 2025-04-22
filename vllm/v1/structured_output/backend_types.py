@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import enum
 from abc import ABC, abstractmethod
@@ -6,6 +7,7 @@ from abc import ABC, abstractmethod
 import torch
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StructuredOutputOptions(enum.Enum):
     JSON = enum.auto()
     JSON_OBJECT = enum.auto()
@@ -17,6 +19,7 @@ class StructuredOutputOptions(enum.Enum):
 StructuredOutputKey = tuple[StructuredOutputOptions, str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StructuredOutputGrammar(ABC):
     """Request-level backend for structured output requests."""
 
@@ -60,6 +63,7 @@ class StructuredOutputGrammar(ABC):
         """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StructuredOutputBackend(ABC):
     """Engine-level backend for structured output requests."""
 

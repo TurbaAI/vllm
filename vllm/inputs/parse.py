@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 from collections.abc import Sequence
 from typing import Literal, Optional, TypedDict, Union, cast, overload
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing_extensions import TypeIs
 
@@ -10,11 +11,13 @@ from .data import (ExplicitEncoderDecoderPrompt, ProcessorInputs, PromptType,
                    SingletonInputs, SingletonPrompt, TextPrompt, TokensPrompt)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParsedText(TypedDict):
     content: str
     is_tokens: Literal[False]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParsedTokens(TypedDict):
     content: list[int]
     is_tokens: Literal[True]
@@ -69,16 +72,19 @@ def parse_and_batch_prompt(
                     "array of tokens, or array of token arrays")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParsedStrPrompt(TypedDict):
     type: Literal["str"]
     content: str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParsedTextPrompt(TypedDict):
     type: Literal["text"]
     content: TextPrompt
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParsedTokensPrompt(TypedDict):
     type: Literal["tokens"]
     content: TokensPrompt

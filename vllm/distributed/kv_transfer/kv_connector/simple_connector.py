@@ -9,6 +9,7 @@ MooncakePipe.
 But the logic can be extended to support other pipe and lookup buffer.
 """
 from typing import TYPE_CHECKING, List, Optional, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -27,6 +28,7 @@ if TYPE_CHECKING:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SimpleConnector(KVConnectorBase):
 
     def __init__(

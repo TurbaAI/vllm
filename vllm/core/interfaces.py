@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import enum
 from abc import ABC, abstractmethod
@@ -10,6 +11,7 @@ from vllm.sequence import Sequence, SequenceGroup
 from vllm.utils import Device
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AllocStatus(enum.Enum):
     """Result for BlockSpaceManager.can_allocate
 
@@ -24,6 +26,7 @@ class AllocStatus(enum.Enum):
     NEVER = enum.auto()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockSpaceManager(ABC):
 
     @staticmethod

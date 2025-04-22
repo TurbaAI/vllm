@@ -2,11 +2,13 @@
 """Inference-only HF format GLM-4 model compatible with THUDM weights."""
 from vllm.config import VllmConfig
 from vllm.model_executor.models.llama import LlamaForCausalLM
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from .interfaces import SupportsV0Only
 from .utils import PPMissingLayer
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GlmForCausalLM(LlamaForCausalLM, SupportsV0Only):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

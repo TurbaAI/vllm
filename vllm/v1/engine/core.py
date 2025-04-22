@@ -9,6 +9,7 @@ from concurrent.futures import Future
 from inspect import isclass, signature
 from logging import DEBUG
 from typing import Any, Callable, Optional, TypeVar, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import msgspec
 import zmq
@@ -44,6 +45,7 @@ POLLING_TIMEOUT_S = 2.5
 _R = TypeVar('_R')  # Return type for collective_rpc
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCore:
     """Inner loop of vLLM's Engine."""
 
@@ -305,6 +307,7 @@ class EngineCore:
                                                   kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreProc(EngineCore):
     """ZMQ-wrapper for running EngineCore in background process."""
 
@@ -555,6 +558,7 @@ class EngineCoreProc(EngineCore):
 ENGINE_PAUSED_OUTPUTS = EngineCoreOutputs(engine_paused=True)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DPEngineCoreProc(EngineCoreProc):
     """ZMQ-wrapper for running EngineCore in background process
     in a data parallel context."""

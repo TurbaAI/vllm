@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 import torch
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.distributed.device_communicators.base_device_communicator import (
     DeviceCommunicatorBase)
@@ -9,6 +10,7 @@ if current_platform.is_neuron():
     import torch_xla.core.xla_model as xm
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NeuronCommunicator(DeviceCommunicatorBase):
 
     def all_reduce(self, x: torch.Tensor) -> torch.Tensor:

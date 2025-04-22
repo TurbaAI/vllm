@@ -2,6 +2,7 @@
 from collections import defaultdict
 from collections.abc import Iterable
 from typing import Callable, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.logger import init_logger
 from vllm.v1.core.kv_cache_utils import (BlockHashType, FreeKVCacheBlockQueue,
@@ -13,6 +14,7 @@ from vllm.v1.request import Request
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockPool:
     """BlockPool that manages KVCacheBlocks.
     It provides methods to allocate, free and cache the kv cache blocks. The

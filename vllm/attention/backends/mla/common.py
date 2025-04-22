@@ -183,6 +183,7 @@ for chunk_idx in range(cdiv(C, MCC)):
 
 return curr_o @ W_O
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import functools
 from abc import abstractmethod
@@ -239,6 +240,7 @@ if TYPE_CHECKING:
 is_hip = current_platform.is_rocm()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonBackend(AttentionBackend):
 
     @staticmethod
@@ -289,6 +291,7 @@ class MLACommonBackend(AttentionBackend):
 T = TypeVar("T", bound="MLACommonMetadata")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonState(AttentionState, Generic[T]):
 
     def __init__(self, runner):
@@ -438,6 +441,7 @@ class MLACommonState(AttentionState, Generic[T]):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonMetadata(AttentionMetadata):
     """Metadata for MLACommon. 
     
@@ -722,6 +726,7 @@ class MLACommonMetadata(AttentionMetadata):
                                    block_tables=self.block_tables)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonMetadataBuilder(AttentionMetadataBuilder[T], Generic[T]):
     """
     NOTE: Please read the comment at the top of the file before trying to 
@@ -991,6 +996,7 @@ class MLACommonMetadataBuilder(AttentionMetadataBuilder[T], Generic[T]):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonImpl(MLAAttentionImpl[T], Generic[T]):
     """
     NOTE: Please read the comment at the top of the file before trying to 

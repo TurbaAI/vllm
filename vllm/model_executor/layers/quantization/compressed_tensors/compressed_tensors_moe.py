@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import enum
 from enum import Enum
@@ -25,6 +26,7 @@ from vllm.platforms import current_platform
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPTQMarlinState(Enum):
     REPACK = enum.auto()
     READY = enum.auto()
@@ -39,6 +41,7 @@ __all__ = [
 ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsMoEMethod(FusedMoEMethodBase):
 
     @staticmethod
@@ -76,6 +79,7 @@ class CompressedTensorsMoEMethod(FusedMoEMethodBase):
                 f"Unsupported FusedMoe scheme: {weight_quant}, {input_quant}")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsW8A8Fp8MoEMethod(CompressedTensorsMoEMethod):
 
     def __init__(
@@ -302,6 +306,7 @@ class CompressedTensorsW8A8Fp8MoEMethod(CompressedTensorsMoEMethod):
             a2_scale=layer.w2_input_scale)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsW8A8Fp8MoECutlassMethod(CompressedTensorsMoEMethod):
 
     def __init__(
@@ -525,6 +530,7 @@ class CompressedTensorsW8A8Fp8MoECutlassMethod(CompressedTensorsMoEMethod):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsWNA16MarlinMoEMethod(CompressedTensorsMoEMethod):
 
     def __init__(
@@ -868,6 +874,7 @@ class CompressedTensorsWNA16MarlinMoEMethod(CompressedTensorsMoEMethod):
             is_k_full=self.is_k_full)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsWNA16MoEMethod(CompressedTensorsMoEMethod):
 
     def __init__(

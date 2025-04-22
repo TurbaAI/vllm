@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -31,6 +32,7 @@ from vllm.model_executor.models.llama import (LlamaDecoderLayer,
                                               LlamaForCausalLM, LlamaModel)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TeleFLMModel(LlamaModel):
 
     def __init__(
@@ -63,6 +65,7 @@ class TeleFLMModel(LlamaModel):
         return embedding
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TeleFLMForCausalLM(LlamaForCausalLM):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

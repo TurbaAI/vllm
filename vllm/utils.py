@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import annotations
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import concurrent
@@ -181,6 +182,7 @@ _V = TypeVar("_V")
 _T = TypeVar("_T")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _Sentinel:
     ...
 
@@ -188,16 +190,19 @@ class _Sentinel:
 ALL_PINNED_SENTINEL = _Sentinel()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Device(enum.Enum):
     GPU = enum.auto()
     CPU = enum.auto()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LayerBlockType(enum.Enum):
     attention = "attention"
     mamba = "mamba"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Counter:
 
     def __init__(self, start: int = 0) -> None:
@@ -212,6 +217,7 @@ class Counter:
         self.counter = 0
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _MappingOrderCacheView(UserDict[_K, _V]):
 
     def __init__(self, data: Mapping[_K, _V], ordered_keys: Mapping[_K, None]):
@@ -225,6 +231,7 @@ class _MappingOrderCacheView(UserDict[_K, _V]):
         return KeysView(self.ordered_keys)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CacheInfo(NamedTuple):
     hits: int
     total: int
@@ -423,6 +430,7 @@ class LRUCache(cachetools.LRUCache[_K, _V], Generic[_K, _V]):
         self._last_info = CacheInfo(hits=0, total=0)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PyObjectCache:
     """Used to cache python objects to avoid object allocations
     across scheduler iterations.
@@ -856,6 +864,7 @@ def is_uva_available() -> bool:
     return is_pin_memory_available()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeviceMemoryProfiler:
 
     def __init__(self, device: Optional[torch.types.Device] = None):
@@ -1261,6 +1270,7 @@ def run_once(f: Callable[P, None]) -> Callable[P, None]:
     return wrapper
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StoreBoolean(Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
@@ -1273,6 +1283,7 @@ class StoreBoolean(Action):
                              "Expected 'true' or 'false'.")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SortedHelpFormatter(ArgumentDefaultsHelpFormatter):
     """SortedHelpFormatter that sorts arguments by their option strings."""
 
@@ -1294,6 +1305,7 @@ class SortedHelpFormatter(ArgumentDefaultsHelpFormatter):
         super().add_arguments(actions)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlexibleArgumentParser(ArgumentParser):
     """ArgumentParser that allows both underscore and dash in names."""
 
@@ -1637,6 +1649,7 @@ def supports_custom_op() -> bool:
     return hasattr(torch.library, "custom_op")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AtomicCounter:
     """An atomic, thread-safe counter"""
 
@@ -1663,6 +1676,7 @@ class AtomicCounter:
 
 
 # Adapted from: https://stackoverflow.com/a/47212782/5082708
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LazyDict(Mapping[str, T], Generic[T]):
 
     def __init__(self, factory: dict[str, Callable[[], T]]):
@@ -1686,6 +1700,7 @@ class LazyDict(Mapping[str, T], Generic[T]):
         return len(self._factory)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ClassRegistry(UserDict[Type[T], _V]):
 
     def __getitem__(self, key: Type[T]) -> _V:
@@ -1786,6 +1801,7 @@ def get_vllm_optional_dependencies():
     }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _PlaceholderBase:
     """
     Disallows downstream usage of placeholder modules.
@@ -1941,6 +1957,7 @@ class _PlaceholderBase:
         return self.__getattr__("__exit__")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PlaceholderModule(_PlaceholderBase):
     """
     A placeholder object to use when a module does not exist.
@@ -1975,6 +1992,7 @@ class PlaceholderModule(_PlaceholderBase):
                              "when the original module can be imported")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _PlaceholderModuleAttr(_PlaceholderBase):
 
     def __init__(self, module: PlaceholderModule, attr_path: str) -> None:
@@ -2086,6 +2104,7 @@ def kill_process_tree(pid: int):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MemorySnapshot:
     """Memory snapshot."""
     torch_peak: int = 0
@@ -2131,6 +2150,7 @@ class MemorySnapshot:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MemoryProfilingResult:
     """Memory profiling result. All numbers are in bytes.
     """
@@ -2502,6 +2522,7 @@ def warn_for_unimplemented_methods(cls: type[T]) -> type[T]:
     return cls
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LazyLoader(types.ModuleType):
     """
     LazyLoader module borrowed from Tensorflow

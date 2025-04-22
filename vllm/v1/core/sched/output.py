@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import annotations
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Optional
@@ -16,6 +17,7 @@ if TYPE_CHECKING:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NewRequestData:
 
     req_id: str
@@ -50,6 +52,7 @@ class NewRequestData:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CachedRequestData:
 
     req_id: str
@@ -79,6 +82,7 @@ class CachedRequestData:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerOutput:
 
     # list of the requests that are scheduled for the first time.

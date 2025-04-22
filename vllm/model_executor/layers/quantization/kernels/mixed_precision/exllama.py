@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Optional, Tuple
 
@@ -14,6 +15,7 @@ from vllm.scalar_type import scalar_types
 from .MPLinearKernel import MPLinearKernel, MPLinearLayerConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExllamaLinearKernel(MPLinearKernel):
     SUPPORTED_QUANT_TYPES = [scalar_types.uint4b8, scalar_types.uint8b128]
     # In theory supports `scalar_types.uint2b2, scalar_types.uint3b4` too but

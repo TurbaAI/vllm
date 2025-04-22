@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Optional
 
@@ -13,6 +14,7 @@ from vllm.worker.worker_base import WorkerBase as WorkerBaseV0
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WorkerBase(WorkerBaseV0):
     """
     Abstract class for v1 worker, mainly define some methods for v1.

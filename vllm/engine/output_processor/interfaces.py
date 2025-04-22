@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import Callable, List
@@ -12,6 +13,7 @@ from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.utils import Counter
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceGroupOutputProcessor(ABC):
     """Interface for logic that processes new token ids in sequence groups,
     managing detokenization, stop checking, and freeing/forking sequences with

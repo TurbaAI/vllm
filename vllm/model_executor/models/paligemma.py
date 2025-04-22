@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 from collections.abc import Iterable, Mapping, Sequence
 from typing import Literal, Optional, Set, Tuple, TypedDict, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -31,12 +32,14 @@ from .vision import get_vision_encoder_info
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PaliGemmaImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: torch.Tensor
     """Shape: `(batch_size * num_images, num_channels, height, width)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PaliGemmaImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: torch.Tensor
@@ -50,6 +53,7 @@ PaliGemmaImageInputs = Union[PaliGemmaImagePixelInputs,
                              PaliGemmaImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PaliGemmaMultiModalProjector(nn.Module):
 
     def __init__(self, vision_hidden_size: int, projection_dim: int):
@@ -62,6 +66,7 @@ class PaliGemmaMultiModalProjector(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PaliGemmaProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -87,6 +92,7 @@ class PaliGemmaProcessingInfo(BaseProcessingInfo):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PaliGemmaDummyInputsBuilder(
         BaseDummyInputsBuilder[PaliGemmaProcessingInfo]):
 
@@ -112,6 +118,7 @@ class PaliGemmaDummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PaliGemmaMultiModalProcessor(
         BaseMultiModalProcessor[PaliGemmaProcessingInfo]):
 
@@ -213,6 +220,7 @@ class PaliGemmaMultiModalProcessor(
     PaliGemmaMultiModalProcessor,
     info=PaliGemmaProcessingInfo,
     dummy_inputs=PaliGemmaDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PaliGemmaForConditionalGeneration(nn.Module, SupportsMultiModal,
                                         SupportsPP):
     packed_modules_mapping = {

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC
 from collections.abc import Mapping
@@ -22,6 +23,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ProcessorInputs:
     """
     Represents the keyword arguments to
@@ -32,12 +34,14 @@ class ProcessorInputs:
     hf_processor_mm_kwargs: Mapping[str, object] = field(default_factory=dict)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DummyEncoderData(NamedTuple):
     """Dummy data used for profiling."""
 
     prompt_token_ids: list[int]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DummyDecoderData(NamedTuple):
     """Dummy data used for profiling."""
 
@@ -49,6 +53,7 @@ class DummyDecoderData(NamedTuple):
 _I = TypeVar("_I", bound=BaseProcessingInfo)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseDummyInputsBuilder(ABC, Generic[_I]):
     """
     Abstract base class that constructs the dummy data to profile
@@ -140,6 +145,7 @@ class BaseDummyInputsBuilder(ABC, Generic[_I]):
         return [video] * num_videos
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalProfiler(Generic[_I]):
     """
     Contains code for running memory profiling for multi-modal models.

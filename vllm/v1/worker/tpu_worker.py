@@ -2,6 +2,7 @@
 """A TPU worker class."""
 import os
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.distributed
@@ -27,6 +28,7 @@ from vllm.v1.worker.tpu_model_runner import TPUModelRunner
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TPUWorker:
 
     def __init__(

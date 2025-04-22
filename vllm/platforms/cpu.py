@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 import sys
@@ -22,6 +23,7 @@ else:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CpuPlatform(Platform):
     _enum = PlatformEnum.CPU
     device_name: str = "cpu"

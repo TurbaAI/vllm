@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import copy
@@ -52,6 +53,7 @@ from vllm.utils import Device, deprecate_kwargs
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MQClientClosedError(Exception):
     """Exception class raised when the client is used post-close.
 
@@ -63,6 +65,7 @@ class MQClientClosedError(Exception):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MQLLMEngineClient(EngineClient):
     """A client wrapper for MQLLMEngine that conforms to the
     EngineClient protocol.

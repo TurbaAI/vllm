@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import copy
 from collections import defaultdict
@@ -116,6 +117,7 @@ def create_spec_worker(*args, **kwargs) -> "SpecDecodeWorker":
 
 # Reminder: Please update docs/source/features/compatibility_matrix.md
 # If the feature combo become valid
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpecDecodeWorker(LoRANotSupportedWorkerBase):
     """Worker which implements speculative decoding.
 

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from: https://github.com/huggingface/peft/blob/main/src/peft/tuners/lora/config.py
 
@@ -15,6 +16,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PEFTHelper:
     """ 
     A helper class for PEFT configurations, specifically designed for LoRA.

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Optional, Union
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BeamSearchSequence:
     """A sequence for beam search.
     It keeps track of the tokens and the log probability of the sequence.
@@ -28,6 +30,7 @@ class BeamSearchSequence:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BeamSearchOutput:
     """The output of beam search.
     It contains the list of the best beam search sequences.
@@ -36,6 +39,7 @@ class BeamSearchOutput:
     sequences: list[BeamSearchSequence]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BeamSearchInstance:
 
     def __init__(

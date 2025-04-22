@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 from dataclasses import dataclass, field
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -19,6 +20,7 @@ DEFAULT_SAMPLING_PARAMS = dict(
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TPUSupportedSamplingMetadata:
     # This class exposes a more xla-friendly interface than SamplingMetadata
     # on TPU, in particular all arguments should be traceable and no optionals

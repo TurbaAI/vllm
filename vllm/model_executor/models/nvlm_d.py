@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://huggingface.co/nvidia/NVLM-D-72B/blob/main/modeling_nvlm_d.py
 # --------------------------------------------------------
@@ -29,6 +30,7 @@ from .internvl import (BaseInternVLProcessingInfo, BaseInternVLProcessor,
 IMG_PAD = "<|vision_pad|>"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NVLMProcessor(BaseInternVLProcessor):
 
     @property
@@ -59,6 +61,7 @@ class NVLMProcessor(BaseInternVLProcessor):
         return PromptUpdateDetails.select_text(repl, IMG_PAD)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NVLMProcessingInfo(BaseInternVLProcessingInfo):
 
     def get_hf_processor(
@@ -84,6 +87,7 @@ class NVLMProcessingInfo(BaseInternVLProcessingInfo):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NVLMDummyInputsBuilder(InternVLDummyInputsBuilder[NVLMProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -110,6 +114,7 @@ class NVLMDummyInputsBuilder(InternVLDummyInputsBuilder[NVLMProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NVLMMultiModalProcessor(InternVLMultiModalProcessor[NVLMProcessingInfo]):
 
     def _get_prompt_updates(
@@ -166,6 +171,7 @@ class NVLMMultiModalProcessor(InternVLMultiModalProcessor[NVLMProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(NVLMMultiModalProcessor,
                                         info=NVLMProcessingInfo,
                                         dummy_inputs=NVLMDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NVLM_D_Model(InternVLChatModel):
 
     def _init_mlp1(self, config: PretrainedConfig) -> nn.Sequential:

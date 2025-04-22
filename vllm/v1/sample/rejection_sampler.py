@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -20,6 +21,7 @@ GREEDY_TEMPERATURE: tl.constexpr = -1
 MAX_SPEC_LEN = 32
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RejectionSampler(nn.Module):
     """
     The implementation strictly follows the algorithm described in

@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Commands that act as an interactive OpenAI API client
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import argparse
 import os
@@ -89,6 +90,7 @@ def _add_query_options(
     return parser
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCommand(CLISubcommand):
     """The `chat` subcommand for the vLLM CLI. """
 
@@ -139,6 +141,7 @@ class ChatCommand(CLISubcommand):
         return chat_parser
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompleteCommand(CLISubcommand):
     """The `complete` subcommand for the vLLM CLI. """
 

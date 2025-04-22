@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import annotations
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import TYPE_CHECKING
 

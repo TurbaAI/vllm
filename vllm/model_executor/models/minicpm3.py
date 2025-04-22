@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -45,6 +46,7 @@ from vllm.model_executor.models.minicpm import (MiniCPMDecoderLayer,
 from .utils import make_layers
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPM3Attention(nn.Module):
 
     def __init__(
@@ -178,6 +180,7 @@ class MiniCPM3Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPM3DecoderLayer(MiniCPMDecoderLayer):
 
     def _init_attn_block(self):
@@ -201,6 +204,7 @@ class MiniCPM3DecoderLayer(MiniCPMDecoderLayer):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPM3Model(MiniCPMModel):
 
     def _init_layers(
@@ -217,6 +221,7 @@ class MiniCPM3Model(MiniCPMModel):
             prefix=f"{prefix}.layers")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPM3ForCausalLM(MiniCPMForCausalLM):
     packed_modules_mapping = {
         "gate_up_proj": [

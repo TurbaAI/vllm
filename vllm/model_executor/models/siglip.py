@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Implementation of SiglipVisionModel intended to be only used
 within a vision language model."""
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from typing import Iterable, Optional, Set, Tuple, Union
@@ -23,6 +24,7 @@ from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from .vision import VisionEncoderInfo, resolve_visual_encoder_outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipEncoderInfo(VisionEncoderInfo[SiglipVisionConfig]):
 
     def get_num_image_tokens(
@@ -45,6 +47,7 @@ class SiglipEncoderInfo(VisionEncoderInfo[SiglipVisionConfig]):
 
 
 # Adapted from https://github.com/huggingface/transformers/blob/v4.43.3/src/transformers/models/siglip/modeling_siglip.py#L249 # noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipVisionEmbeddings(nn.Module):
 
     def __init__(self, config: SiglipVisionConfig):
@@ -137,6 +140,7 @@ class SiglipVisionEmbeddings(nn.Module):
         return embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipAttention(nn.Module):
 
     def __init__(
@@ -193,6 +197,7 @@ class SiglipAttention(nn.Module):
         return attn_output, None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipMLP(nn.Module):
 
     def __init__(
@@ -235,6 +240,7 @@ class SiglipMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipEncoderLayer(nn.Module):
 
     def __init__(
@@ -280,6 +286,7 @@ class SiglipEncoderLayer(nn.Module):
         return hidden_states, None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipEncoder(nn.Module):
 
     def __init__(
@@ -324,6 +331,7 @@ class SiglipEncoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipMultiheadAttentionPoolingHead(nn.Module):
     """Multihead Attention Pooling."""
 
@@ -358,6 +366,7 @@ class SiglipMultiheadAttentionPoolingHead(nn.Module):
         return hidden_state[:, 0]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipVisionTransformer(nn.Module):
 
     def __init__(
@@ -442,6 +451,7 @@ class SiglipVisionTransformer(nn.Module):
         return encoder_outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SiglipVisionModel(nn.Module):
     config_class = SiglipVisionConfig
     main_input_name = "pixel_values"

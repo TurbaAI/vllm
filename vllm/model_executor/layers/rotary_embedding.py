@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.33.2/src/transformers/models/llama/modeling_llama.py
@@ -76,6 +77,7 @@ def _apply_rotary_emb(
 
 
 @CustomOp.register("rotary_embedding")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RotaryEmbedding(CustomOp):
     """Original rotary positional embedding."""
 
@@ -342,6 +344,7 @@ class RotaryEmbedding(CustomOp):
         return s
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LinearScalingRotaryEmbedding(RotaryEmbedding):
     """RotaryEmbedding extended with linear scaling.
 
@@ -428,6 +431,7 @@ class LinearScalingRotaryEmbedding(RotaryEmbedding):
         return self._scaling_factor_to_offset
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DynamicNTKScalingRotaryEmbedding(RotaryEmbedding):
     """RotaryEmbedding extended with Dynamic NTK scaling.
 
@@ -509,6 +513,7 @@ def _yarn_get_mscale(scale: float = 1) -> float:
     return 0.1 * math.log(scale) + 1.0
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class YaRNScalingRotaryEmbedding(RotaryEmbedding):
     """RotaryEmbedding extended with YaRN method.
 
@@ -570,6 +575,7 @@ class YaRNScalingRotaryEmbedding(RotaryEmbedding):
         return cache
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3LongRoPEScaledRotaryEmbedding(nn.Module):
     """Phi3 family of models scaled rotary embedding.
 
@@ -695,6 +701,7 @@ def yarn_get_mscale(scale: float = 1, mscale: float = 1) -> float:
     return 0.1 * mscale * math.log(scale) + 1.0
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekScalingRotaryEmbedding(RotaryEmbedding):
     """RotaryEmbedding extended with YaRN method.
 
@@ -805,6 +812,7 @@ class DeepseekScalingRotaryEmbedding(RotaryEmbedding):
         return query, key
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama3RotaryEmbedding(RotaryEmbedding):
 
     def __init__(
@@ -851,6 +859,7 @@ class Llama3RotaryEmbedding(RotaryEmbedding):
         return new_freqs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4VisionRotaryEmbedding(RotaryEmbedding):
 
     def __init__(
@@ -915,6 +924,7 @@ class Llama4VisionRotaryEmbedding(RotaryEmbedding):
         return query_out.type_as(query), key_out.type_as(key)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MRotaryEmbedding(RotaryEmbedding):
     """Rotary Embedding with Multimodal Sections."""
 

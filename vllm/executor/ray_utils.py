@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 import time
@@ -34,6 +35,7 @@ try:
         from ray._private.state import state as _state
         available_resources_per_node = _state._available_resources_per_node
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class RayWorkerWrapper(WorkerWrapperBase):
         """Ray wrapper for vllm.worker.Worker, allowing Worker to be
         lazily initialized after Ray sets CUDA_VISIBLE_DEVICES."""

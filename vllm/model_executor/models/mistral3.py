@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import abstractmethod
 from collections.abc import Iterable, Mapping, Sequence
@@ -40,6 +41,7 @@ from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
 from .vision import get_vision_encoder_info
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mistral3ImagePixelInputs(TypedDict):
     type: Literal["pixel_values_pixtral"]
     pixel_values: Union[torch.Tensor, list[torch.Tensor]]
@@ -51,6 +53,7 @@ class Mistral3ImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mistral3PatchMerger(nn.Module):
     """
     Learned merging of spatial_merge_size ** 2 patches
@@ -96,6 +99,7 @@ class Mistral3PatchMerger(nn.Module):
         return image_features
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mistral3MultiModalProjector(nn.Module):
 
     def __init__(self,
@@ -137,6 +141,7 @@ class Mistral3MultiModalProjector(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaLikeConfig(Protocol):
     vision_config: Final[PretrainedConfig]
     image_token_index: Final[int]
@@ -144,10 +149,12 @@ class LlavaLikeConfig(Protocol):
     vision_feature_layer: Final[Union[int, list[int]]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaLikeProcessor(Protocol):
     image_token: Final[str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseLlavaProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self) -> LlavaLikeConfig:
@@ -184,6 +191,7 @@ class BaseLlavaProcessingInfo(BaseProcessingInfo):
 _I = TypeVar("_I", bound=BaseLlavaProcessingInfo)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mistral3DummyInputsBuilder(BaseDummyInputsBuilder[_I]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -212,12 +220,14 @@ class Mistral3DummyInputsBuilder(BaseDummyInputsBuilder[_I]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mistral3ProcessingInfo(BaseLlavaProcessingInfo):
 
     def get_hf_processor(self, **kwargs: object):
         return self.ctx.get_hf_processor(PixtralProcessor, **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mistral3MultiModalProcessor(
         BaseMultiModalProcessor[Mistral3ProcessingInfo]):
 
@@ -383,6 +393,7 @@ def init_vision_tower_for_llava(
     _build_mistral3_processor,
     info=_build_mistral3_info,
     dummy_inputs=Mistral3DummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mistral3ForConditionalGeneration(nn.Module, SupportsMultiModal,
                                        SupportsPP):
 

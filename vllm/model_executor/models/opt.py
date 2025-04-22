@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/opt/modeling_opt.py
@@ -48,6 +49,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OPTLearnedPositionalEmbedding(nn.Embedding):
 
     def __init__(self, num_embeddings: int, embedding_dim: int):
@@ -61,6 +63,7 @@ class OPTLearnedPositionalEmbedding(nn.Embedding):
         return super().forward(positions + self.offset)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OPTAttention(nn.Module):
 
     def __init__(
@@ -115,6 +118,7 @@ class OPTAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OPTDecoderLayer(nn.Module):
 
     def __init__(
@@ -189,6 +193,7 @@ class OPTDecoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OPTDecoder(nn.Module):
 
     def __init__(
@@ -281,6 +286,7 @@ class OPTDecoder(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OPTModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -314,6 +320,7 @@ class OPTModel(nn.Module):
                             inputs_embeds=inputs_embeds)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OPTForCausalLM(nn.Module, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": ["q_proj", "k_proj", "v_proj"],

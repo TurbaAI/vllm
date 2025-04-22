@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Optional
 
@@ -8,6 +9,7 @@ from torch.distributed import ProcessGroup
 from .base_device_communicator import DeviceCommunicatorBase
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CudaCommunicator(DeviceCommunicatorBase):
 
     def __init__(self,

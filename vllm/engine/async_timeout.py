@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Workaround for https://github.com/python/cpython/issues/86296
 #
@@ -29,12 +30,14 @@ else:
         deadline = loop.time() + delay if delay is not None else None
         return Timeout(deadline, loop)
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class _State(enum.Enum):
         INIT = "INIT"
         ENTER = "ENTER"
         TIMEOUT = "TIMEOUT"
         EXIT = "EXIT"
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Timeout:
         # Internal class, please don't instantiate it directly
         # Use timeout() and timeout_at() public factories instead.

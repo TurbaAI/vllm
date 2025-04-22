@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Any, Dict, List, Tuple
@@ -9,6 +10,7 @@ from vllm.pooling_params import PoolingParams
 from vllm.utils import is_pin_memory_available
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingMetadata:
     """Metadata for pooling operations in the Pooler layer.
 
@@ -39,6 +41,7 @@ class PoolingMetadata:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingTensors:
     """Tensors for pooling."""
 

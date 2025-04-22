@@ -20,6 +20,7 @@ Not currently supported:
 1) Non power of two head dims
 
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import triton
@@ -695,6 +696,7 @@ def check_args(
     assert (nheads_q % nheads_k) == 0
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _attention(torch.autograd.Function):
 
     @staticmethod

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from typing import Optional, Union
@@ -9,6 +10,7 @@ import vllm.envs as envs
 from vllm.transformers_utils.configs.deepseek_vl2 import DeepseekV2Config
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EAGLEConfig(PretrainedConfig):
     model_type = "eagle"
 

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Custom normalization layers."""
 from typing import Optional, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -79,6 +80,7 @@ def dispatch_cuda_rmsnorm_func(add_residual: bool):
 
 
 @CustomOp.register("rms_norm")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RMSNorm(CustomOp):
     """Root mean square normalization.
 
@@ -213,6 +215,7 @@ class RMSNorm(CustomOp):
 
 
 @CustomOp.register("gemma_rms_norm")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GemmaRMSNorm(CustomOp):
     """RMS normalization for Gemma.
 

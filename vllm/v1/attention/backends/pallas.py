@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Any, Optional
@@ -15,6 +16,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PallasAttentionBackend(AttentionBackend):
 
     @staticmethod
@@ -52,6 +54,7 @@ class PallasAttentionBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PallasMetadata:
     # NOTE(sang): Definition of context_len, query_len, and seq_len.
     # |---------- N-1 iteration --------|
@@ -69,6 +72,7 @@ class PallasMetadata:
     num_seqs: int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PallasAttentionBackendImpl(AttentionImpl):
 
     def __init__(

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import abstractmethod
 from typing import Dict, Optional, Union
@@ -10,6 +11,7 @@ import torch.nn as nn
 from vllm.platforms import current_platform
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpecDecodeBaseSampler(nn.Module):
     """Base class for samplers used for Speculative Decoding verification
         step.
@@ -225,6 +227,7 @@ class SpecDecodeBaseSampler(nn.Module):
         assert torch.all(draft_token_ids >= 0)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpecDecodeDeterministicBaseSampler(SpecDecodeBaseSampler):
     """Base class for samplers used for Speculative Decoding verification
        step which are deterministic.
@@ -241,6 +244,7 @@ class SpecDecodeDeterministicBaseSampler(SpecDecodeBaseSampler):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpecDecodeStochasticBaseSampler(SpecDecodeBaseSampler):
     """Base class for samplers used for Speculative Decoding verification
        step which are stochastic

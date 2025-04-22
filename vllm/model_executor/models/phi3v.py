@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 The vLLM team.
 # Copyright 2024 Microsoft and the HuggingFace Inc. team. All rights reserved.
@@ -94,6 +95,7 @@ def _init_img_processor(hf_config: PretrainedConfig,
     return img_processor
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3VImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: Union[torch.Tensor, List[torch.Tensor]]
@@ -113,6 +115,7 @@ class Phi3VImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3VImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: Union[torch.Tensor, List[torch.Tensor]]
@@ -125,6 +128,7 @@ class Phi3VImageEmbeddingInputs(TypedDict):
 Phi3VImageInputs = Union[Phi3VImagePixelInputs, Phi3VImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3ImageEmbeddingBase(nn.Module):
 
     def __init__(self) -> None:
@@ -152,6 +156,7 @@ class Phi3ImageEmbeddingBase(nn.Module):
 
 
 # adapted from https://huggingface.co/microsoft/Phi-3-vision-128k-instruct/blob/main/image_embedding_phi3_v.py
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3HDImageEmbedding(Phi3ImageEmbeddingBase):
     """Phi3 Image embedding with HD transform."""
 
@@ -306,6 +311,7 @@ class Phi3HDImageEmbedding(Phi3ImageEmbeddingBase):
         return image_features_hd_newline
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3VProcessingInfo(BaseProcessingInfo):
 
     def get_hf_processor(
@@ -342,6 +348,7 @@ class Phi3VProcessingInfo(BaseProcessingInfo):
         return ImageSize(height=8000, width=50)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3VDummyInputsBuilder(BaseDummyInputsBuilder[Phi3VProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -370,6 +377,7 @@ class Phi3VDummyInputsBuilder(BaseDummyInputsBuilder[Phi3VProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3VMultiModalProcessor(BaseMultiModalProcessor[Phi3VProcessingInfo]):
 
     def _call_hf_processor(
@@ -509,6 +517,7 @@ class Phi3VMultiModalProcessor(BaseMultiModalProcessor[Phi3VProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(Phi3VMultiModalProcessor,
                                         info=Phi3VProcessingInfo,
                                         dummy_inputs=Phi3VDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3VForCausalLM(nn.Module, SupportsMultiModal, SupportsPP,
                        SupportsQuant):
     hf_to_vllm_mapper = WeightsMapper(

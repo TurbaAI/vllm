@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Attention layer with PagedAttention and Triton prefix prefill."""
 from typing import Any, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -16,6 +17,7 @@ from vllm.v1.attention.backends.flash_attn import (
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TritonAttentionBackend(AttentionBackend):
 
     accept_output_buffer: bool = True
@@ -56,6 +58,7 @@ class TritonAttentionBackend(AttentionBackend):
         return FlashAttentionMetadataBuilder
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TritonAttentionImpl(AttentionImpl):
 
     def __init__(

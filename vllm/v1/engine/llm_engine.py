@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections.abc import Mapping
 from copy import copy
@@ -35,6 +36,7 @@ _G = TypeVar("_G", bound=BaseTokenizerGroup, default=BaseTokenizerGroup)
 _R = TypeVar("_R", default=Any)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LLMEngine:
     """Legacy LLMEngine for backwards compatibility."""
 

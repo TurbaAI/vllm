@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import inspect
 from abc import ABC, abstractmethod
@@ -8,6 +9,7 @@ import torch
 from torch import nn
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuantizeMethodBase(ABC):
     """Base class for different quantized methods."""
 
@@ -57,6 +59,7 @@ def method_has_implemented_embedding(
             and class_embedding is not base_embedding)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuantizationConfig(ABC):
     """Base class for quantization configs."""
 

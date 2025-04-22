@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 from typing import Iterable, Optional, Set, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -22,6 +23,7 @@ from .deepseek_v2 import (DeepseekV2DecoderLayer,
 from .utils import maybe_prefix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SharedHead(nn.Module):
 
     def __init__(
@@ -39,6 +41,7 @@ class SharedHead(nn.Module):
         return self.norm(hidden_states)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepSeekMultiTokenPredictorLayer(nn.Module):
 
     def __init__(
@@ -90,6 +93,7 @@ class DeepSeekMultiTokenPredictorLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepSeekMultiTokenPredictor(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -145,6 +149,7 @@ class DeepSeekMultiTokenPredictor(nn.Module):
         return logits
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepSeekMTP(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

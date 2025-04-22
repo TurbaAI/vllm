@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from typing import List, Optional
@@ -8,6 +9,7 @@ from vllm.core.block.interfaces import Block, DeviceAwareBlockAllocator
 from vllm.utils import Device, cdiv, chunk_list
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockTable:
     """A class to manage blocks for a specific sequence.
 

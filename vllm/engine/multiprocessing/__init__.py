@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import uuid
 from dataclasses import dataclass, field
@@ -23,11 +24,13 @@ IPC_HEALTH_EXT = "_health_socket"
 IPC_DATA_EXT = "_data_socket"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MQEngineDeadError(RuntimeError):
     pass
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCProcessRequest:
     prompt: PromptType
     params: Union[SamplingParams, PoolingParams]
@@ -98,6 +101,7 @@ class RPCProcessRequest:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCError:
     request_id: Optional[str]
     is_engine_errored: bool
@@ -105,52 +109,62 @@ class RPCError:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCAbortRequest:
     request_id: str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCStartupRequest(Enum):
     IS_SERVER_READY = 1
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCStartupResponse:
     tracing_enabled: bool
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCUProfileRequest(Enum):
     START_PROFILE = 1
     STOP_PROFILE = 2
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCResetPrefixCacheRequest:
     device: Device
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCSleepRequest(Enum):
     SLEEP_LEVEL_1 = 1
     SLEEP_LEVEL_2 = 2
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCWakeUpRequest:
     tags: Optional[list[str]] = None
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCIsSleepingRequest:
     # Set the default value of request_id to a new UUID
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCIsSleepingResponse:
     request_id: str
     is_sleeping: bool
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCLoadAdapterRequest:
     lora_request: LoRARequest
     # Set the default value of request_id to a new UUID
@@ -158,6 +172,7 @@ class RPCLoadAdapterRequest:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RPCAdapterLoadedResponse:
     request_id: str
 

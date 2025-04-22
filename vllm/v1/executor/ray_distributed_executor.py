@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from concurrent.futures import Future
 from typing import Union
@@ -9,6 +10,7 @@ from vllm.v1.executor.abstract import Executor
 from vllm.v1.outputs import ModelRunnerOutput
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FutureWrapper(Future):
     """A wrapper around a Ray output reference to meet the interface
     of .execute_model().
@@ -24,6 +26,7 @@ class FutureWrapper(Future):
         return self.ref.get()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RayDistributedExecutor(RayDistributedExecutorV0, Executor):
     """Ray distributed executor using Ray Compiled Graphs."""
 

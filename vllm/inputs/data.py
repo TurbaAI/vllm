@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -14,6 +15,7 @@ if TYPE_CHECKING:
     from vllm.multimodal.inputs import MultiModalInputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TextPrompt(TypedDict):
     """Schema for a text prompt."""
 
@@ -35,6 +37,7 @@ class TextPrompt(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokensPrompt(TypedDict):
     """Schema for a tokenized prompt."""
 
@@ -91,6 +94,7 @@ _T2_co = TypeVar("_T2_co",
 
 
 # TODO: Make fields ReadOnly once mypy supports it
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExplicitEncoderDecoderPrompt(TypedDict, Generic[_T1_co, _T2_co]):
     """
     Represents an encoder/decoder model input prompt,
@@ -130,6 +134,7 @@ both decoder-only and encoder/decoder input types:
 """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenInputs(TypedDict):
     """Represents token-based inputs."""
 
@@ -217,6 +222,7 @@ This specifies the data required for decoder-only models.
 """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EncoderDecoderInputs(TypedDict):
     """
     The inputs in :class:`~vllm.LLMEngine` before they are
@@ -239,6 +245,7 @@ A processed :class:`SingletonPrompt` which can be passed to
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SingletonInputsAdapter:
     """
     Unified interface to access the components of :class:`SingletonInputs`.

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import itertools
 from abc import abstractmethod
@@ -133,6 +134,7 @@ def left_shift_bitsandbytes_4bit_shard(bnb_weight_attrs: dict[str, Any]):
     return left, right
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LinearMethodBase(QuantizeMethodBase):
     """Base class for different (maybe quantized) linear methods."""
 
@@ -167,6 +169,7 @@ class LinearMethodBase(QuantizeMethodBase):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UnquantizedLinearMethod(LinearMethodBase):
     """Linear method without quantization."""
 
@@ -191,6 +194,7 @@ class UnquantizedLinearMethod(LinearMethodBase):
         return F.linear(x, layer.weight, bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LinearBase(torch.nn.Module):
     """Base linear layer.
 
@@ -238,6 +242,7 @@ class LinearBase(torch.nn.Module):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ReplicatedLinear(LinearBase):
     """Replicated linear layer.
 
@@ -331,6 +336,7 @@ class ReplicatedLinear(LinearBase):
         return s
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ColumnParallelLinear(LinearBase):
     """Linear layer with column parallelism.
 
@@ -491,6 +497,7 @@ class ColumnParallelLinear(LinearBase):
         return s
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MergedColumnParallelLinear(ColumnParallelLinear):
     """Packed linear layers with column parallelism.
 
@@ -765,6 +772,7 @@ class MergedColumnParallelLinear(ColumnParallelLinear):
                                         shard_size=shard_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QKVParallelLinear(ColumnParallelLinear):
     """Linear layers for the attention's QKV transformation.
 
@@ -1107,6 +1115,7 @@ class QKVParallelLinear(ColumnParallelLinear):
         param_data.copy_(loaded_weight)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RowParallelLinear(LinearBase):
     """Linear layer with row parallelism.
 
@@ -1278,6 +1287,7 @@ class RowParallelLinear(LinearBase):
         return s
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QKVCrossParallelLinear(LinearBase):
     """Linear layers for efficient cross-attention's QKV transformation.
 

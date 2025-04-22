@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from enum import Enum, IntEnum
 from functools import cached_property
 from typing import Annotated, Any, Optional, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import msgspec
 from pydantic import BaseModel
@@ -20,6 +21,7 @@ _SAMPLING_EPS = 1e-5
 _MAX_TEMP = 1e-2
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SamplingType(IntEnum):
     GREEDY = 0
     RANDOM = 1
@@ -28,6 +30,7 @@ class SamplingType(IntEnum):
 
 # maybe make msgspec?
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GuidedDecodingParams:
     """One of these fields will be used to build a logit processor."""
     json: Optional[Union[str, dict]] = None
@@ -96,6 +99,7 @@ class GuidedDecodingParams:
                 f"specified: {self.__dict__}")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestOutputKind(Enum):
     # Return entire output so far in every RequestOutput
     CUMULATIVE = 0
@@ -105,6 +109,7 @@ class RequestOutputKind(Enum):
     FINAL_ONLY = 2
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SamplingParams(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]
@@ -566,6 +571,7 @@ class SamplingParams(
             f"extra_args={self.extra_args})")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BeamSearchParams(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]

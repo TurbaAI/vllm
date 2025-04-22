@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 ###############################################################################
 # Copyright (C) 2024 Habana Labs, Ltd. an Intel Company
@@ -34,6 +35,7 @@ from vllm.worker.worker_base import (LocalOrDistributedWorkerBase, WorkerBase,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUWorker(LocalOrDistributedWorkerBase):
     """A worker class that executes (a partition of) the model on a HPU.
 
@@ -459,6 +461,7 @@ def raise_if_cache_size_invalid(num_gpu_blocks, block_size, max_model_len,
             "initializing the engine.")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUCacheEngine(CacheEngine):
 
     def _allocate_kv_cache(

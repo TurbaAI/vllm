@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass, field
 from typing import Optional
@@ -13,6 +14,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IncrementalDetokenizer:
 
     # Generation data

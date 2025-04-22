@@ -2,6 +2,7 @@
 """Attention layer with FlashAttention."""
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 import torch
@@ -28,6 +29,7 @@ if current_platform.is_cuda():
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashAttentionBackend(AttentionBackend):
 
     accept_output_buffer: bool = True
@@ -69,6 +71,7 @@ class FlashAttentionBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashAttentionMetadata:
     # NOTE(sang): Definition of context_len, query_len, and seq_len.
     # |---------- N-1 iteration --------|
@@ -98,6 +101,7 @@ class FlashAttentionMetadata:
 
     # for local attention
     @dataclass
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class LocalAttentionMetadata:
         local_query_start_loc: torch.Tensor
         local_seqused_k: torch.Tensor
@@ -274,6 +278,7 @@ def make_local_attention_virtual_batches(
         block_table_local
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashAttentionMetadataBuilder:
 
     def __init__(self, runner: "GPUModelRunner"):
@@ -353,6 +358,7 @@ class FlashAttentionMetadataBuilder:
         return attn_metadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashAttentionImpl(AttentionImpl):
 
     def __init__(

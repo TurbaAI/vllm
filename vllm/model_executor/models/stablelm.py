@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2023 Stability AI, EleutherAI, and The HuggingFace Inc. team.
 # All rights reserved.
@@ -49,6 +50,7 @@ from .utils import (AutoWeightsLoader, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StablelmMLP(nn.Module):
 
     def __init__(self,
@@ -78,6 +80,7 @@ class StablelmMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StablelmAttention(nn.Module):
 
     def __init__(self,
@@ -156,6 +159,7 @@ class StablelmAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StablelmDecoderLayer(nn.Module):
 
     def __init__(
@@ -200,6 +204,7 @@ class StablelmDecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StableLMEpochModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -293,6 +298,7 @@ class StableLMEpochModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StablelmForCausalLM(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

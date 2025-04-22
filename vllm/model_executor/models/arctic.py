@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Inference-only Snowflake Arctic model."""
 from typing import Iterable, List, Optional, Set, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -42,6 +43,7 @@ from .utils import (extract_layer_index, is_pp_missing_parameter,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticMLP(nn.Module):
 
     def __init__(self,
@@ -79,6 +81,7 @@ class ArcticMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticMoE(nn.Module):
     """
     Model-parallel implementation of Arctic MoE Layer.
@@ -218,6 +221,7 @@ class ArcticMoE(nn.Module):
         return final_hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticAttention(nn.Module):
 
     def __init__(
@@ -292,6 +296,7 @@ class ArcticAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticDecoderLayer(nn.Module):
 
     def __init__(
@@ -361,6 +366,7 @@ class ArcticDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -412,6 +418,7 @@ class ArcticModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticForCausalLM(nn.Module, SupportsPP, SupportsQuant):
     packed_modules_mapping = {"qkv_proj": ["q_proj", "k_proj", "v_proj"]}
 

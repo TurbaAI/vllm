@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
@@ -24,6 +25,7 @@ from vllm.model_executor.parameter import (BasevLLMParameter,
 __all__ = ["CompressedTensors24"]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensors24(CompressedTensorsScheme):
 
     def __init__(

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import inspect
 from typing import Callable, Dict, List, Optional, TypeVar, Union, overload
@@ -47,6 +48,7 @@ def support_torch_compile(
 
     ```python
     @support_torch_compile
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class MyModel(nn.Module):
         def forward(self, x: torch.Tensor, y: Optional[torch.Tensor]):
             ...
@@ -56,6 +58,7 @@ def support_torch_compile(
 
     ```python
     @support_torch_compile(dynamic_arg_dims={"x": 0, "y": 0})
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class MyModel(nn.Module):
         def forward(self, x: torch.Tensor, y: Optional[torch.Tensor]):
             ...

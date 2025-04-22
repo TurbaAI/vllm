@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Dict, Optional
 
@@ -16,6 +17,7 @@ from .idefics3 import Idefics3ProcessingInfo
 # yapf: enable
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SmolVLMProcessingInfo(Idefics3ProcessingInfo):
 
     def get_hf_processor(
@@ -42,6 +44,7 @@ class SmolVLMProcessingInfo(Idefics3ProcessingInfo):
 @MULTIMODAL_REGISTRY.register_processor(SmolVLMMultiModalProcessor,
                                         info=SmolVLMProcessingInfo,
                                         dummy_inputs=SmolVLMDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SmolVLMForConditionalGeneration(Idefics3ForConditionalGeneration):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

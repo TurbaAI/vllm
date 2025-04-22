@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """Utility functions used for tests and benchmarks"""
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List, Optional
 
@@ -14,6 +15,7 @@ from .quant_utils import (get_pack_factor, gptq_quantize_weights,
                           quantize_weights, sort_weights)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MarlinWorkspace:
 
     def __init__(self, out_features, min_thread_n, max_parallel):

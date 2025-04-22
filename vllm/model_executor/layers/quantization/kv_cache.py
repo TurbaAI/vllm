@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -10,6 +11,7 @@ from vllm.platforms import current_platform
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseKVCacheMethod(QuantizeMethodBase):
     """
     Quant method that adds `_k_scale` and `_v_scale` attributes to the

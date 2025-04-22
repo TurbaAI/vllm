@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 from collections.abc import Sequence
@@ -26,6 +27,7 @@ logger = init_logger(__name__)
 
 
 @ToolParserManager.register_module("granite")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteToolParser(ToolParser):
     """
     Tool call parser for the granite 3.0 models. Intended

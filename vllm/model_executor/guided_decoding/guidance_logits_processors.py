@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 import os
 from typing import Any, List
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import llguidance
 import llguidance.hf
@@ -13,6 +14,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GuidanceLogitsProcessor:
     """Base Guidance Logits Processor"""
 

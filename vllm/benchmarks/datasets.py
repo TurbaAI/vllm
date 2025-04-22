@@ -13,6 +13,7 @@ generation. Supported dataset types include:
 TODO: Implement CustomDataset to parse a JSON file and convert its contents into
 SampleRequest instances, similar to the approach used in ShareGPT.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import base64
 import io
@@ -43,6 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SampleRequest:
     """
     Represents a single inference request for benchmarking.
@@ -60,6 +62,7 @@ class SampleRequest:
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BenchmarkDataset(ABC):
     DEFAULT_SEED = 0
 
@@ -285,6 +288,7 @@ def process_image(image: Any) -> Mapping[str, Any]:
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RandomDataset(BenchmarkDataset):
     # Default values copied from benchmark_serving.py for the random dataset.
     DEFAULT_PREFIX_LEN = 0
@@ -358,6 +362,7 @@ class RandomDataset(BenchmarkDataset):
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ShareGPTDataset(BenchmarkDataset):
     """
     Implements the ShareGPT dataset.  Loads data from a JSON file and generates
@@ -432,6 +437,7 @@ class ShareGPTDataset(BenchmarkDataset):
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SonnetDataset(BenchmarkDataset):
     """
     Simplified implementation of the Sonnet dataset.  Loads poem lines from a
@@ -513,6 +519,7 @@ class SonnetDataset(BenchmarkDataset):
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BurstGPTDataset(BenchmarkDataset):
     """
     Implements the BurstGPT dataset.  Loads data from a CSV file and generates
@@ -589,6 +596,7 @@ class BurstGPTDataset(BenchmarkDataset):
 # -----------------------------------------------------------------------------
 # HuggingFace Dataset Base Implementation
 # -----------------------------------------------------------------------------
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HuggingFaceDataset(BenchmarkDataset):
     """Base class for datasets hosted on HuggingFace."""
 
@@ -630,6 +638,7 @@ class HuggingFaceDataset(BenchmarkDataset):
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConversationDataset(HuggingFaceDataset):
     """Dataset for conversation data with multimodal support."""
     SUPPORTED_DATASET_PATHS = {
@@ -687,6 +696,7 @@ class ConversationDataset(HuggingFaceDataset):
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionArenaDataset(HuggingFaceDataset):
     """
     Vision Arena Dataset.
@@ -743,6 +753,7 @@ class VisionArenaDataset(HuggingFaceDataset):
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InstructCoderDataset(HuggingFaceDataset):
     """
     InstructCoder Dataset.
@@ -787,6 +798,7 @@ class InstructCoderDataset(HuggingFaceDataset):
 # -----------------------------------------------------------------------------
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AIMODataset(HuggingFaceDataset):
     """
     Dataset class for processing a AIMO dataset with reasoning questions.

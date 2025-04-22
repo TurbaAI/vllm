@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://huggingface.co/h2oai/h2ovl-mississippi-2b/blob/main/modeling_h2ovl_chat.py
 # https://huggingface.co/h2oai/h2ovl-mississippi-2b/blob/main/image_process.py
@@ -219,6 +220,7 @@ def image_to_pixel_values_h2ovl(
     return pixel_values
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class H2OVLProcessor(BaseInternVLProcessor):
 
     def __init__(
@@ -388,6 +390,7 @@ class H2OVLProcessor(BaseInternVLProcessor):
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class H2OVLProcessingInfo(BaseInternVLProcessingInfo):
 
     def get_hf_processor(
@@ -430,6 +433,7 @@ class H2OVLProcessingInfo(BaseInternVLProcessingInfo):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class H2OVLMultiModalProcessor(InternVLMultiModalProcessor[H2OVLProcessingInfo]
                                ):
 
@@ -513,6 +517,7 @@ class H2OVLMultiModalProcessor(InternVLMultiModalProcessor[H2OVLProcessingInfo]
     H2OVLMultiModalProcessor,
     info=H2OVLProcessingInfo,
     dummy_inputs=InternVLDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class H2OVLChatModel(InternVLChatModel):
 
     def _init_vision_model(

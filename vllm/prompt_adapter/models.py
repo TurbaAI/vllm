@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import logging
 import math
@@ -74,6 +75,7 @@ def convert_mapping(
     return pa_indices, pa_embedding_mapping
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptAdapterModel(AdapterModel):
 
     def __init__(self,
@@ -106,6 +108,7 @@ class PromptAdapterModel(AdapterModel):
         return cls(prompt_adapter_id, num_virtual_tokens, prompt_embedding)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptAdapterModelManager(AdapterModelManager):
     """A manager that manages multiple Prompt Adapter models."""
 
@@ -259,6 +262,7 @@ class PromptAdapterModelManager(AdapterModelManager):
         return get_adapter(adapter_id, self._registered_adapters)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptAdapterLRUCache(AdapterLRUCache[PromptAdapterModel]):
 
     def __init__(self, capacity: int,
@@ -266,6 +270,7 @@ class PromptAdapterLRUCache(AdapterLRUCache[PromptAdapterModel]):
         super().__init__(capacity, deactivate_prompt_adapter_fn)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LRUCachePromptAdapterModelManager(PromptAdapterModelManager):
     """A model manager that manages multiple prompt_adapters with LRU cache."""
 

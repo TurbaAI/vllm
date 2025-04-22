@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import weakref
 from typing import List, Optional, Set, Tuple
@@ -14,10 +15,12 @@ from vllm.spec_decode.proposer_worker_base import NonLLMProposerWorkerBase
 from vllm.spec_decode.top1_proposer import Top1Proposer
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _DummyModel(nn.Module):
     pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NGramWorker(NonLLMProposerWorkerBase):
     """NGramWorker provides a light drafter without need for model.
 

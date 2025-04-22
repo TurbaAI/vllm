@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from collections.abc import Iterable, Mapping, Sequence
@@ -39,6 +40,7 @@ from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
 _MAX_FRAMES_PER_VIDEO = 16
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionVideoPixelInputs(TypedDict):
     type: Literal["pixel_values_videos"]
     pixel_values_videos: Union[torch.Tensor, list[torch.Tensor]]
@@ -51,6 +53,7 @@ class LlavaOnevisionVideoPixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: Union[torch.Tensor, list[torch.Tensor]]
@@ -70,6 +73,7 @@ class LlavaOnevisionImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: torch.Tensor
@@ -86,10 +90,12 @@ LlavaOnevisionMultiInputs = Union[LlavaOnevisionImageInputs,
                                   LlavaOnevisionVideoPixelInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionLikeConfig(LlavaNextLikeConfig, Protocol):
     video_token_index: Final[int]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionProcessingInfo(LlavaNextProcessingInfo):
 
     def get_hf_config(self) -> LlavaOnevisionLikeConfig:
@@ -223,6 +229,7 @@ class LlavaOnevisionProcessingInfo(LlavaNextProcessingInfo):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionDummyInputsBuilder(
         LlavaDummyInputsBuilder[LlavaOnevisionProcessingInfo]):
 
@@ -265,6 +272,7 @@ class LlavaOnevisionDummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionMultiModalProcessor(
         BaseLlavaNextMultiModalProcessor[LlavaOnevisionProcessingInfo]):
 
@@ -401,6 +409,7 @@ class LlavaOnevisionMultiModalProcessor(
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionMultiModalProjector(nn.Module):
 
     def __init__(self, config: LlavaOnevisionConfig):
@@ -425,6 +434,7 @@ class LlavaOnevisionMultiModalProjector(nn.Module):
     LlavaOnevisionMultiModalProcessor,
     info=LlavaOnevisionProcessingInfo,
     dummy_inputs=LlavaOnevisionDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaOnevisionForConditionalGeneration(nn.Module, SupportsMultiModal,
                                              SupportsPP):
 

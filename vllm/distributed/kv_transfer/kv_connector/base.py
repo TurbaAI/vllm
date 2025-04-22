@@ -6,6 +6,7 @@ The class provides two primary abstract methods:
 1. send_kv_caches_and_hidden_states(): Send KV caches and hidden states
 2. recv_kv_caches_and_hidden_states(): Recv KV caches and hidden states
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, List, Tuple, Union
@@ -19,6 +20,7 @@ if TYPE_CHECKING:
     from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVConnectorBase(ABC):
     """
     Abstract base class for a KV connector.

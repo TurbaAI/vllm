@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Callable, List, Optional
 
@@ -22,6 +23,7 @@ SUPPORTED_STRATEGIES = [
 ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsW8A16Fp8(CompressedTensorsScheme):
 
     def __init__(self, strategy: str, is_static_input_scheme: bool):

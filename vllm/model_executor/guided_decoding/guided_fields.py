@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Dict, List, Optional, TypedDict, Union
@@ -7,6 +8,7 @@ from pydantic import BaseModel
 
 
 # These classes are deprecated, see SamplingParams
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LLMGuidedOptions(TypedDict, total=False):
     guided_json: Union[Dict, BaseModel, str]
     guided_regex: str
@@ -18,6 +20,7 @@ class LLMGuidedOptions(TypedDict, total=False):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GuidedDecodingRequest:
     """One of the fields will be used to retrieve the logit processor."""
     guided_json: Optional[Union[Dict, BaseModel, str]] = None

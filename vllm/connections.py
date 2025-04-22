@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections.abc import Mapping, MutableMapping
 from pathlib import Path
@@ -11,6 +12,7 @@ import requests
 from vllm.version import __version__ as VLLM_VERSION
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HTTPConnection:
     """Helper class to send HTTP requests."""
 

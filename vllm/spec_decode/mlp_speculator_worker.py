@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List, Optional, Set, Tuple
 
@@ -11,6 +12,7 @@ from vllm.spec_decode.multi_step_worker import MultiStepWorker
 from vllm.spec_decode.proposer_worker_base import NonLLMProposerWorkerBase
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLPSpeculatorWorker(NonLLMProposerWorkerBase, MultiStepWorker):
     """Worker for MLPSpeculator models.
 

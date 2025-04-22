@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Optional, Union
 
@@ -11,6 +12,7 @@ from vllm.sampling_params import BeamSearchParams, SamplingParams
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestLogger:
 
     def __init__(self, *, max_log_len: Optional[int]) -> None:

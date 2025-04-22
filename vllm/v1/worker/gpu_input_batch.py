@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Datastructures defining an input batch
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Optional, cast
@@ -20,6 +21,7 @@ _SAMPLING_EPS = 1e-5
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CachedRequestState:
 
     req_id: str
@@ -53,6 +55,7 @@ class CachedRequestState:
             return self.output_token_ids[idx - self.num_prompt_tokens]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InputBatch:
 
     def __init__(

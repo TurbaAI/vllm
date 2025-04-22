@@ -15,6 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from typing import Iterable, Optional, Set, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn.functional as F
@@ -51,6 +52,7 @@ from .utils import (AutoWeightsLoader, extract_layer_index,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3MLP(nn.Module):
 
     def __init__(
@@ -90,6 +92,7 @@ class Gemma3MLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3Attention(nn.Module):
 
     def __init__(self,
@@ -273,6 +276,7 @@ class Gemma3Attention(nn.Module):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3DecoderLayer(nn.Module):
 
     def __init__(
@@ -341,6 +345,7 @@ class Gemma3DecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3Model(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -466,6 +471,7 @@ class Gemma3Model(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3ForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

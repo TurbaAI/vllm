@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.distributed as dist
 from torch.distributed import ProcessGroup
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeviceCommunicatorBase:
     """
     Base class for device-specific communicator.

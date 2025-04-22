@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
@@ -16,6 +17,7 @@ if TYPE_CHECKING:
                                                ModelRunnerInputBuilderBase)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttentionType:
     """
     Attention type.
@@ -31,6 +33,7 @@ class AttentionType:
     ENCODER_DECODER = "encoder_decoder"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttentionBackend(ABC):
     """Abstract class for attention backends."""
     # For some attention backends, we allocate an output tensor before
@@ -101,6 +104,7 @@ class AttentionBackend(ABC):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttentionMetadata:
     """Attention metadata for prefill and decode batched together."""
     # Total number of prefill requests.
@@ -160,6 +164,7 @@ class AttentionMetadata:
 T = TypeVar("T", bound=AttentionMetadata)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttentionState(ABC, Generic[T]):
     """Holds attention backend-specific objects reused during the
     lifetime of the model runner."""
@@ -210,6 +215,7 @@ class AttentionState(ABC, Generic[T]):
         ...
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttentionMetadataBuilder(ABC, Generic[T]):
     """Abstract class for attention metadata builders."""
 
@@ -230,6 +236,7 @@ class AttentionMetadataBuilder(ABC, Generic[T]):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttentionLayer(Protocol):
 
     _q_scale: torch.Tensor
@@ -249,6 +256,7 @@ class AttentionLayer(Protocol):
         ...
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttentionImpl(ABC, Generic[T]):
 
     @abstractmethod
@@ -281,6 +289,7 @@ class AttentionImpl(ABC, Generic[T]):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLAAttentionImpl(AttentionImpl[T], Generic[T]):
 
     @abstractmethod

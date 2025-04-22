@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # pylint: disable=unused-argument
 from typing import TYPE_CHECKING, List, Optional, Tuple, Union, cast
@@ -77,6 +78,7 @@ def _mcp_apply(x, bias, layer: ColumnParallelLinearWithLoRA):
 # https://arxiv.org/abs/2311.03285.
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ColumnParallelLinearWithShardedLoRA(ColumnParallelLinearWithLoRA):
     """
     Differs from ColumnParallelLinearWithLoRA by slicing LoRA A also.
@@ -120,6 +122,7 @@ class ColumnParallelLinearWithShardedLoRA(ColumnParallelLinearWithLoRA):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MergedColumnParallelLinearWithShardedLoRA(
         MergedColumnParallelLinearWithLoRA):
     """
@@ -167,6 +170,7 @@ class MergedColumnParallelLinearWithShardedLoRA(
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QKVParallelLinearWithShardedLoRA(QKVParallelLinearWithLoRA):
     """
     Differs from QKVParallelLinearWithLoRA by slicing the
@@ -202,6 +206,7 @@ class QKVParallelLinearWithShardedLoRA(QKVParallelLinearWithLoRA):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MergedQKVParallelLinearWithShardedLoRA(MergedQKVParallelLinearWithLoRA):
     """
     Differs from MergedQKVParallelLinearWithLoRA by slicing the 
@@ -250,6 +255,7 @@ class MergedQKVParallelLinearWithShardedLoRA(MergedQKVParallelLinearWithLoRA):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RowParallelLinearWithShardedLoRA(RowParallelLinearWithLoRA):
     """
     Differs from RowParallelLinearWithLoRA by slicing the

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -21,6 +22,7 @@ if TYPE_CHECKING:
     from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLABackend(MLACommonBackend):
 
     @staticmethod
@@ -45,6 +47,7 @@ class FlashMLABackend(MLACommonBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLAMetadata(MLACommonMetadata):
     decode_tile_scheduler_metadata: Optional[Tuple[torch.Tensor,
                                                    torch.Tensor]] = None
@@ -72,6 +75,7 @@ class FlashMLAMetadata(MLACommonMetadata):
             "advance_step is not implemented for FlashMLA")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLAMetadataBuilder(MLACommonMetadataBuilder[FlashMLAMetadata]):
 
     def __init__(self, *args, **kwargs):
@@ -96,6 +100,7 @@ class FlashMLAMetadataBuilder(MLACommonMetadataBuilder[FlashMLAMetadata]):
         return m
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLAState(MLACommonState[FlashMLAMetadata]):
 
     def __init__(self, *args, **kwds):
@@ -169,6 +174,7 @@ class FlashMLAState(MLACommonState[FlashMLAMetadata]):
             attn_metadata.decode_metadata.decode_num_splits)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashMLAImpl(MLACommonImpl[FlashMLAMetadata]):
 
     def __init__(

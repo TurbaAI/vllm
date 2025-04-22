@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import importlib.util
 from typing import Any, Callable, Dict, List, Optional
@@ -47,6 +48,7 @@ def _is_col_major(x: torch.Tensor) -> bool:
     return x.stride(0) == m * n and x.stride(1) == 1 and x.stride(2) == m
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Fp8Config(QuantizationConfig):
     """Config class for FP8."""
 
@@ -143,6 +145,7 @@ class Fp8Config(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Fp8LinearMethod(LinearMethodBase):
     """Linear method for FP8.
     Supports loading FP8 checkpoints with static weight scale and
@@ -421,6 +424,7 @@ class Fp8LinearMethod(LinearMethodBase):
                                      bias=bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Fp8MoEMethod(FusedMoEMethodBase):
     """MoE method for FP8.
     Supports loading FP8 checkpoints with static weight scale and
@@ -819,6 +823,7 @@ class Fp8MoEMethod(FusedMoEMethodBase):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Fp8KVCacheMethod(BaseKVCacheMethod):
     """
     Supports loading kv-cache scaling factors from FP8 checkpoints.

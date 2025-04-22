@@ -5,6 +5,7 @@ from collections import deque
 from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any, Callable, NamedTuple, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.config import VllmConfig
 from vllm.logger import init_logger
@@ -18,6 +19,7 @@ from vllm.v1.request import Request
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockHashType(NamedTuple):
     """Hash value of a block (int), the token IDs in the block, and extra keys.
     We keep a tuple of token IDs and extra keys to reduce the likelihood of
@@ -46,6 +48,7 @@ NONE_HASH = int.from_bytes(os.urandom(32), byteorder="big") if os.getenv(
     'PYTHONHASHSEED') is not None else sha256(os.getenv('PYTHONHASHSEED'))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrefixCachingMetrics:
     """Metrics for prefix caching with a hit rate of the most recent N requests.
 
@@ -109,6 +112,7 @@ class PrefixCachingMetrics:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVCacheBlock:
     """KV-cache block metadata."""
     # Block ID, ranging from 0 to num_gpu_blocks - 1.
@@ -158,6 +162,7 @@ class KVCacheBlock:
                 f"next_free_block={next_block_id})")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FreeKVCacheBlockQueue:
     """This class organizes a list of KVCacheBlock objects to a doubly linked
     list of free blocks. We implement this class instead of using Python

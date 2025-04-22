@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 import pickle
@@ -43,6 +44,7 @@ def sched_yield():
         time.sleep(0)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ShmRingBuffer:
 
     def __init__(self,
@@ -172,6 +174,7 @@ class ShmRingBuffer:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Handle:
     local_reader_ranks: List[int] = field(default_factory=list)
 
@@ -181,6 +184,7 @@ class Handle:
     remote_addr_ipv6: bool = False
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MessageQueue:
 
     def __init__(

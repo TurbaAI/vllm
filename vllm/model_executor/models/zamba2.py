@@ -8,6 +8,7 @@ model alternates between state space model layers and attention-based layers.
 """
 from itertools import cycle
 from typing import Dict, Iterable, List, Optional, Set, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -44,6 +45,7 @@ from .interfaces import HasInnerState, IsHybrid, SupportsV0Only
 from .utils import AutoWeightsLoader, WeightsMapper, maybe_prefix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Zamba2LoRA(nn.Module):
     """LoRA layer for the Zamba2 model.
     
@@ -92,6 +94,7 @@ class Zamba2LoRA(nn.Module):
         return lora_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Zamba2Attention(nn.Module):
     """Multi-head attention mechanism for the Zamba2 model.
     
@@ -268,6 +271,7 @@ class Zamba2Attention(nn.Module):
         return y
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Zamba2MLP(nn.Module):
     """Feed-forward MLP layer for the Zamba2 model.
     
@@ -359,6 +363,7 @@ class Zamba2MLP(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Zamba2AttentionDecoderLayer(nn.Module):
     """Single decoder layer combining attention and feed-forward networks.
     
@@ -462,6 +467,7 @@ class Zamba2AttentionDecoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Zamba2MambaDecoderLayer(nn.Module):
     """Single Mamba decoder layer with normalization.
     
@@ -557,6 +563,7 @@ class Zamba2MambaDecoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Zamba2HybridLayer(nn.Module):
     """Hybrid layer combining Transformer and Mamba architectures.
     
@@ -641,6 +648,7 @@ class Zamba2HybridLayer(nn.Module):
         return layer_outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Zamba2Model(nn.Module):
     """Core Zamba2 model combining transformer and Mamba architectures.
     
@@ -803,6 +811,7 @@ class Zamba2Model(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Zamba2ForCausalLM(nn.Module, HasInnerState, IsHybrid, SupportsV0Only):
     """Zamba2 model with causal language modeling head.
     

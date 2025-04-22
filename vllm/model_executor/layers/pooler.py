@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from enum import IntEnum
 from typing import List, Optional, Union
@@ -17,6 +18,7 @@ from vllm.transformers_utils.config import (
     get_cross_encoder_activation_function)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingType(IntEnum):
     """Enumeration for different types of pooling methods."""
     LAST = 0
@@ -26,6 +28,7 @@ class PoolingType(IntEnum):
     MEAN = 4
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SimplePooler(nn.Module):
     """A layer that pools specific information from hidden states.
 
@@ -102,6 +105,7 @@ class SimplePooler(nn.Module):
         return PoolerOutput(outputs=pooled_outputs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLSPool(SimplePooler):
 
     def extract_states(
@@ -116,6 +120,7 @@ class CLSPool(SimplePooler):
         return hidden_states[first_token_flat_indices]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LastPool(SimplePooler):
 
     def extract_states(
@@ -129,6 +134,7 @@ class LastPool(SimplePooler):
         return hidden_states[last_token_flat_indices]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AllPool(SimplePooler):
 
     def extract_states(
@@ -147,6 +153,7 @@ class AllPool(SimplePooler):
         return pooled_data
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MeanPool(SimplePooler):
 
     def extract_states(
@@ -166,6 +173,7 @@ class MeanPool(SimplePooler):
                 hidden_states[start_indices]) / prompt_lens.unsqueeze(1)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StepPool(SimplePooler):
 
     def __init__(
@@ -209,6 +217,7 @@ class StepPool(SimplePooler):
         return pooled_data
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolerHead(nn.Module):
 
     def __init__(self, *, normalize: bool, softmax: bool) -> None:
@@ -249,6 +258,7 @@ class PoolerHead(nn.Module):
         return pooled_data
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Pooler(nn.Module):
 
     @classmethod
@@ -276,6 +286,7 @@ class Pooler(nn.Module):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CrossEncodingPooler(nn.Module):
     """A layer that pools specific information from hidden states.
 

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -11,6 +12,7 @@ from vllm.worker.worker_base import WorkerBase
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpeculativeProposals:
     """Datastructure used to represent proposal tokens from some proposer. It
     also tracks how many speculative tokens each sequence has.
@@ -36,6 +38,7 @@ class SpeculativeProposals:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpeculativeScores:
     """Datastructure used to represent the scores of speculative tokens
     according to the scoring model.
@@ -66,6 +69,7 @@ class SpeculativeScores:
                 f"token_ids={self.token_ids.shape})")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpeculativeProposer(ABC):
 
     @abstractmethod
@@ -79,6 +83,7 @@ class SpeculativeProposer(ABC):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpeculativeScorer(ABC):
 
     def __init__(self, scorer_worker: WorkerBase,

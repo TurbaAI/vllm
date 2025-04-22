@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional
 
@@ -25,6 +26,7 @@ ACTIVATION_SCHEMES = ["static", "dynamic"]
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PTPCFp8Config(Fp8Config):
     """Config class for Per-Token-Per-Channel Dynamic Quantization Fp8."""
 
@@ -73,6 +75,7 @@ class PTPCFp8Config(Fp8Config):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PTPCFp8LinearMethod(Fp8LinearMethod):
     """Linear method for Per-Token and Per-Channel FP8 Quantization.
     Only supports loading quantized BF16 model checkpoints with dynamic

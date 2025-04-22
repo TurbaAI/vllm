@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 import pickle
@@ -37,6 +38,7 @@ MMF_CLASS_TO_FACTORY: dict[type[BaseMultiModalField], str] = {
 bytestr = Union[bytes, bytearray, memoryview, zmq.Frame]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MsgpackEncoder:
     """Encoder with custom torch tensor and numpy array serialization.
 
@@ -154,6 +156,7 @@ class MsgpackEncoder:
         return name, *field_values
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MsgpackDecoder:
     """Decoder with custom torch tensor and numpy array serialization.
 

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple, Type
@@ -18,6 +19,7 @@ from vllm.distributed import (get_tensor_model_parallel_rank,
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlocksparseParams:
     max_seqlen: int
 
@@ -88,6 +90,7 @@ class BlocksparseParams:
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlocksparseFlashAttentionBackend(AttentionBackend):
 
     @staticmethod
@@ -137,6 +140,7 @@ class BlocksparseFlashAttentionBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlocksparseFlashAttentionMetadata(AttentionMetadata):
     """A copy of Metadata for FlashAttentionBackend,
     to avoid having to install flash_attn.
@@ -269,12 +273,14 @@ class BlocksparseFlashAttentionMetadata(AttentionMetadata):
         return self._cached_decode_metadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlocksparseFlashAttentionMetadataBuilder(
         CommonMetadataBuilder[BlocksparseFlashAttentionMetadata]):
 
     _metadata_cls = BlocksparseFlashAttentionMetadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlocksparseFlashAttentionImpl(AttentionImpl):
     """
     If the input tensors contain prompt tokens, the layout is as follows:

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -11,6 +12,7 @@ from vllm.scalar_type import ScalarType
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPLinearLayerConfig:
     full_weight_shape: Tuple[int, int]  # [in, out]
     partition_weight_shape: Tuple[int, int]
@@ -21,6 +23,7 @@ class MPLinearLayerConfig:
     has_g_idx: bool
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPLinearKernel(ABC):
 
     @classmethod

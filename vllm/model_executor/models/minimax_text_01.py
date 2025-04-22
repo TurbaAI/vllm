@@ -4,6 +4,7 @@ import copy
 import math
 import re
 from typing import Dict, Iterable, List, Optional, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.distributed
@@ -73,6 +74,7 @@ def weight_loader_with_alias(alias: str):
     return wrapper
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01RMSNormTP(CustomOp):
     name = "MiniMaxText01RMSNormTP"
 
@@ -123,6 +125,7 @@ class MiniMaxText01RMSNormTP(CustomOp):
         return self._forward(x)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01RotaryEmbedding(CustomOp):
     name = "MiniMaxText01RotaryEmbedding"
 
@@ -181,6 +184,7 @@ class MiniMaxText01RotaryEmbedding(CustomOp):
         return query, key
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01MLP(nn.Module):
 
     def __init__(
@@ -219,6 +223,7 @@ class MiniMaxText01MLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01MoE(nn.Module):
 
     def __init__(
@@ -287,6 +292,7 @@ class MiniMaxText01MoE(nn.Module):
         return final_hidden
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01LinearKernel:
 
     @staticmethod
@@ -319,6 +325,7 @@ class MiniMaxText01LinearKernel:
         return rearrange(output.squeeze(0), "h n d -> n (h d)")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01LinearAttention(nn.Module):
 
     def __init__(
@@ -487,6 +494,7 @@ class MiniMaxText01LinearAttention(nn.Module):
         return hidden
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01Attention(nn.Module):
 
     def __init__(
@@ -565,6 +573,7 @@ class MiniMaxText01Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01DecoderLayer(nn.Module):
 
     def __init__(
@@ -756,6 +765,7 @@ class MiniMaxText01DecoderLayer(nn.Module):
         return
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01Model(nn.Module):
 
     def __init__(
@@ -957,6 +967,7 @@ class MiniMaxText01Model(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniMaxText01ForCausalLM(nn.Module, HasInnerState, IsHybrid,
                                SupportsV0Only):
 

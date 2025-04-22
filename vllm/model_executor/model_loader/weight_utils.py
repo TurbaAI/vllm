@@ -10,6 +10,7 @@ import time
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Callable, Dict, Generator, List, Optional, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import filelock
 import gguf
@@ -70,6 +71,7 @@ def enable_hf_transfer():
 enable_hf_transfer()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DisabledTqdm(tqdm):
 
     def __init__(self, *args, **kwargs):

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Adapted from https://huggingface.co/moonshotai/Kimi-VL-A3B-Instruct/blob/main/configuration_kimi_vl.py
 from typing import Optional, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from transformers.configuration_utils import PretrainedConfig
 
@@ -8,6 +9,7 @@ from vllm.transformers_utils.configs.deepseek_vl2 import DeepseekV2Config
 from vllm.transformers_utils.configs.moonvit import MoonViTConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KimiVLConfig(PretrainedConfig):
     model_type = "kimi_vl"
 

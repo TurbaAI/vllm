@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.40.1/src/transformers/models/olmo/modeling_olmo.py
@@ -52,6 +53,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoAttention(nn.Module):
     """
     This is the attention block where the output is computed as
@@ -130,6 +132,7 @@ class OlmoAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoMLP(nn.Module):
     """
     This is the MLP block where the output is computed as
@@ -176,6 +179,7 @@ class OlmoMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoDecoderLayer(nn.Module):
     """
     This is a typical transformer block where the output is
@@ -226,6 +230,7 @@ class OlmoDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -286,6 +291,7 @@ class OlmoModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OlmoForCausalLM(nn.Module, SupportsPP):
     """
     Extremely barebones HF model wrapper.

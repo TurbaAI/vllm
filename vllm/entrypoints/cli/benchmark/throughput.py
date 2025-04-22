@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 import argparse
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.benchmarks.throughput import add_cli_args, main
 from vllm.entrypoints.cli.benchmark.base import BenchmarkSubcommandBase
 from vllm.entrypoints.cli.types import CLISubcommand
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BenchmarkThroughputSubcommand(BenchmarkSubcommandBase):
     """ The `throughput` subcommand for vllm bench. """
 

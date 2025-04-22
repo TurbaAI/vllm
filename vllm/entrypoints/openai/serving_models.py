@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 import pathlib
@@ -25,24 +26,28 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseModelPath:
     name: str
     model_path: str
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptAdapterPath:
     name: str
     local_path: str
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAModulePath:
     name: str
     path: str
     base_model_name: Optional[str] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OpenAIServingModels:
     """Shared instance to hold data about the loaded base model(s) and adapters.
 

@@ -3,6 +3,7 @@
 import gc
 import os
 from typing import Dict, List, Optional, Set, Tuple, Type, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.distributed
@@ -35,6 +36,7 @@ from vllm.worker.worker_base import (LocalOrDistributedWorkerBase, WorkerBase,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Worker(LocalOrDistributedWorkerBase):
     """A worker class that executes (a partition of) the model on a GPU.
 

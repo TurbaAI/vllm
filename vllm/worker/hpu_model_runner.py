@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 ###############################################################################
 # Copyright (C) 2024 Habana Labs, Ltd. an Intel Company
@@ -75,6 +76,7 @@ _PAD_BLOCK_ID = 0
 LORA_WARMUP_RANK = 8
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Singleton(type):
     _instances: Dict[type, object] = {}
 
@@ -85,6 +87,7 @@ class Singleton(type):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUBucketingGlobalState(metaclass=Singleton):
     prompt_bs_bucket_cfg: Tuple[int, int, int] = field(init=False)
     decode_bs_bucket_cfg: Tuple[int, int, int] = field(init=False)
@@ -310,6 +313,7 @@ def modify_decoder_layer(module: torch.nn.Module, suffix="DecoderLayer"):
         modify_decoder_layer(child_module)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HpuModelAdapter:
 
     def __init__(self, model, vllm_config):
@@ -455,6 +459,7 @@ class HpuModelAdapter:
         return self.model.sample(*args, **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PreparePromptMetadata(NamedTuple):
     input_tokens: torch.Tensor
     input_positions: List[List[int]]
@@ -483,6 +488,7 @@ class PreparePromptMetadata(NamedTuple):
                                      lora_ids=[])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrepareDecodeMetadata(NamedTuple):
     input_tokens: torch.Tensor
     input_positions: List[List[int]]
@@ -506,6 +512,7 @@ class PrepareDecodeMetadata(NamedTuple):
 
 
 # How batches are constructed.
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BatchType(IntEnum):
     # Every batch is prefill.
     PREFILL = 0
@@ -609,6 +616,7 @@ class ModelInputForHPUWithSamplingMetadata(ModelInputForHPU):
         return cls(**tensor_dict)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUModelRunnerBase(ModelRunnerBase[TModelInputForHPU]):
     """
     Helper class for shared methods between GPU model runners.
@@ -1791,6 +1799,7 @@ def _maybe_wrap_in_hpu_graph(*args, **kwargs):
     ) if htorch.utils.internal.is_lazy() else HpuModelAdapter(*args, **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HabanaProfilerCounterHelper:
 
     def __init__(self):
@@ -1889,6 +1898,7 @@ def unwrap_model(model):
         return modules
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUModelRunner(HPUModelRunnerBase[ModelInputForHPUWithSamplingMetadata]):
     """
     GPU model runner with sampling step.

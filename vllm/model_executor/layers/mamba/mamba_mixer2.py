@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List, Optional, Tuple, Union
 
@@ -32,6 +33,7 @@ from vllm.model_executor.utils import set_weight_attrs
 
 # Adapted from transformers.models.mamba2.modeling_mamba2.MambaRMSNormGated
 @CustomOp.register("mixer2_gated_rms_norm")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mixer2RMSNormGated(CustomOp):
 
     def __init__(self, full_hidden_size, full_n_groups, eps=1e-6):
@@ -195,6 +197,7 @@ def mamba_v2_sharded_weight_loader(
 
 # Adapted from transformers.models.mamba.modeling_mamba.MambaMixer
 @CustomOp.register("mamba_mixer2")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MambaMixer2(CustomOp):
     """
     Compute ∆, A, B, C, and D the state space parameters and compute

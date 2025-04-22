@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from functools import lru_cache
 from typing import TYPE_CHECKING, Any, Union, cast
@@ -12,6 +13,7 @@ if TYPE_CHECKING:
 _P = TypeVar("_P", bound=ProcessorMixin, default=ProcessorMixin)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HashableDict(dict):
     """
     A dictionary that can be hashed by lru_cache.
@@ -23,6 +25,7 @@ class HashableDict(dict):
         return hash(frozenset(self.items()))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HashableList(list):
     """
     A list that can be hashed by lru_cache.

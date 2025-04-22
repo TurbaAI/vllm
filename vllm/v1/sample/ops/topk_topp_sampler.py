@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Optional
 
@@ -18,6 +19,7 @@ except ImportError:
     is_flashinfer_available = False
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TopKTopPSampler(nn.Module):
     """
     Module that performs optional top-k and top-p filtering followed by

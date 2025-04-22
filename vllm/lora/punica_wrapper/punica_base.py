@@ -5,6 +5,7 @@ Chen, L., Ye, Z., Wu, Y., Zhuo, D., Ceze, L., & Krishnamurthy, A. (2023).
 Punica: Multi-Tenant LoRA Serving. 
 https://arxiv.org/abs/2310.18547
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, List, Optional, Tuple, Union
@@ -19,6 +20,7 @@ if TYPE_CHECKING:
     from vllm.lora.models import LongContextLoRAContext
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PunicaWrapperABC(ABC):
     """
     PunicaWrapper ABC.
@@ -121,6 +123,7 @@ class PunicaWrapperABC(ABC):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PunicaWrapperBase(PunicaWrapperABC):
     """
     PunicaWrapperBase is designed to manage and provide metadata for the punica 

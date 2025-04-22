@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
@@ -16,6 +17,7 @@ from vllm.worker.worker_base import WorkerWrapperBase
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UniProcExecutor(ExecutorBase):
 
     uses_ray: bool = False
@@ -65,6 +67,7 @@ class UniProcExecutor(ExecutorBase):
 UniProcExecutorAsync = UniProcExecutor
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExecutorWithExternalLauncher(UniProcExecutor):
     """An executor that uses external launchers to launch engines,
     specially designed for torchrun-compatible launchers, for

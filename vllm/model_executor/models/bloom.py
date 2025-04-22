@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/bloom/modeling_bloom.py
@@ -73,6 +74,7 @@ def _get_alibi_slopes(total_num_heads: int) -> torch.Tensor:
     return slopes
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BloomAttention(nn.Module):
 
     def __init__(
@@ -135,6 +137,7 @@ class BloomAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BloomMLP(nn.Module):
 
     def __init__(
@@ -163,6 +166,7 @@ class BloomMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BloomBlock(nn.Module):
 
     def __init__(
@@ -221,6 +225,7 @@ class BloomBlock(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BloomModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -279,6 +284,7 @@ class BloomModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BloomForCausalLM(nn.Module, SupportsPP, SupportsV0Only, SupportsQuant):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

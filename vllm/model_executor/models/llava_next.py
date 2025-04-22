@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import abstractmethod
 from functools import cached_property
@@ -30,6 +31,7 @@ from .utils import (AutoWeightsLoader, embed_multimodal, flatten_bn,
                     init_vllm_registered_model, maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: Union[torch.Tensor, list[torch.Tensor]]
@@ -49,6 +51,7 @@ class LlavaNextImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: torch.Tensor
@@ -62,10 +65,12 @@ LlavaNextImageInputs = Union[LlavaNextImagePixelInputs,
                              LlavaNextImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextLikeConfig(LlavaLikeConfig, Protocol):
     image_grid_pinpoints: Final[list[list[int]]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextProcessingInfo(BaseLlavaProcessingInfo):
 
     def get_hf_config(self) -> LlavaNextLikeConfig:
@@ -170,6 +175,7 @@ class LlavaNextProcessingInfo(BaseLlavaProcessingInfo):
 _I = TypeVar("_I", bound=LlavaNextProcessingInfo)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseLlavaNextMultiModalProcessor(BaseLlavaMultiModalProcessor[_I]):
 
     # Copied from BaseMultiModalProcessor
@@ -182,6 +188,7 @@ class BaseLlavaNextMultiModalProcessor(BaseLlavaMultiModalProcessor[_I]):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextMultiModalProcessor(
         BaseLlavaNextMultiModalProcessor[LlavaNextProcessingInfo]):
 
@@ -200,6 +207,7 @@ class LlavaNextMultiModalProcessor(
 @MULTIMODAL_REGISTRY.register_processor(LlavaNextMultiModalProcessor,
                                         info=LlavaNextProcessingInfo,
                                         dummy_inputs=LlavaDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextForConditionalGeneration(nn.Module, SupportsMultiModal,
                                         SupportsPP):
 

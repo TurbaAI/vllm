@@ -5,6 +5,7 @@ Chen, L., Ye, Z., Wu, Y., Zhuo, D., Ceze, L., & Krishnamurthy, A. (2023).
 Punica: Multi-Tenant LoRA Serving. 
 https://arxiv.org/abs/2310.18547
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import TYPE_CHECKING, List, Optional, Tuple, Union, final
 
@@ -26,6 +27,7 @@ if TYPE_CHECKING:
 
 
 @final
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PunicaWrapperGPU(PunicaWrapperBase):
     """
     PunicaWrapperGPU is designed to manage and provide metadata for the punica 

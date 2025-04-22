@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional
 
@@ -16,6 +17,7 @@ from vllm.platforms import current_platform
 MIN_IPEX_VERSION = "2.5.0"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IPEXConfig(QuantizationConfig):
     """INT8 quantization config class using IPEX for the CPU/XPU backend,
     including AWQ, GPTQ.
@@ -121,6 +123,7 @@ class IPEXConfig(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IPEXGPTQLinearMethod(GPTQLinearMethod):
     """GPTQ linear method using IPEX for the CPU/XPU backend.
     """
@@ -185,6 +188,7 @@ class IPEXGPTQLinearMethod(GPTQLinearMethod):
         return out.reshape(x.shape[:-1] + (layer.ipex_output_size, ))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IPEXAWQLinearMethod(AWQLinearMethod):
     """AWQ linear method using IPEX for the CPU/XPU backend.
     """

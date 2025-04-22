@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import List, Optional, Sequence, Tuple
@@ -19,6 +20,7 @@ from vllm.platforms import current_platform
 DEFAULT_VOCAB_PADDING_SIZE = 64
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UnquantizedEmbeddingMethod(QuantizeMethodBase):
     """Unquantized method for embeddings."""
 
@@ -73,6 +75,7 @@ def vocab_range_from_global_vocab_size(global_vocab_size: int,
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VocabParallelEmbeddingShardIndices:
     """Indices for a shard of a vocab parallel embedding."""
     padded_org_vocab_start_index: int
@@ -156,6 +159,7 @@ def get_masked_input_and_mask(
     return input_, ~vocab_mask
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VocabParallelEmbedding(torch.nn.Module):
     """Embedding parallelized in the vocabulary dimension.
 
@@ -430,6 +434,7 @@ class VocabParallelEmbedding(torch.nn.Module):
         return s
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParallelLMHead(VocabParallelEmbedding):
     """Parallelized LM head.
 

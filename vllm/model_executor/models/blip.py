@@ -2,6 +2,7 @@
 """Minimal implementation of BlipVisionModel intended to be only used 
 within a vision language model."""
 from typing import Iterable, Optional, Set, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -31,6 +32,7 @@ def get_blip_num_patches(*, image_size: int, patch_size: int) -> int:
 
 
 # Adapted from https://github.com/huggingface/transformers/blob/v4.39.0/src/transformers/models/blip/modeling_blip.py#L164 # noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlipVisionEmbeddings(nn.Module):
 
     def __init__(self, config: Union[BlipVisionConfig, Blip2VisionConfig]):
@@ -73,6 +75,7 @@ class BlipVisionEmbeddings(nn.Module):
         return embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlipAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -134,6 +137,7 @@ class BlipAttention(nn.Module):
         return attn_output, None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlipMLP(nn.Module):
 
     def __init__(
@@ -166,6 +170,7 @@ class BlipMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlipEncoderLayer(nn.Module):
 
     def __init__(
@@ -205,6 +210,7 @@ class BlipEncoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlipEncoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self 
@@ -245,6 +251,7 @@ class BlipEncoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlipVisionModel(nn.Module, SupportsQuant):
     config_class = BlipVisionConfig
     main_input_name = "pixel_values"

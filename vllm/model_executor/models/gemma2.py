@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 The vLLM team.
 # Copyright 2024 Google Inc. HuggingFace Inc. team. All rights reserved.
@@ -51,6 +52,7 @@ from .utils import (AutoWeightsLoader, extract_layer_index,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma2MLP(nn.Module):
 
     def __init__(
@@ -84,6 +86,7 @@ class Gemma2MLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma2Attention(nn.Module):
 
     def __init__(self,
@@ -173,6 +176,7 @@ class Gemma2Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma2DecoderLayer(nn.Module):
 
     def __init__(
@@ -240,6 +244,7 @@ class Gemma2DecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma2Model(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -361,6 +366,7 @@ class Gemma2Model(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma2ForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

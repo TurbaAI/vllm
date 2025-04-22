@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Iterable, Optional, Set, Tuple, Union
 
@@ -31,6 +32,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxRouter(nn.Module):
     """A Router implementation for DBRX that returns logits for each expert
     per token.
@@ -58,6 +60,7 @@ class DbrxRouter(nn.Module):
         return router_logits
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxExperts(FusedMoE):
 
     def __init__(
@@ -128,6 +131,7 @@ class DbrxExperts(FusedMoE):
                 param_data[:] = loaded_weight
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxMoE(nn.Module):
     """A tensor-parallel MoE implementation for DBRX.
 
@@ -165,6 +169,7 @@ class DbrxMoE(nn.Module):
         return final_hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxAttention(nn.Module):
 
     def __init__(
@@ -245,6 +250,7 @@ class DbrxAttention(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxFusedNormAttention(nn.Module):
 
     def __init__(
@@ -280,6 +286,7 @@ class DbrxFusedNormAttention(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxBlock(nn.Module):
 
     def __init__(
@@ -311,6 +318,7 @@ class DbrxBlock(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -366,6 +374,7 @@ class DbrxModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxForCausalLM(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

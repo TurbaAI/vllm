@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 import functools
@@ -55,6 +56,7 @@ def completion_seq_group_output_builder():
 
 
 # Used by pythonization to reduce python object allocations
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PythonizationCache:
 
     def __init__(self):
@@ -68,6 +70,7 @@ class PythonizationCache:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelOutput:
     """The output of a single model forward pass.
 
@@ -142,6 +145,7 @@ class ModelOutput:
 
 
 @dataclass(frozen=False)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StatefulModelInput(BroadcastableModelInput):
     # actual frozen model input dataclass passed to _base_model_runner
     frozen_model_input: Optional[ModelInputForGPUWithSamplingMetadata] = None
@@ -304,6 +308,7 @@ class StatefulModelInput(BroadcastableModelInput):
 # ModelInputForGPU but it wraps the actual input dataclass and adds multi-step
 # metadata
 # mypy: disable-error-code=type-var
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiStepModelRunner(GPUModelRunnerBase[StatefulModelInput]):
     # mypy: enable-error-code=type-var
 

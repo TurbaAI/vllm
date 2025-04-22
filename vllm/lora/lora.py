@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List, Optional
 from typing import Sequence as GenericSequence
@@ -10,6 +11,7 @@ from vllm.lora.peft_helper import PEFTHelper
 from vllm.utils import is_pin_memory_available
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRALayerWeights:
     """LoRA weights for a layer composed of two low rank matrixes."""
 
@@ -118,6 +120,7 @@ class LoRALayerWeights:
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PackedLoRALayerWeights(LoRALayerWeights):
     """LoRA used for packed layers (eg. qkv_proj)."""
 

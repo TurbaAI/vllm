@@ -11,6 +11,7 @@ put/get operations.
 
 These classes above are abstracted behind class `KVCacheBufferBase`.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import List, Optional
@@ -18,6 +19,7 @@ from typing import List, Optional
 import torch
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVCacheBufferBase(ABC):
     """
     Abstract base class for a KVCache buffer.
@@ -36,6 +38,7 @@ class KVCacheBufferBase(ABC):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVLookupBufferBase(KVCacheBufferBase):
     """
     Abstract base class for a KVCache lookup buffer.
@@ -119,6 +122,7 @@ class KVLookupBufferBase(KVCacheBufferBase):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVStoreBufferBase(KVCacheBufferBase):
     """
     Abstract base class for a KVCache storage buffer with key-value semantics.

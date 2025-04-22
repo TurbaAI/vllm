@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Supports AQLM compression, see https://github.com/Vahe1994/AQLM
 # and https://arxiv.org/pdf/2401.06118.pdf
@@ -156,6 +157,7 @@ def optimized_dequantize_gemm(
         return F.linear(input, weights, bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AQLMConfig(QuantizationConfig):
     """Config class for AQLM.
 
@@ -217,6 +219,7 @@ class AQLMConfig(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AQLMLinearMethod(LinearMethodBase):
     """Linear method for AQLM.
 

@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 import argparse
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.entrypoints.cli.types import CLISubcommand
 from vllm.utils import FlexibleArgumentParser
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BenchmarkSubcommandBase(CLISubcommand):
     """ The base class of subcommands for vllm bench. """
 

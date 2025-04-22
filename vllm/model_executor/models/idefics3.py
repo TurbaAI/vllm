@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 the HuggingFace Inc. team. All rights reserved.
 #
@@ -56,6 +57,7 @@ from .utils import (AutoWeightsLoader, flatten_bn, maybe_prefix,
                     merge_multimodal_embeddings)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3ImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: torch.Tensor
@@ -69,6 +71,7 @@ class Idefics3ImagePixelInputs(TypedDict):
     """Shape: `(batch_size * num_images)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3ImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: torch.Tensor
@@ -81,6 +84,7 @@ class Idefics3ImageEmbeddingInputs(TypedDict):
 ImageInputs = Union[Idefics3ImagePixelInputs, Idefics3ImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3ProcessingInfo(BaseProcessingInfo):
 
     def get_hf_processor(
@@ -281,6 +285,7 @@ class Idefics3ProcessingInfo(BaseProcessingInfo):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3DummyInputsBuilder(BaseDummyInputsBuilder[Idefics3ProcessingInfo]
                                  ):
 
@@ -310,6 +315,7 @@ class Idefics3DummyInputsBuilder(BaseDummyInputsBuilder[Idefics3ProcessingInfo]
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3MultiModalProcessor(
         BaseMultiModalProcessor[Idefics3ProcessingInfo]):
 
@@ -404,6 +410,7 @@ class Idefics3MultiModalProcessor(
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3SimpleMLP(nn.Module):
 
     def __init__(
@@ -429,6 +436,7 @@ class Idefics3SimpleMLP(nn.Module):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3Connector(nn.Module):
 
     def __init__(
@@ -472,6 +480,7 @@ class Idefics3Connector(nn.Module):
         return image_hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3Model(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -567,6 +576,7 @@ class Idefics3Model(nn.Module):
     Idefics3MultiModalProcessor,
     info=Idefics3ProcessingInfo,
     dummy_inputs=Idefics3DummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics3ForConditionalGeneration(nn.Module, SupportsMultiModal,
                                        SupportsLoRA):
     packed_modules_mapping = {

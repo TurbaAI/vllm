@@ -12,6 +12,7 @@
 import threading
 from collections import deque
 from typing import Deque, List, Optional, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -23,6 +24,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SimpleBuffer(KVLookupBufferBase):
 
     def __init__(self, signal_pipe: KVPipeBase, data_pipe: KVPipeBase,

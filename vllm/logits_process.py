@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Callable, Union
 
@@ -47,6 +48,7 @@ def get_bad_words_logits_processors(
     return [NoBadWordsLogitsProcessor(bad_words_ids=bad_words_ids)]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NoBadWordsLogitsProcessor:
     _SMALLEST_LOGIT = float("-inf")
     _NEUTRAL_LOGIT = 0.0

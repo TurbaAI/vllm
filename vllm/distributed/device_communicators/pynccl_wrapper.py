@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # This file is a pure Python wrapper for the NCCL library.
 # The main purpose is to use NCCL combined with CUDA graph.
@@ -42,6 +43,7 @@ ncclResult_t = ctypes.c_int
 ncclComm_t = ctypes.c_void_p
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ncclUniqueId(ctypes.Structure):
     _fields_ = [("internal", ctypes.c_byte * 128)]
 
@@ -52,6 +54,7 @@ buffer_type = ctypes.c_void_p
 ncclDataType_t = ctypes.c_int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ncclDataTypeEnum:
     ncclInt8 = 0
     ncclChar = 0
@@ -94,6 +97,7 @@ class ncclDataTypeEnum:
 ncclRedOp_t = ctypes.c_int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ncclRedOpTypeEnum:
     ncclSum = 0
     ncclProd = 1
@@ -118,12 +122,14 @@ class ncclRedOpTypeEnum:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Function:
     name: str
     restype: Any
     argtypes: List[Any]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NCCLLibrary:
     exported_functions = [
         # const char* ncclGetErrorString(ncclResult_t result)

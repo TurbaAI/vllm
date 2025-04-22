@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from typing import Callable, Optional, Union
@@ -11,6 +12,7 @@ from vllm.model_executor.layers.spec_decode_base_sampler import (
 from vllm.utils import is_pin_memory_available
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpecDecodeWorkerMetrics(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]
@@ -50,6 +52,7 @@ class SpecDecodeWorkerMetrics(
 Timer = Callable[[], float]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncMetricsCollector:
     """Class which copies rejection/typical-acceptance sampler metrics
     from the device to CPU on a non-default Torch stream.

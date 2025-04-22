@@ -45,6 +45,7 @@ import math
 from copy import deepcopy
 from functools import cached_property
 from typing import List, Optional, Sequence, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -183,6 +184,7 @@ def apply_rope(xq: torch.Tensor, xk: torch.Tensor,
     return xq_out.type_as(xq), xk_out.type_as(xk)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Learnable2DInterpPosEmb(nn.Module):
 
     def __init__(self,
@@ -216,6 +218,7 @@ class Learnable2DInterpPosEmb(nn.Module):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MoonVisionPatchEmbed(nn.Module):
 
     def __init__(
@@ -260,6 +263,7 @@ class MoonVisionPatchEmbed(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Rope2DPosEmb(nn.Module):
     """2D rotary position embedding with multi-resolution support.
 
@@ -374,6 +378,7 @@ class Rope2DPosEmb(nn.Module):
         return freqs_cis
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLP2(nn.Module):
     """
     Args:
@@ -398,6 +403,7 @@ class MLP2(nn.Module):
         return self.fc1(x)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MoonVitEncoderLayer(nn.Module):
 
     def __init__(
@@ -485,6 +491,7 @@ class MoonVitEncoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MoonVitEncoder(nn.Module):
 
     def __init__(
@@ -549,6 +556,7 @@ def patch_merger(
     return outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MoonVitVLProjector(nn.Module):
 
     def __init__(
@@ -578,6 +586,7 @@ class MoonVitVLProjector(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MoonVitPretrainedModel(PreTrainedModel):
     config_class = MoonViTConfig
     model_type = "moonvit"

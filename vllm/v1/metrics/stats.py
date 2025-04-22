@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from dataclasses import dataclass, field
@@ -12,6 +13,7 @@ if TYPE_CHECKING:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrefixCacheStats:
     """Stores prefix cache hit statistics."""
     # Whether reset_prefix_cache was invoked.
@@ -26,6 +28,7 @@ class PrefixCacheStats:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerStats:
     """Stats associated with the scheduler."""
 
@@ -41,12 +44,14 @@ class SchedulerStats:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAStats:
     waiting_requests: set[str] = field(default_factory=set)
     running_requests: set[str] = field(default_factory=set)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestStateStats:
     """Stats that need to be tracked across delta updates."""
 
@@ -63,6 +68,7 @@ class RequestStateStats:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FinishedRequestStats:
     """Stats associated with a finished request."""
 
@@ -77,6 +83,7 @@ class FinishedRequestStats:
     decode_time: float = 0.0
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IterationStats:
     """Stats associated with a single set of EngineCoreOutputs."""
 
@@ -179,6 +186,7 @@ class IterationStats:
         self.finished_requests.append(finished_req)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRARequestStates:
     """Per-LoRA request state stats."""
 

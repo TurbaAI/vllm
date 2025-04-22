@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 ###############################################################################
 # Copyright (C) 2024 Habana Labs, Ltd. an Intel Company
@@ -15,6 +16,7 @@ _PARTITION_SIZE = 512
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUPagedAttentionMetadata:
     """Metadata for PagedAttention."""
     block_list: Optional[torch.Tensor]
@@ -26,6 +28,7 @@ class HPUPagedAttentionMetadata:
     block_groups: Optional[torch.Tensor]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HPUPagedAttention:
 
     @staticmethod

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Inference-only Jamba model."""
 from typing import Iterable, Optional, Set, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -37,6 +38,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JambaMoE(nn.Module):
 
     def __init__(self,
@@ -86,6 +88,7 @@ class JambaMoE(nn.Module):
         return hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JambaMLP(JambaMoE):
 
     def __init__(self,
@@ -103,6 +106,7 @@ class JambaMLP(JambaMoE):
                          prefix=prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JambaMambaDecoderLayer(nn.Module):
 
     def __init__(self,
@@ -162,6 +166,7 @@ class JambaMambaDecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JambaAttentionDecoderLayer(nn.Module):
 
     def __init__(self,
@@ -267,6 +272,7 @@ ALL_DECODER_LAYER_TYPES = {
 }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JambaModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -359,6 +365,7 @@ class JambaModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JambaForCausalLM(nn.Module, HasInnerState, SupportsLoRA, SupportsPP,
                        IsHybrid, SupportsV0Only):
     packed_modules_mapping = {
@@ -568,6 +575,7 @@ def _is_moe_layer(name: str):
         ]])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JambaForSequenceClassification(JambaForCausalLM):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

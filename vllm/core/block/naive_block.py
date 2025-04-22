@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections import deque
 from typing import Deque, FrozenSet, Iterable, List, Optional, Tuple, Union
@@ -10,6 +11,7 @@ from vllm.core.block.interfaces import Block, BlockAllocator, BlockId, Device
 Refcount = int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NaiveBlockAllocator(BlockAllocator):
     """A simple block allocator that manages blocks of memory without prefix
     caching.
@@ -341,6 +343,7 @@ class NaiveBlockAllocator(BlockAllocator):
         return []
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NaiveBlock(Block):
     """An implementation of the Block class that does not support prefix
     caching.

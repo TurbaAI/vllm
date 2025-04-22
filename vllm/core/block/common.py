@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections import deque
 from dataclasses import dataclass
@@ -10,6 +11,7 @@ BlockId = int
 RefCount = int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RefCounterProtocol(Protocol):
 
     def incr(self, block_id: BlockId) -> RefCount:
@@ -22,6 +24,7 @@ class RefCounterProtocol(Protocol):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RefCounter(RefCounterProtocol):
     """A class for managing reference counts for a set of block indices.
 
@@ -70,6 +73,7 @@ class RefCounter(RefCounterProtocol):
         return ReadOnlyRefCounter(self)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ReadOnlyRefCounter(RefCounterProtocol):
     """A read-only view of the RefCounter class.
 
@@ -95,6 +99,7 @@ class ReadOnlyRefCounter(RefCounterProtocol):
         return self._refcounter.get(block_id)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CopyOnWriteTracker:
     """A class for tracking and managing copy-on-write operations for blocks.
 
@@ -153,6 +158,7 @@ class CopyOnWriteTracker:
         return cows
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockPool:
     """Used to pre-allocate block objects, in order to avoid excessive python
     object allocations/deallocations.
@@ -228,6 +234,7 @@ class BlockPool:
         self._free_ids.appendleft(block.pool_id)  # type: ignore[attr-defined]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockList:
     """This class is an optimization to allow fast-access to physical 
     block ids. It maintains a block id list that is updated with the 
@@ -294,6 +301,7 @@ class BlockList:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CacheMetricData:
     """A utility dataclass to maintain cache metric.
     To avoid overflow, we maintain the hit rate in block granularity, so that

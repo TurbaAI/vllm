@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Callable, Dict, List, Optional
 
@@ -22,6 +23,7 @@ from vllm.model_executor.utils import set_weight_attrs
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GGUFConfig(QuantizationConfig):
     """Config class for GGUF."""
 
@@ -186,6 +188,7 @@ def _fused_moe_gguf(
     return out_hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GGUFLinearMethod(LinearMethodBase):
     """Linear method for GGUF.
 
@@ -257,6 +260,7 @@ class GGUFLinearMethod(LinearMethodBase):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GGUFMoEMethod(FusedMoEMethodBase):
     """MoE method for GGUF.
 
@@ -364,6 +368,7 @@ class GGUFMoEMethod(FusedMoEMethodBase):
                                layer.w2_qweight_type.weight_type, self.act)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GGUFEmbeddingMethod(GGUFLinearMethod):
     """Embedding method for GGUF.
 
@@ -387,6 +392,7 @@ class GGUFEmbeddingMethod(GGUFLinearMethod):
         return dequant.view(*x.shape, hidden_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GGUFUninitializedParameter(UninitializedParameter):
     cls_to_become = Parameter
     data_container: List[torch.Tensor]

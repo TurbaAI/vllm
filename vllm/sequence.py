@@ -10,6 +10,7 @@ from collections.abc import Sequence as GenericSequence
 from dataclasses import dataclass, field
 from functools import reduce
 from typing import Any, Callable, Optional, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import msgspec
 import torch
@@ -35,6 +36,7 @@ def array_full(token_id: int, count: int):
 # openai server output, and msgspec is not serializable.
 # TODO(sang): Fix it.
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Logprob:
     """Infos for supporting OpenAI compatible logprobs and token ranks.
 
@@ -55,6 +57,7 @@ PromptLogprobs = list[Optional[dict[int, Logprob]]]
 SampleLogprobs = list[dict[int, Logprob]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceStatus(enum.IntEnum):
     """Status of a sequence."""
     WAITING = 0
@@ -89,12 +92,14 @@ class SequenceStatus(enum.IntEnum):
         return finish_reason
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceStage(enum.Enum):
     PREFILL = enum.auto()
     DECODE = enum.auto()
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestMetrics:
     """Metrics associated with a request.
 
@@ -131,6 +136,7 @@ class RequestMetrics:
     spec_token_acceptance_counts: Optional[list[int]] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceDataDelta(
         msgspec.Struct,
         array_like=True,  # type: ignore[call-arg]
@@ -146,6 +152,7 @@ class SequenceDataDelta(
     new_stage: SequenceStage
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceData(msgspec.Struct,
                    omit_defaults=True):  # type: ignore[call-arg]
     """Data associated with a sequence.
@@ -392,6 +399,7 @@ class SequenceData(msgspec.Struct,
                 f"get_num_computed_tokens={self.get_num_computed_tokens()})")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Sequence:
     """Stores the data, status, and block information of a sequence.
 
@@ -617,6 +625,7 @@ class Sequence:
                 f"num_blocks={self.n_blocks})")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceGroupState(msgspec.Struct,
                          omit_defaults=True):  # type: ignore[call-arg]
     """Mutable state tied to a specific sequence group"""
@@ -630,6 +639,7 @@ class SequenceGroupState(msgspec.Struct,
         return self.num_steps - self.current_step
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceGroup:
     """A group of sequences that are generated from the same prompt.
 
@@ -900,6 +910,7 @@ class SequenceGroup:
                 f"num_seqs={len(self.seqs)})")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceGroupMetadataDelta(
         msgspec.Struct,
         tag=True,  # type: ignore[call-arg]
@@ -921,6 +932,7 @@ class SequenceGroupMetadataDelta(
         default_factory=lambda: SequenceGroupState())
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceGroupMetadata(
         msgspec.Struct,
         tag=True,  # type: ignore[call-arg]
@@ -1040,6 +1052,7 @@ class SequenceGroupMetadata(
         self.state.current_step += 1
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceOutput(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]
@@ -1071,6 +1084,7 @@ class SequenceOutput(
         return equal and log_probs_equal
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceGroupOutput(ABC):
     """The base class for model outputs associated with a sequence group."""
 
@@ -1083,6 +1097,7 @@ class SequenceGroupOutput(ABC):
         pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompletionSequenceGroupOutput(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]
@@ -1105,6 +1120,7 @@ class CompletionSequenceGroupOutput(
                 and self.prompt_logprobs == other.prompt_logprobs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingSequenceGroupOutput(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]
@@ -1127,6 +1143,7 @@ class PoolingSequenceGroupOutput(
 
 # cannot use msgspec.Struct here because Dynamo does not support it
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class IntermediateTensors:
     """For all pipeline stages except the last, we need to return the hidden
     states and residuals to be sent to the next stage. This data structure
@@ -1164,6 +1181,7 @@ class IntermediateTensors:
         return f"IntermediateTensors(tensors={self.tensors})"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolerOutput(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]
@@ -1208,6 +1226,7 @@ def get_all_seq_ids_and_request_ids(
     return seq_ids, request_id_seq_ids_mapping
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HiddenStates(msgspec.Struct, array_like=True,
                    omit_defaults=True):  # type: ignore[call-arg]
     """Hidden states corresponding to in-progress sequences.
@@ -1294,6 +1313,7 @@ class HiddenStates(msgspec.Struct, array_like=True,
             [self.hidden_states, self.second_last_token_hidden_states])[index]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExecuteModelRequest(
         msgspec.Struct,
         array_like=True,  # type: ignore[call-arg]
@@ -1379,6 +1399,7 @@ class ExecuteModelRequest(
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceGroupBase:
     group_id: str  # the original request id before splitting
 
@@ -1418,6 +1439,7 @@ class SequenceGroupBase:
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParallelSampleSequenceGroup(SequenceGroupBase):
 
     @staticmethod

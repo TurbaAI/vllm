@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import functools
 from collections import UserDict
@@ -175,6 +176,7 @@ class InputProcessingContext(InputContext):
 N = TypeVar("N", bound=type[nn.Module])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DummyData(NamedTuple):
     """Dummy data used for profiling."""
 
@@ -183,6 +185,7 @@ class DummyData(NamedTuple):
     multi_modal_placeholders: Optional["MultiModalPlaceholderDict"] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DummyDataFactory(Protocol):
 
     def __call__(
@@ -205,6 +208,7 @@ class DummyDataFactory(Protocol):
         ...
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _MultiModalCounts(UserDict[str, int]):
     """
     Wraps `mm_counts` for a more informative error message
@@ -224,6 +228,7 @@ InputProcessor = Callable[[InputContext, ProcessorInputs], ProcessorInputs]
 """Preprocess the inputs to the model."""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InputRegistry:
     """
     A registry to dispatch data processing

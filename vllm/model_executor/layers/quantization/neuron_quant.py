@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from importlib.util import find_spec
@@ -12,6 +13,7 @@ from vllm.model_executor.layers.quantization.base_config import (
 SUPPORTED_QUANT_DTYPE_LIST = ['s8', 'f8e4m3fn']
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NeuronQuantConfig(QuantizationConfig):
     """Int8 Quantization Config class for Neuron Backend."""
 

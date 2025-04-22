@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import TYPE_CHECKING, Any, Optional
 
@@ -8,6 +9,7 @@ if TYPE_CHECKING:
     from vllm.config import ModelConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingParams(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]

@@ -3,6 +3,7 @@
 import itertools
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -26,6 +27,7 @@ logger = init_logger(__name__)
 _PARTITION_SIZE_ROCM = 256
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ROCmFlashAttentionBackend(AttentionBackend):
 
     @staticmethod
@@ -75,6 +77,7 @@ class ROCmFlashAttentionBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ROCmFlashAttentionMetadata(AttentionMetadata, PagedAttentionMetadata):
     """Metadata for FlashAttentionBackend.
 
@@ -291,6 +294,7 @@ class ROCmFlashAttentionMetadata(AttentionMetadata, PagedAttentionMetadata):
                                    block_tables=self.block_tables)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ROCmFlashAttentionMetadataBuilder(
         CommonMetadataBuilder[ROCmFlashAttentionMetadata]):
 
@@ -424,6 +428,7 @@ def _get_seq_len_block_table_args(
         raise AttributeError(f"Invalid attention type {str(attn_type)}")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ROCmFlashAttentionImpl(AttentionImpl):
     """
     If the input tensors contain prompt tokens, the layout is as follows:

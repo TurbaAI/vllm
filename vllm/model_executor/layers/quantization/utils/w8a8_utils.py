@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List, Optional, Tuple, Union
 
@@ -133,6 +134,7 @@ def maybe_create_device_identity():
 
 # TODO(luka): follow similar pattern for marlin and block-fp8-linear
 #  https://github.com/vllm-project/vllm/issues/14397
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Fp8LinearOp:
     """
     This class executes a FP8 linear layer using cutlass if supported and

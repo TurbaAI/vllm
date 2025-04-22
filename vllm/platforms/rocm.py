@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from functools import cache, lru_cache, wraps
@@ -121,6 +122,7 @@ def use_rocm_custom_paged_attention(qtype: torch.dtype, head_size: int,
             and envs.VLLM_ROCM_CUSTOM_PAGED_ATTN)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RocmPlatform(Platform):
     _enum = PlatformEnum.ROCM
     device_name: str = "rocm"

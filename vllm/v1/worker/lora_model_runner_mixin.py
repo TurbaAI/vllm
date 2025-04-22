@@ -2,6 +2,7 @@
 """
 Define LoRA functionality mixin for model runners.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from contextlib import contextmanager
 
@@ -20,6 +21,7 @@ logger = init_logger(__name__)
 
 
 # Defined as a mixin for GPUModelRunner
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAModelRunnerMixin:
 
     LORA_WARMUP_RANK = 8

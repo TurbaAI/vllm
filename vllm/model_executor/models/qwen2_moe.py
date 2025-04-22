@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/qwen2_moe/modeling_qwen2_moe.py
@@ -63,6 +64,7 @@ from .utils import (AutoWeightsLoader, extract_layer_index,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2MoeMLP(nn.Module):
 
     def __init__(
@@ -95,6 +97,7 @@ class Qwen2MoeMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2MoeSparseMoeBlock(nn.Module):
 
     def __init__(
@@ -163,6 +166,7 @@ class Qwen2MoeSparseMoeBlock(nn.Module):
         return final_hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2MoeAttention(nn.Module):
 
     def __init__(
@@ -244,6 +248,7 @@ class Qwen2MoeAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2MoeDecoderLayer(nn.Module):
 
     def __init__(
@@ -320,6 +325,7 @@ class Qwen2MoeDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2MoeModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -479,6 +485,7 @@ class Qwen2MoeModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2MoeForCausalLM(nn.Module, SupportsPP):
 
     fall_back_to_pt_during_load = False

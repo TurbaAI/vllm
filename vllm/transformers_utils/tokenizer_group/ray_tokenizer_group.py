@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import os
@@ -23,6 +24,7 @@ from .tokenizer_group import TokenizerGroup
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RayTokenizerGroupPool(BaseTokenizerGroup):
     """A Ray-based pool of TokenizerGroups for async tokenization."""
 

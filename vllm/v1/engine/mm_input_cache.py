@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 from collections.abc import Sequence
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.envs import VLLM_MM_INPUT_CACHE_GIB
 from vllm.multimodal import MultiModalKwargs
@@ -30,6 +31,7 @@ from vllm.utils import is_list_of
 # variable VLLM_MM_INPUT_CACHE_GIB.
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MirroredProcessingCache:
 
     def __init__(self, model_config):

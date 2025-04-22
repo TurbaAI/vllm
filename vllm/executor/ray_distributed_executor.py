@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import json
@@ -36,6 +37,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RayWorkerMetaData:
     """
     Metadata for a Ray worker.
@@ -48,6 +50,7 @@ class RayWorkerMetaData:
     ip: str = ""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RayDistributedExecutor(DistributedExecutorBase):
     """Ray-based distributed executor"""
 

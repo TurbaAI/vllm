@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.distributed as dist
@@ -11,6 +12,7 @@ if current_platform.is_hpu():
     import habana_frameworks.torch as htorch  # noqa: F401
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HpuCommunicator(DeviceCommunicatorBase):
 
     def all_reduce(self, input_: torch.Tensor) -> torch.Tensor:

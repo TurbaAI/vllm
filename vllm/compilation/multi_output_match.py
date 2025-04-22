@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import abc
 import operator
@@ -14,6 +15,7 @@ from torch.fx import Node
 from vllm.compilation.fx_utils import find_auto_fn
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiOutputMatch(abc.ABC):
     """
     This class provides utilities to process multi-output matches and

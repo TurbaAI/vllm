@@ -3,6 +3,7 @@
 import inspect
 from concurrent.futures import ThreadPoolExecutor
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -21,6 +22,7 @@ if envs.VLLM_LOGITS_PROCESSOR_THREADS is not None:
         envs.VLLM_LOGITS_PROCESSOR_THREADS)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LogitsProcessor(nn.Module):
     """Process logits and apply logits processors from sampling metadata.
 

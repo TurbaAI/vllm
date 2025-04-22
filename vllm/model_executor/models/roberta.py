@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import itertools
 from typing import Iterable, Optional, Tuple
@@ -22,6 +23,7 @@ from vllm.transformers_utils.config import (
 from .interfaces import SupportsCrossEncoding, SupportsV0Only
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RobertaEmbedding(nn.Module):
 
     def __init__(self, config: RobertaConfig):
@@ -96,6 +98,7 @@ class RobertaEmbedding(nn.Module):
 
 
 # Adapted from transformers
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RobertaClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -112,6 +115,7 @@ class RobertaClassificationHead(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RobertaEmbeddingModel(BertEmbeddingModel):
     """A model that uses Roberta to provide embedding functionalities.
 
@@ -166,6 +170,7 @@ class RobertaEmbeddingModel(BertEmbeddingModel):
         assert len(loaded), "Unable to load RobertaEmbeddingModel"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RobertaForSequenceClassification(nn.Module, SupportsCrossEncoding,
                                        SupportsV0Only):
     """A model that uses Roberta to provide embedding functionalities.

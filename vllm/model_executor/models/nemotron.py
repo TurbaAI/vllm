@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -67,6 +68,7 @@ def _cast_if_autocast_enabled(*args):
             args, device_type="cuda", dtype=torch.get_autocast_gpu_dtype())
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NemotronLayerNorm1P(nn.LayerNorm):
 
     def __init__(self,
@@ -94,6 +96,7 @@ class NemotronLayerNorm1P(nn.LayerNorm):
             return x if residual is None else (x, residual)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NemotronMLP(nn.Module):
 
     def __init__(
@@ -125,6 +128,7 @@ class NemotronMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NemotronAttention(nn.Module):
 
     def __init__(
@@ -213,6 +217,7 @@ class NemotronAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NemotronDecoderLayer(nn.Module):
 
     def __init__(
@@ -289,6 +294,7 @@ class NemotronDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NemotronModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -363,6 +369,7 @@ class NemotronModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NemotronForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

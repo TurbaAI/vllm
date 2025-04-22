@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """The request function for API endpoints."""
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 import os
@@ -16,6 +17,7 @@ AIOHTTP_TIMEOUT = aiohttp.ClientTimeout(total=6 * 60 * 60)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestFuncInput:
     """The input for the request function."""
     prompt: str
@@ -32,6 +34,7 @@ class RequestFuncInput:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestFuncOutput:
     """The output of the request function including metrics."""
     generated_text: str = ""

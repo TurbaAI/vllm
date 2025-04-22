@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 import math
 from dataclasses import dataclass
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -12,6 +13,7 @@ from vllm.attention.backends.xformers import XFormersMetadata
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mamba2Metadata:
     has_prefill: bool
 

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 from typing import Callable, Dict, List, Type, Union
@@ -28,6 +29,7 @@ def trim_string_back(string, width):
     return string
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TablePrinter:
 
     def __init__(self, row_cls: Type[dataclasses.dataclass],

@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 from abc import ABC, abstractmethod
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.utils import cdiv
 from vllm.v1.core.block_pool import BlockPool
@@ -8,6 +9,7 @@ from vllm.v1.kv_cache_interface import (FullAttentionSpec, KVCacheSpec,
                                         SlidingWindowSpec)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpecializedManager(ABC):
     """
     An abstract base class for specialized managers that handle the kv
@@ -66,6 +68,7 @@ class SpecializedManager(ABC):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FullAttentionManager(SpecializedManager):
 
     def find_longest_cache_hit(
@@ -87,6 +90,7 @@ class FullAttentionManager(SpecializedManager):
         return []
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SlidingWindowManager(SpecializedManager):
 
     def __init__(self, kv_cache_spec: SlidingWindowSpec,

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://huggingface.co/OpenGVLab/InternVL2-1B/blob/main/configuration_internvl_chat.py
@@ -10,6 +11,7 @@
 from transformers.configuration_utils import PretrainedConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVLChatConfig(PretrainedConfig):
     model_type = 'internvl_chat'
     is_composition = True

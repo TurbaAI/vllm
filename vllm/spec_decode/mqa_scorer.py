@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.sequence import (ExecuteModelRequest, SequenceData,
                            SequenceGroupMetadata, get_all_seq_ids)
@@ -9,6 +10,7 @@ SeqId = int
 TargetSeqId = int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MQAScorer(SpeculativeScorer):
 
     def score_proposals(

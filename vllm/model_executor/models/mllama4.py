@@ -20,6 +20,7 @@ from collections.abc import Iterable, Mapping
 from functools import cached_property
 from itertools import tee
 from typing import List, Literal, Optional, Set, Tuple, TypedDict, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -59,6 +60,7 @@ from .utils import (AutoWeightsLoader, flatten_bn, maybe_prefix,
                     merge_multimodal_embeddings)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4ImagePatchInputs(TypedDict):
     type: Literal["pixel_values"]
     flat_data: torch.Tensor
@@ -84,6 +86,7 @@ class Llama4ImagePatchInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4VisionMLP(nn.Module):
 
     def __init__(self,
@@ -121,6 +124,7 @@ class Llama4VisionMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4MultiModalProjector(nn.Module):
 
     def __init__(
@@ -168,6 +172,7 @@ def pixel_shuffle(input_tensor, shuffle_ratio):
     return output_tensor
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4VisionPixelShuffleMLP(nn.Module):
 
     def __init__(
@@ -196,6 +201,7 @@ class Llama4VisionPixelShuffleMLP(nn.Module):
         return self.mlp(encoded_patches)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4VisionAttention(nn.Module):
 
     def __init__(
@@ -270,6 +276,7 @@ class Llama4VisionAttention(nn.Module):
         return attn_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4VisionEncoderLayer(nn.Module):
 
     def __init__(
@@ -317,6 +324,7 @@ class Llama4VisionEncoderLayer(nn.Module):
         return outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4VisionEncoder(nn.Module):
 
     def __init__(
@@ -357,6 +365,7 @@ class Llama4VisionEncoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4UnfoldConvolution(nn.Module):
 
     def __init__(self,
@@ -384,6 +393,7 @@ class Llama4UnfoldConvolution(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4VisionModel(nn.Module):
 
     def __init__(
@@ -463,6 +473,7 @@ class Llama4VisionModel(nn.Module):
         return hidden_state
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mllama4ProcessingInfo(BaseProcessingInfo):
 
     def __init__(self, ctx: InputProcessingContext) -> None:
@@ -506,6 +517,7 @@ class Mllama4ProcessingInfo(BaseProcessingInfo):
                          width=image_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mllama4MultiModalProcessor(BaseMultiModalProcessor[Mllama4ProcessingInfo]
                                  ):
 
@@ -617,6 +629,7 @@ class Mllama4MultiModalProcessor(BaseMultiModalProcessor[Mllama4ProcessingInfo]
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Mllama4DummyInputsBuilder(BaseDummyInputsBuilder[Mllama4ProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -650,6 +663,7 @@ class Mllama4DummyInputsBuilder(BaseDummyInputsBuilder[Mllama4ProcessingInfo]):
     info=Mllama4ProcessingInfo,
     dummy_inputs=Mllama4DummyInputsBuilder,
 )
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4ForConditionalGeneration(nn.Module, SupportsMultiModal,
                                      SupportsPP):
     packed_modules_mapping = {

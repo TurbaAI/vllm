@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Type
@@ -16,6 +17,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PallasAttentionBackend(AttentionBackend):
 
     @staticmethod
@@ -66,6 +68,7 @@ class PallasAttentionBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PallasMetadata(AttentionMetadata):
 
     # Currently, input sequences can only contain all prefills
@@ -94,6 +97,7 @@ class PallasMetadata(AttentionMetadata):
         return self
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PallasAttentionBackendImpl(AttentionImpl):
 
     def __init__(

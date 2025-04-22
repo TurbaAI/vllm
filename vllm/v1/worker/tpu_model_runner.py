@@ -3,6 +3,7 @@ import bisect
 import time
 from typing import TYPE_CHECKING, Optional, cast
 from unittest.mock import patch
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 import torch
@@ -88,6 +89,7 @@ MIN_NUM_SEQS = 8
 # The dummy_run should be comprehensive, ensuring all potential input shapes and
 # branch predictions are included as subgraph inputs to facilitate
 # pre-compilation.
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TPUModelRunner:
 
     def __init__(

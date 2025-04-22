@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Dict, Type
 
@@ -11,6 +12,7 @@ from vllm.platforms import current_platform
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CustomOp(nn.Module):
     """
     Base class for custom ops.

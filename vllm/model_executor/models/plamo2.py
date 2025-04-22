@@ -2,6 +2,7 @@
 """Inference-only PLaMo2 model."""
 import math
 from typing import Iterable, Optional, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -41,6 +42,7 @@ from vllm.utils import LayerBlockType
 
 
 # Only used for type hinting.
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Plamo2Config(PretrainedConfig):  # type: ignore
     model_type: str = "plamo2"
 
@@ -62,6 +64,7 @@ class Plamo2Config(PretrainedConfig):  # type: ignore
     vocab_size: int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Plamo2PreTrainedModel(PreTrainedModel):  # type: ignore
 
     def _init_weights(self, module: torch.nn.Module) -> None:
@@ -116,6 +119,7 @@ def _swiglu(h: torch.Tensor) -> torch.Tensor:
 
 
 # Adapted from transformers.models.mamba.modeling_mamba.MambaMixer
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Plamo2MambaMixer(nn.Module):
     # TODO(Shinichi): Rebase on Mamba2 implementation.
 
@@ -319,6 +323,7 @@ class Plamo2MambaMixer(nn.Module):
         return contextualized_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DenseMLP(nn.Module):
 
     def __init__(
@@ -348,6 +353,7 @@ class DenseMLP(nn.Module):
         return output  # type: ignore
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Plamo2AttentionMixer(nn.Module):
 
     def __init__(self,
@@ -435,6 +441,7 @@ class Plamo2AttentionMixer(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Plamo2DecoderLayer(nn.Module):
 
     def __init__(self,
@@ -502,6 +509,7 @@ class Plamo2DecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Plamo2Decoder(torch.nn.Module):
 
     def __init__(self, vllm_config: VllmConfig, prefix: str = "") -> None:
@@ -538,6 +546,7 @@ class Plamo2Decoder(torch.nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Plamo2Model(Plamo2PreTrainedModel):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -581,6 +590,7 @@ class Plamo2Model(Plamo2PreTrainedModel):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Plamo2ForCausalLM(Plamo2PreTrainedModel, HasInnerState, IsHybrid,
                         SupportsV0Only):
     packed_modules_mapping = {

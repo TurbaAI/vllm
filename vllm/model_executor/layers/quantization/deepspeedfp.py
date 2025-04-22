@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional
 
@@ -12,6 +13,7 @@ from vllm.model_executor.layers.quantization.base_config import (
 from vllm.model_executor.utils import set_weight_attrs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepSpeedFPConfig(QuantizationConfig):
     """Config for DeepSpeed FP quantizer. It supports fp6 and fp8.
     
@@ -76,6 +78,7 @@ class DeepSpeedFPConfig(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepSpeedFPLinearMethod(LinearMethodBase):
     """Linear method for DeepSpeedFP quantizer.
 
@@ -132,6 +135,7 @@ class DeepSpeedFPLinearMethod(LinearMethodBase):
         return F.linear(x, y, bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepSpeedFPParameter(nn.Parameter):
     """
     DeepSpeedFP quantized parameter class that implements fp8/fp6

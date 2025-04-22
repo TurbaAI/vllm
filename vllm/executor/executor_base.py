@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import time
@@ -24,6 +25,7 @@ logger = init_logger(__name__)
 _R = TypeVar("_R", default=Any)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExecutorBase(ABC):
     """Base class for all executors.
 
@@ -275,6 +277,7 @@ class ExecutorBase(ABC):
         self.check_health()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DistributedExecutorBase(ExecutorBase):
     """Abstract superclass of distributed executor implementations."""
 

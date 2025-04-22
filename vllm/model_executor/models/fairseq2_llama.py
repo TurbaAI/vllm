@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 The vLLM team.
 # Copyright 2024 Meta Platforms, Inc. and affiliates. All rights reserved.
@@ -30,6 +31,7 @@ from vllm.model_executor.models.llama import LlamaForCausalLM
 from .utils import AutoWeightsLoader, WeightsMapper
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Fairseq2LlamaForCausalLM(LlamaForCausalLM):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

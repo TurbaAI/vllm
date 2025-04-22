@@ -16,6 +16,7 @@ from multiprocessing.connection import Connection
 from multiprocessing.process import BaseProcess
 from threading import Thread
 from typing import Any, Callable, Optional, Union, cast
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import cloudpickle
 
@@ -41,6 +42,7 @@ POLLING_TIMEOUT_S = POLLING_TIMEOUT_MS // 1000
 EXECUTE_MODEL_TIMEOUT_S = 30
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiprocExecutor(Executor):
 
     def _init_executor(self) -> None:
@@ -237,6 +239,7 @@ class MultiprocExecutor(Executor):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UnreadyWorkerProcHandle:
     """WorkerProcess handle before READY."""
     proc: BaseProcess
@@ -245,6 +248,7 @@ class UnreadyWorkerProcHandle:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WorkerProcHandle:
     proc: BaseProcess
     rank: int
@@ -261,6 +265,7 @@ class WorkerProcHandle:
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WorkerProc:
     """Wrapper that runs one Worker in a separate process."""
 
@@ -448,6 +453,7 @@ class WorkerProc:
             if worker is not None:
                 worker.shutdown()
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class ResponseStatus(Enum):
         SUCCESS = auto()
         FAILURE = auto()

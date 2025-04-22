@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 from collections.abc import Mapping
@@ -22,6 +23,7 @@ from .parse import is_explicit_encoder_decoder_prompt, parse_singleton_prompt
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InputPreprocessor:
 
     def __init__(

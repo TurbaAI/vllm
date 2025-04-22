@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import List, Optional
 
@@ -13,6 +14,7 @@ from vllm.utils import LRUCache
 from .base_tokenizer_group import BaseTokenizerGroup
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenizerGroup(BaseTokenizerGroup):
     """A group of tokenizers that can be used for LoRA adapters."""
 

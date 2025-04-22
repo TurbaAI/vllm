@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import json
@@ -45,6 +46,7 @@ from vllm.transformers_utils.tokenizers import (maybe_serialize_tool_calls,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OpenAIServingChat(OpenAIServing):
 
     def __init__(

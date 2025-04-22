@@ -5,6 +5,7 @@ import time
 from collections.abc import AsyncGenerator
 from math import ceil
 from typing import Final, Optional, Union, cast
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from fastapi import Request
 
@@ -144,6 +145,7 @@ ISO639_1_OTHER_LANGS = {
 MAX_AUDIO_CLIP_FILESIZE_MB = 25
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OpenAIServingTranscription(OpenAIServing):
 
     def __init__(

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 from collections import defaultdict
@@ -49,6 +50,7 @@ if TYPE_CHECKING:
                                           ModelInputForGPUWithSamplingMetadata)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashInferBackend(AttentionBackend):
 
     @staticmethod
@@ -110,6 +112,7 @@ class FlashInferBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PerLayerParameters:
     """
     Currently, FlashInfer backend only support models in which all layers share
@@ -175,6 +178,7 @@ def infer_global_hyperparameters(
     return global_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashInferState(AttentionState):
 
     def __init__(self, runner):
@@ -360,6 +364,7 @@ class FlashInferState(AttentionState):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashInferMetadata(AttentionMetadata):
     # Maximum sequence length among prefill batch. 0 if there are decoding
     # requests only.
@@ -600,6 +605,7 @@ class FlashInferMetadata(AttentionMetadata):
             block_table_bound=self.block_table_bound)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashInferMetadataBuilder(AttentionMetadataBuilder[FlashInferMetadata]):
 
     def __init__(self, input_builder: "ModelInputForGPUBuilder"):
@@ -896,6 +902,7 @@ class FlashInferMetadataBuilder(AttentionMetadataBuilder[FlashInferMetadata]):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashInferImpl(AttentionImpl):
 
     def __init__(

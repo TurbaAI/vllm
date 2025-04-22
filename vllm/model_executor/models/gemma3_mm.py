@@ -2,6 +2,7 @@
 import math
 from collections.abc import Iterable, Mapping, Sequence
 from typing import Any, Literal, Optional, Set, Tuple, TypedDict, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -41,6 +42,7 @@ from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3ImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: torch.Tensor
@@ -58,6 +60,7 @@ class Gemma3ImagePixelInputs(TypedDict):
 Gemma3ImageInputs = Gemma3ImagePixelInputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3ProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -223,6 +226,7 @@ class Gemma3ProcessingInfo(BaseProcessingInfo):
         return ImageSize(height=50 * max_num_crops, width=50)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3DummyInputsBuilder(BaseDummyInputsBuilder[Gemma3ProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -251,6 +255,7 @@ class Gemma3DummyInputsBuilder(BaseDummyInputsBuilder[Gemma3ProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3MultiModalProcessor(BaseMultiModalProcessor[Gemma3ProcessingInfo]):
 
     def _call_hf_processor(
@@ -414,6 +419,7 @@ class Gemma3MultiModalProcessor(BaseMultiModalProcessor[Gemma3ProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3MultiModalProjector(nn.Module):
 
     def __init__(self, config: Gemma3Config):
@@ -457,6 +463,7 @@ class Gemma3MultiModalProjector(nn.Module):
 @MULTIMODAL_REGISTRY.register_processor(Gemma3MultiModalProcessor,
                                         info=Gemma3ProcessingInfo,
                                         dummy_inputs=Gemma3DummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Gemma3ForConditionalGeneration(nn.Module, SupportsMultiModal, SupportsPP,
                                      SupportsLoRA):
     packed_modules_mapping = {

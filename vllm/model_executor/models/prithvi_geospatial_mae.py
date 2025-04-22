@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2025 The vLLM team.
 # Copyright 2025 IBM.
@@ -40,12 +41,14 @@ from vllm.sequence import (IntermediateTensors, PoolerOutput,
                            PoolingSequenceGroupOutput)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrithviGeoSpatialMAEProcessingInfo(BaseProcessingInfo):
 
     def get_supported_mm_limits(self) -> Mapping[str, Optional[int]]:
         return {"image": None}
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrithviGeoSpatialMAEInputBuilder(
         BaseDummyInputsBuilder[PrithviGeoSpatialMAEProcessingInfo]):
 
@@ -66,6 +69,7 @@ class PrithviGeoSpatialMAEInputBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrithviGeoSpatialMAEMultiModalProcessor(BaseMultiModalProcessor):
 
     def _get_mm_fields_config(
@@ -112,6 +116,7 @@ class PrithviGeoSpatialMAEMultiModalProcessor(BaseMultiModalProcessor):
     PrithviGeoSpatialMAEMultiModalProcessor,
     info=PrithviGeoSpatialMAEProcessingInfo,
     dummy_inputs=PrithviGeoSpatialMAEInputBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrithviGeoSpatialMAE(nn.Module, IsAttentionFree, SupportsMultiModal,
                            SupportsV0Only):
     """ Prithvi Masked Autoencoder"""

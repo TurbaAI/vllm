@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 import itertools
@@ -73,6 +74,7 @@ class EncoderDecoderModelInput(ModelInputForGPUWithSamplingMetadata):
             super().from_broadcasted_tensor_dict(tensor_dict, attn_backend))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EncoderDecoderModelRunner(GPUModelRunnerBase[EncoderDecoderModelInput]):
     _model_input_cls: Type[EncoderDecoderModelInput] = (
         EncoderDecoderModelInput)

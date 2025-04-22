@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Iterable, Union
 
@@ -13,6 +14,7 @@ from .vllm_inductor_pass import VllmInductorPass
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NoOpEliminationPass(VllmInductorPass):
     """
     This is an inductor pass that removes redundant reshape/slice operations.

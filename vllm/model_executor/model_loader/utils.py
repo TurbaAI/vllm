@@ -3,6 +3,7 @@
 import contextlib
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple, Type
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import transformers
@@ -119,6 +120,7 @@ def get_architecture_class_name(model_config: ModelConfig) -> str:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParamMapping:
     """
     A class to handle parameter mapping for model weight loading.

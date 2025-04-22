@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 #  https://github.com/modelscope/ms-swift/blob/v2.4.2/swift/utils/module_mapping.py
@@ -8,6 +9,7 @@ from typing import List, Union
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelKeys:
     model_type: str = None
 
@@ -45,6 +47,7 @@ class ModelKeys:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModelKeys(ModelKeys):
     language_model: List[str] = field(default_factory=list)
     connector: List[str] = field(default_factory=list)

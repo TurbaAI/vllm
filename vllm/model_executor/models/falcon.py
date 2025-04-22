@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/a5cc30d72ae2dc19af534e4b35c986cc28db1275/src/transformers/models/falcon/modeling_falcon.py
@@ -79,6 +80,7 @@ def _get_alibi_slopes(total_num_heads: int) -> torch.Tensor:
     return slopes
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FalconAttention(nn.Module):
 
     def __init__(
@@ -202,6 +204,7 @@ class FalconAttention(nn.Module):
         return attn_output, bias
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FalconMLP(nn.Module):
 
     def __init__(
@@ -238,6 +241,7 @@ class FalconMLP(nn.Module):
         return x, bias
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FalconDecoderLayer(nn.Module):
 
     def __init__(
@@ -338,6 +342,7 @@ class FalconDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FalconModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -444,6 +449,7 @@ class FalconModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FalconForCausalLM(nn.Module, SupportsPP):
     packed_modules_mapping = {
         "query_key_value": ["query_key_value"],

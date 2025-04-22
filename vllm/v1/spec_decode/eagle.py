@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import triton
 import triton.language as tl
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.config import VllmConfig, set_current_vllm_config
 from vllm.forward_context import set_forward_context
@@ -13,6 +14,7 @@ from vllm.v1.attention.backends.flash_attn import FlashAttentionMetadata
 from vllm.v1.sample.metadata import SamplingMetadata
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EagleProposer:
 
     def __init__(

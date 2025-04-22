@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import time
@@ -37,6 +38,7 @@ from vllm.utils import merge_async_iterators
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OpenAIServingCompletion(OpenAIServing):
 
     def __init__(

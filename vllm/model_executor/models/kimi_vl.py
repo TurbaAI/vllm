@@ -40,6 +40,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import copy
 import math
@@ -89,11 +90,13 @@ logger = init_logger(__name__)
 
 # For dummy input only
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MaxImageTokenMeta:
     width: int = 1024
     height: int = 1024
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KimiVLMultiModalProjector(nn.Module):
 
     def __init__(self, config: KimiVLConfig):
@@ -122,6 +125,7 @@ class KimiVLMultiModalProjector(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KimiVLImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: Union[torch.Tensor, List[torch.Tensor]]
@@ -138,6 +142,7 @@ class KimiVLImagePixelInputs(TypedDict):
 KimiVLImageInputs = KimiVLImagePixelInputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KimiVLProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -202,6 +207,7 @@ class KimiVLProcessingInfo(BaseProcessingInfo):
         return self.get_hf_config().media_placeholder_token_id
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KimiVLDummyInputsBuilder(BaseDummyInputsBuilder[KimiVLProcessingInfo]):
 
     def __init__(self, info: KimiVLProcessingInfo) -> None:
@@ -233,6 +239,7 @@ class KimiVLDummyInputsBuilder(BaseDummyInputsBuilder[KimiVLProcessingInfo]):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KimiVLMultiModalProcessor(BaseMultiModalProcessor[KimiVLProcessingInfo]):
 
     def _get_mm_fields_config(
@@ -286,6 +293,7 @@ class KimiVLMultiModalProcessor(BaseMultiModalProcessor[KimiVLProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(KimiVLMultiModalProcessor,
                                         info=KimiVLProcessingInfo,
                                         dummy_inputs=KimiVLDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KimiVLForConditionalGeneration(nn.Module, SupportsMultiModal):
 
     def __init__(

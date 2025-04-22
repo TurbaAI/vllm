@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 from typing import Iterable, Optional, Set, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -23,6 +24,7 @@ from .interfaces import SupportsCrossEncoding
 from .utils import WeightsMapper, maybe_prefix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertEmbeddings(nn.Module):
 
     def __init__(self, config: ModernBertConfig):
@@ -48,6 +50,7 @@ class ModernBertEmbeddings(nn.Module):
             return embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertRotaryEmbedding(RotaryEmbedding):
 
     def __init__(self, config: ModernBertConfig, head_size: int, dim: int,
@@ -62,6 +65,7 @@ class ModernBertRotaryEmbedding(RotaryEmbedding):
         self.config = config
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertAttention(nn.Module):
 
     def __init__(self,
@@ -122,6 +126,7 @@ class ModernBertAttention(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertMLP(nn.Module):
 
     def __init__(self, config: ModernBertConfig):
@@ -140,6 +145,7 @@ class ModernBertMLP(nn.Module):
         return self.Wo(self.act(input) * gate)[0]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertLayer(nn.Module):
 
     def __init__(self,
@@ -173,6 +179,7 @@ class ModernBertLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertEncoderLayer(nn.Module):
 
     def __init__(self, vllm_config: VllmConfig, prefix: str = ""):
@@ -194,6 +201,7 @@ class ModernBertEncoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertModel(nn.Module):
     hf_to_vllm_mapper = WeightsMapper(
         orig_to_new_prefix={"layers.": "encoder_layer.layers."})
@@ -247,6 +255,7 @@ class ModernBertModel(nn.Module):
         return norm_outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertPooler(nn.Module):
 
     def __init__(self, config: ModernBertConfig):
@@ -265,6 +274,7 @@ class ModernBertPooler(nn.Module):
         return pooled_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModernBertForSequenceClassification(nn.Module, SupportsCrossEncoding):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

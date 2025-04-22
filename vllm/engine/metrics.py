@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from typing import TYPE_CHECKING
@@ -304,6 +305,7 @@ class Metrics:
                 prometheus_client.REGISTRY.unregister(collector)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _RayGaugeWrapper:
     """Wraps around ray.util.metrics.Gauge to provide same API as
     prometheus_client.Gauge"""
@@ -331,6 +333,7 @@ class _RayGaugeWrapper:
         return self._gauge.set(time.time())
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _RayCounterWrapper:
     """Wraps around ray.util.metrics.Counter to provide same API as
     prometheus_client.Counter"""
@@ -354,6 +357,7 @@ class _RayCounterWrapper:
         return self._counter.inc(value)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _RayHistogramWrapper:
     """Wraps around ray.util.metrics.Histogram to provide same API as
     prometheus_client.Histogram"""
@@ -378,6 +382,7 @@ class _RayHistogramWrapper:
         return self._histogram.observe(value)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RayMetrics(Metrics):
     """
     RayMetrics is used by RayPrometheusStatLogger to log to Ray metrics.
@@ -712,6 +717,7 @@ class PrometheusStatLogger(StatLoggerBase):
             info_gauge.labels(**metrics_info).set(1)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RayPrometheusStatLogger(PrometheusStatLogger):
     """RayPrometheusStatLogger uses Ray metrics instead."""
     _metrics_cls = RayMetrics

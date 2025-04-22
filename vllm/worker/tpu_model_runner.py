@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import enum
 import time
@@ -42,6 +43,7 @@ _ENABLE_TOP_P = False
 _MAX_NUM_SAMPLES = 128
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExecutionMode(enum.Enum):
     PREFILL = enum.auto()
     DECODE = enum.auto()
@@ -97,6 +99,7 @@ class ModelInputForTPU(ModelRunnerInputBase):
         return cls(**tensor_dict)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TPUModelRunner(ModelRunnerBase[ModelInputForTPU]):
 
     def __init__(
@@ -767,6 +770,7 @@ class TPUModelRunner(ModelRunnerBase[ModelInputForTPU]):
             return [sampler_output]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelWrapper(nn.Module):
 
     def __init__(self, model: nn.Module):

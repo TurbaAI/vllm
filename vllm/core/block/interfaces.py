@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import Dict, FrozenSet, List, Optional, Protocol, Tuple
@@ -8,6 +9,7 @@ from vllm.utils import Device
 BlockId = int
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Block(ABC):
 
     @abstractmethod
@@ -78,6 +80,7 @@ class Block(ABC):
     def last_accessed(self, last_accessed_ts: float):
         raise NotImplementedError
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Factory(Protocol):
 
         @abstractmethod
@@ -105,6 +108,7 @@ class Block(ABC):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockAllocator(ABC):
 
     @abstractmethod
@@ -199,6 +203,7 @@ class BlockAllocator(ABC):
         """Reset prefix cache."""
         pass
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class NoFreeBlocksError(ValueError):
         pass
 
@@ -210,6 +215,7 @@ class BlockAllocator(ABC):
         pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeviceAwareBlockAllocator(ABC):
 
     @abstractmethod

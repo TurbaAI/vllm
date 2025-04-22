@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 import time
@@ -109,6 +110,7 @@ class ModelInputForXPUWithSamplingMetadata(ModelInputForXPU):
         return cls(**tensor_dict)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelInputForXPUBuilder(ModelRunnerInputBuilderBase[ModelInputForXPU]):
 
     def __init__(self,
@@ -366,6 +368,7 @@ class ModelInputForXPUBuilder(ModelRunnerInputBuilderBase[ModelInputForXPU]):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XPUModelRunner(ModelRunnerBase[ModelInputForXPUWithSamplingMetadata]):
     _model_input_cls: Type[ModelInputForXPUWithSamplingMetadata] = (
         ModelInputForXPUWithSamplingMetadata)

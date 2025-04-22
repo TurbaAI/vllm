@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from collections.abc import MutableSequence
@@ -17,6 +18,7 @@ from vllm.sequence import (PromptLogprobs, RequestMetrics, SampleLogprobs,
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompletionOutput:
     """The output data of one completion output of a request.
 
@@ -58,6 +60,7 @@ class CompletionOutput:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingOutput:
     """The output data of one pooling output of a request.
 
@@ -82,6 +85,7 @@ class PoolingOutput:
         return self.data.tolist()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestOutput:
     """The output data of a completion request to the LLM.
 
@@ -333,6 +337,7 @@ class RequestOutput:
 _O = TypeVar("_O", default=PoolingOutput)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingRequestOutput(Generic[_O]):
     """
     The output data of a pooling request to the LLM.
@@ -380,6 +385,7 @@ class PoolingRequestOutput(Generic[_O]):
                 f"finished={self.finished})")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestOutputFactory:
 
     @staticmethod
@@ -394,6 +400,7 @@ class RequestOutputFactory:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EmbeddingOutput:
     """The output data of one embedding output of a request.
 
@@ -419,6 +426,7 @@ class EmbeddingOutput:
         return f"EmbeddingOutput(hidden_size={self.hidden_size})"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EmbeddingRequestOutput(PoolingRequestOutput[EmbeddingOutput]):
 
     @staticmethod
@@ -432,6 +440,7 @@ class EmbeddingRequestOutput(PoolingRequestOutput[EmbeddingOutput]):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ClassificationOutput:
     """The output data of one classification output of a request.
 
@@ -457,6 +466,7 @@ class ClassificationOutput:
         return f"ClassificationOutput(num_classes={self.num_classes})"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ClassificationRequestOutput(PoolingRequestOutput[ClassificationOutput]):
 
     @staticmethod
@@ -470,6 +480,7 @@ class ClassificationRequestOutput(PoolingRequestOutput[ClassificationOutput]):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScoringOutput:
     """The output data of one scoring output of a request.
 
@@ -496,6 +507,7 @@ class ScoringOutput:
         return [self.score]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScoringRequestOutput(PoolingRequestOutput[ScoringOutput]):
 
     @staticmethod

@@ -3,6 +3,7 @@
 import gc
 import os
 from typing import List, Optional, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import intel_extension_for_pytorch  # noqa: F401
 import oneccl_bindings_for_pytorch  # noqa: F401
@@ -24,6 +25,7 @@ from vllm.worker.xpu_model_runner import XPUModelRunner
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XPUWorker(LoRANotSupportedWorkerBase, Worker):
     """A worker class that executes (a partition of) the model on a GPU.
     

@@ -2,6 +2,7 @@
 """Minimal implementation of CLIPVisionModel intended to be only used
 within a vision language model."""
 from typing import Iterable, Optional, Set, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -20,6 +21,7 @@ from vllm.model_executor.models.interfaces import SupportsQuant
 from .vision import VisionEncoderInfo, resolve_visual_encoder_outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLIPEncoderInfo(VisionEncoderInfo[CLIPVisionConfig]):
 
     def get_num_image_tokens(
@@ -43,6 +45,7 @@ class CLIPEncoderInfo(VisionEncoderInfo[CLIPVisionConfig]):
 
 
 # Adapted from https://github.com/huggingface/transformers/blob/v4.39.0/src/transformers/models/clip/modeling_clip.py#L164 # noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLIPVisionEmbeddings(nn.Module):
 
     def __init__(self, config: CLIPVisionConfig):
@@ -85,6 +88,7 @@ class CLIPVisionEmbeddings(nn.Module):
         return embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLIPAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -146,6 +150,7 @@ class CLIPAttention(nn.Module):
         return attn_output, None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLIPMLP(nn.Module):
 
     def __init__(
@@ -176,6 +181,7 @@ class CLIPMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLIPEncoderLayer(nn.Module):
 
     def __init__(
@@ -214,6 +220,7 @@ class CLIPEncoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLIPEncoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self
@@ -262,6 +269,7 @@ class CLIPEncoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLIPVisionTransformer(nn.Module):
 
     def __init__(
@@ -333,6 +341,7 @@ class CLIPVisionTransformer(nn.Module):
         return encoder_outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CLIPVisionModel(nn.Module, SupportsQuant):
     config_class = CLIPVisionConfig
     main_input_name = "pixel_values"

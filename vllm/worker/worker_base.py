@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 import os
@@ -29,6 +30,7 @@ logger = init_logger(__name__)
 
 
 @warn_for_unimplemented_methods
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WorkerBase:
     """Worker interface that allows vLLM to cleanly separate implementations for
     different hardware. Also abstracts control plane communication, e.g., to
@@ -130,6 +132,7 @@ class WorkerBase:
         return self.model_config.get_vocab_size()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DelegateWorkerBase(WorkerBase):
     """
     A class that delegates all methods to another WorkerBase instance. This is
@@ -189,6 +192,7 @@ class DelegateWorkerBase(WorkerBase):
         return getattr(self.worker, attr)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRANotSupportedWorkerBase(WorkerBase):
     """Partial implementation of WorkerBase that raises exceptions when LoRA
     methods are invoked.
@@ -256,6 +260,7 @@ class WorkerInput:
         return tensor_dict
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LocalOrDistributedWorkerBase(WorkerBase):
     """
     Partial implementation of WorkerBase that has a default `execute_model`
@@ -483,6 +488,7 @@ class LocalOrDistributedWorkerBase(WorkerBase):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WorkerWrapperBase:
     """
     This class represents one process in an executor/engine. It is responsible

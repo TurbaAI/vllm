@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from concurrent.futures import Future
 from typing import Callable, Union
@@ -18,6 +19,7 @@ from vllm.v1.outputs import ModelRunnerOutput
 FailureCallback = Callable[[], None]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Executor(ExecutorBase):
     """
     Abstract class for v1 executors, mainly define some methods for v1.
@@ -95,10 +97,12 @@ class Executor(ExecutorBase):
         self.collective_rpc("profile", args=(is_start, ))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UniProcExecutor(UniProcExecutorV0, Executor):
     pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExecutorWithExternalLauncher(ExecutorWithExternalLauncherV0, Executor):
 
     def determine_available_memory(self) -> list[int]:  # in bytes

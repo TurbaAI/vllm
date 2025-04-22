@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 import os
@@ -20,6 +21,7 @@ NONE_INT = -150886311
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MooncakeTransferEngineConfig:
     prefill_url: str
     decode_url: str
@@ -52,6 +54,7 @@ class MooncakeTransferEngineConfig:
         return MooncakeTransferEngineConfig.from_file(config_file_path)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MooncakeTransferEngine:
     """Handles the transfer of data using mooncake_vllm_adaptor and ZeroMQ."""
 
@@ -204,6 +207,7 @@ class MooncakeTransferEngine:
         return ret
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MooncakePipe(KVPipeBase):
     """MooncakeTransferEngine based Pipe implementation."""
 

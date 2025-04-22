@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import Any, Optional, Set
@@ -6,6 +7,7 @@ from typing import Any, Optional, Set
 import torch
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AbstractWorkerManager(ABC):
 
     def __init__(self, device: torch.device):

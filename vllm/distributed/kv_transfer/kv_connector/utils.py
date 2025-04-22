@@ -3,6 +3,7 @@
 KV cache helper for store.
 """
 import torch
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import vllm.envs as envs
 from vllm import _custom_ops as ops
@@ -12,6 +13,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class model_aware_kv_ops_helper:
 
     def __init__(self, config: VllmConfig):

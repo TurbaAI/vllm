@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 The vLLM team.
 #
@@ -111,6 +112,7 @@ def replace_linear_class(
     )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TransformersModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -362,6 +364,7 @@ class TransformersModel(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TransformersForCausalLM(nn.Module, SupportsQuant, SupportsLoRA,
                               SupportsPP):
     embedding_padding_modules = ["lm_head"]

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from functools import cached_property
 from importlib.util import find_spec
@@ -27,6 +28,7 @@ else:
     chain_speculative_sampling = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RejectionSampler(SpecDecodeStochasticBaseSampler):
     """Apply modified rejection sampling as described in "Accelerating Large
         Language Model Decoding with Speculative Sampling"

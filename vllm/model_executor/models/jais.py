@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://huggingface.co/inceptionai/jais-30b-chat-v3/blob/main/modeling_jais.py
@@ -50,6 +51,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SwiGLUActivation(nn.Module):
 
     def forward(self, x1: torch.Tensor, x2: torch.Tensor) -> torch.Tensor:
@@ -71,6 +73,7 @@ def _get_alibi_slopes(n):
             2 * closest_power_of_2)[0::2][:n - closest_power_of_2])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JAISAttention(nn.Module):
 
     def __init__(
@@ -131,6 +134,7 @@ class JAISAttention(nn.Module):
         return attn_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JAISMLP(nn.Module):
 
     def __init__(
@@ -173,6 +177,7 @@ class JAISMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JAISBlock(nn.Module):
 
     def __init__(
@@ -214,6 +219,7 @@ class JAISBlock(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JAISModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -285,6 +291,7 @@ class JAISModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JAISLMHeadModel(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

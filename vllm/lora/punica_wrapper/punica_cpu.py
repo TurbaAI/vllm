@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Callable, Optional, Tuple, Union
 
@@ -13,6 +14,7 @@ from .punica_base import PunicaWrapperBase
 
 # The platforms that are compatible with the PyTorch-native implementation can
 # inherit this class
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PunicaWrapperCPU(PunicaWrapperBase):
     """
     PunicaWrapperCPU is designed to manage and provide metadata for the punica 

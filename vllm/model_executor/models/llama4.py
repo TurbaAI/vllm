@@ -17,6 +17,7 @@
 # limitations under the License.
 """Inference-only LLaMA model compatible with HuggingFace weights."""
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -41,6 +42,7 @@ from .utils import (AutoWeightsLoader, extract_layer_index, fast_topk,
                     is_pp_missing_parameter)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4MoE(nn.Module):
 
     @staticmethod
@@ -107,6 +109,7 @@ class Llama4MoE(nn.Module):
         return experts_out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4Attention(nn.Module):
 
     def __init__(self,
@@ -242,6 +245,7 @@ class Llama4Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4DecoderLayer(nn.Module):
 
     def __init__(
@@ -319,6 +323,7 @@ class Llama4DecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4Model(LlamaModel):
 
     def __init__(self,
@@ -459,6 +464,7 @@ class Llama4Model(LlamaModel):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama4ForCausalLM(LlamaForCausalLM):
 
     packed_modules_mapping = {

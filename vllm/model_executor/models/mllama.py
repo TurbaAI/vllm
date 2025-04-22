@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 the HuggingFace Inc. team. All rights reserved.
 #
@@ -72,6 +73,7 @@ from .utils import maybe_prefix
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: torch.Tensor
@@ -92,6 +94,7 @@ def calc_token_per_chunk(image_size: int) -> int:
     return token_per_chunk
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self) -> MllamaConfig:
@@ -130,6 +133,7 @@ class MllamaProcessingInfo(BaseProcessingInfo):
         return ImageSize(height=max_num_tiles * image_size, width=image_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaDummyInputsBuilder(BaseDummyInputsBuilder[MllamaProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -158,6 +162,7 @@ class MllamaDummyInputsBuilder(BaseDummyInputsBuilder[MllamaProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaMultiModalProcessor(EncDecMultiModalProcessor[MllamaProcessingInfo]
                                 ):
 
@@ -354,6 +359,7 @@ def _prepare_aspect_ratio_attention_mask(
     return attention_mask
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ColumnParallelConv2dPatch(torch.nn.Module):
     """Conv2D Patching layer with model parallelism.
     Column parallel over unfolded input.
@@ -392,6 +398,7 @@ class ColumnParallelConv2dPatch(torch.nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaPrecomputedAspectRatioEmbedding(nn.Module):
 
     def __init__(self,
@@ -421,6 +428,7 @@ class MllamaPrecomputedAspectRatioEmbedding(nn.Module):
         return hidden_state
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaPrecomputedPositionEmbedding(nn.Module):
 
     def __init__(self, config: config_mllama.MllamaVisionConfig):
@@ -462,6 +470,7 @@ class MllamaPrecomputedPositionEmbedding(nn.Module):
 
 
 # TODO: support other attention backends for attention in vision model
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaVisionSdpaAttention(nn.Module):
 
     def __init__(self,
@@ -523,6 +532,7 @@ class MllamaVisionSdpaAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaVisionEncoderLayer(nn.Module):
 
     def __init__(
@@ -578,6 +588,7 @@ class MllamaVisionEncoderLayer(nn.Module):
         return hidden_state
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaVisionEncoder(nn.Module):
 
     def __init__(
@@ -621,6 +632,7 @@ class MllamaVisionEncoder(nn.Module):
         return hidden_states, encoder_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaVisionModel(nn.Module):
 
     def __init__(
@@ -791,6 +803,7 @@ class MllamaVisionModel(nn.Module):
         return hidden_state
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaTextRMSNorm(nn.Module):
 
     def __init__(self, hidden_size, eps=1e-6):
@@ -813,6 +826,7 @@ class MllamaTextRMSNorm(nn.Module):
         return f"{tuple(self.weight.shape)}, eps={self.variance_epsilon}"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaTextCrossAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -979,6 +993,7 @@ class MllamaTextCrossAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaCrossAttentionDecoderLayer(torch.nn.Module):
     """Cross-attention transformer block with tanh-gated attention
     and feedforward."""
@@ -1045,6 +1060,7 @@ class MllamaCrossAttentionDecoderLayer(torch.nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaTextModel(nn.Module):
     config_class = config_mllama.MllamaTextConfig
     base_model_prefix = "model"
@@ -1120,6 +1136,7 @@ class MllamaTextModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaForCausalLM(nn.Module):
     config_class = config_mllama.MllamaTextConfig
     base_model_prefix = "language_model"
@@ -1171,6 +1188,7 @@ class MllamaForCausalLM(nn.Module):
 @MULTIMODAL_REGISTRY.register_processor(MllamaMultiModalProcessor,
                                         info=MllamaProcessingInfo,
                                         dummy_inputs=MllamaDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MllamaForConditionalGeneration(nn.Module, SupportsMultiModal,
                                      SupportsV0Only):
     packed_modules_mapping = {

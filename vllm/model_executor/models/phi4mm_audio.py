@@ -7,6 +7,7 @@
 import abc
 import math
 from typing import List, Literal, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 import torch
@@ -26,6 +27,7 @@ from vllm.model_executor.models.phi4mm_utils import (
 _AUDIO_PLACEHOLDER_TOKEN_ID = 200011  # <|endoftext11|>
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConformerEncoderLayer(nn.Module):
     """ConformerEncoder Layer module.
     for more details see conformer paper:
@@ -247,6 +249,7 @@ class ConformerEncoderLayer(nn.Module):
         return out, pos_k, pos_v, mask
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TransformerEncoderBase(abc.ABC, nn.Module):
     """The Base class for Transformer based encoders
 
@@ -578,6 +581,7 @@ class TransformerEncoderBase(abc.ABC, nn.Module):
         return get_offset(self.input_layer, self.time_reduction)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConformerEncoder(TransformerEncoderBase):
     """ConformerEncoder module.
     see original paper for more details:
@@ -963,6 +967,7 @@ class ConformerEncoder(TransformerEncoderBase):
         return input_tensor, masks  # , layer_emb
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WindowQformer(nn.Module):
     """Window-level Qformer"""
 
@@ -1038,6 +1043,7 @@ class WindowQformer(nn.Module):
         return out, embed_len
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AudioEmbedding(nn.Module):
     """Image embedding."""
 

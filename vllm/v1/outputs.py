@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import NamedTuple, Optional
@@ -6,6 +7,7 @@ from typing import NamedTuple, Optional
 import torch
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LogprobsLists(NamedTuple):
 
     # [num_reqs, max_num_logprobs + 1]
@@ -23,6 +25,7 @@ class LogprobsLists(NamedTuple):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LogprobsTensors(NamedTuple):
 
     # [num_reqs, max_num_logprobs + 1]
@@ -60,6 +63,7 @@ class LogprobsTensors(NamedTuple):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SamplerOutput:
 
     # [num_reqs, max_num_generated_tokens]
@@ -73,6 +77,7 @@ class SamplerOutput:
 # ModelRunnerOutput is serialized and sent to the scheduler process.
 # This is expensive for torch.Tensor so prefer to use list instead.
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelRunnerOutput:
 
     # [num_reqs]

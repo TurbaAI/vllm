@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -56,6 +57,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralMLP(nn.Module):
 
     def __init__(
@@ -95,6 +97,7 @@ class MixtralMLP(nn.Module):
         return current_hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralMoE(nn.Module):
 
     def __init__(
@@ -162,6 +165,7 @@ class MixtralMoE(nn.Module):
             num_tokens, hidden_dim)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralAttention(nn.Module):
 
     def __init__(
@@ -242,6 +246,7 @@ class MixtralAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralDecoderLayer(nn.Module):
 
     def __init__(
@@ -298,6 +303,7 @@ class MixtralDecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -355,6 +361,7 @@ class MixtralModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MixtralForCausalLM(nn.Module, SupportsPP):
     fall_back_to_pt_during_load = False
 

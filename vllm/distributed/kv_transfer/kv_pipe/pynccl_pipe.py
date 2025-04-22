@@ -11,6 +11,7 @@
     - Manages buffer size and provides backpressure control
     - Supports distributed process groups with configurable parameters
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import threading
 import time
@@ -28,6 +29,7 @@ from vllm.logger import init_logger
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BrokenPipeException(Exception):
 
     def __init__(self, message):
@@ -38,6 +40,7 @@ class BrokenPipeException(Exception):
 Metadata = Dict[str, Optional[torch.Tensor]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PyNcclPipe(KVPipeBase):
 
     METADATA_LENGTH = 16

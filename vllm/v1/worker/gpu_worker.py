@@ -3,6 +3,7 @@
 import gc
 import os
 from typing import TYPE_CHECKING, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.distributed
@@ -31,6 +32,7 @@ if TYPE_CHECKING:
     from vllm.v1.core.sched.output import SchedulerOutput
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Worker(WorkerBase):
 
     def __init__(

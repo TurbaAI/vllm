@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import base64
 from io import BytesIO
@@ -24,6 +25,7 @@ except ImportError:
     soundfile = PlaceholderModule("soundfile")  # type: ignore[assignment]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AudioPlugin(MultiModalPlugin):
     """Plugin for audio data."""
 
@@ -52,6 +54,7 @@ def resample_audio(
     return librosa.resample(audio, orig_sr=orig_sr, target_sr=target_sr)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AudioMediaIO(MediaIO[tuple[npt.NDArray, float]]):
 
     def load_bytes(self, data: bytes) -> tuple[npt.NDArray, float]:

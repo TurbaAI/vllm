@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 from collections.abc import Iterable
@@ -17,6 +18,7 @@ from vllm.v1.metrics.stats import (IterationStats, LoRARequestStates,
                                    RequestStateStats)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestOutputCollector:
     """
     Collects streamed RequestOutputs per individual request,
@@ -66,12 +68,14 @@ class RequestOutputCollector:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OutputProcessorOutput:
 
     request_outputs: list[RequestOutput]
     reqs_to_abort: list[str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestState:
 
     def __init__(
@@ -223,6 +227,7 @@ class RequestState:
             stop_reason=stop_reason if finished else None)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OutputProcessor:
     """Process EngineCoreOutputs into RequestOutputs."""
 

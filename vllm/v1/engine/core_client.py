@@ -9,6 +9,7 @@ from concurrent.futures import Future
 from dataclasses import dataclass, field
 from threading import Thread
 from typing import Any, Callable, Optional, TypeVar, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import zmq
 import zmq.asyncio
@@ -35,6 +36,7 @@ _R = TypeVar('_R')  # Return type for collective_rpc
 STARTUP_POLL_PERIOD_MS = 10000
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreClient(ABC):
     """
     EngineCoreClient: subclasses handle different methods for pushing 
@@ -182,6 +184,7 @@ class EngineCoreClient(ABC):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InprocClient(EngineCoreClient):
     """
     InprocClient: client for in-process EngineCore. Intended 
@@ -252,6 +255,7 @@ class InprocClient(EngineCoreClient):
         return self.engine_core.collective_rpc(method, timeout, args, kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CoreEngine:
     """One per data parallel rank."""
 
@@ -294,6 +298,7 @@ class CoreEngine:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BackgroundResources:
     """Used as a finalizer for clean shutdown, avoiding
     circular reference back to the client object."""
@@ -339,6 +344,7 @@ class BackgroundResources:
             raise EngineDeadError()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPClient(EngineCoreClient):
     """
     MPClient: base client for multi-proc EngineCore.
@@ -469,6 +475,7 @@ def _process_utility_output(output: UtilityOutput,
         future.set_result(output.result)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SyncMPClient(MPClient):
     """Synchronous client for multi-proc EngineCore."""
 
@@ -612,6 +619,7 @@ class SyncMPClient(MPClient):
         self.call_utility("save_sharded_state", path, pattern, max_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncMPClient(MPClient):
     """Asyncio-compatible client for multi-proc EngineCore."""
 
@@ -785,6 +793,7 @@ class AsyncMPClient(MPClient):
                                              args, kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DPAsyncMPClient(AsyncMPClient):
     """Asyncio-compatible client for multi-proc, multi-engine (data parallel)
     EngineCore."""

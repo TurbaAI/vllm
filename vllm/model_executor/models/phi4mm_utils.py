@@ -6,12 +6,14 @@
 #!/usr/bin/env python3
 import math
 from typing import Optional, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Block(nn.Module):
     """Block abstract module"""
 
@@ -89,6 +91,7 @@ def adaptive_enc_mask(x_len, chunk_start_idx, left_window=0, right_window=0):
     return mask_left & mask_right
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Swish(nn.Module):
     """Implement Swish activation module.
     From https://arxiv.org/pdf/2005.03191.pdf
@@ -109,6 +112,7 @@ class Swish(nn.Module):
         return x * self.act_fn(x)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLU(nn.Module):
     """Implement Gated Linear Unit (GLU) module"""
 
@@ -143,6 +147,7 @@ class GLU(nn.Module):
 
 
 # TODO: Abdel, this can be improved using GLU module
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLUPointWiseConv(nn.Module):
     """GLUPointWiseConv module
     used for conformer architecture,
@@ -245,6 +250,7 @@ class GLUPointWiseConv(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DepthWiseSeperableConv1d(nn.Module):
     """DepthWiseSeperableConv1d module used in Convnet module
     for the conformer, for more details see:
@@ -313,6 +319,7 @@ class DepthWiseSeperableConv1d(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConvModule(nn.Module):
     """ConvModule Module for the conformer block.
     for more details see:
@@ -549,6 +556,7 @@ class ConvModule(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLULinear(nn.Module):
     """Linear + GLU module
 
@@ -586,6 +594,7 @@ class GLULinear(nn.Module):
         return self.glu_act(x)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FeedForward(nn.Module):
     """FeedForward Module.
     For more details see Conformer paper:
@@ -662,6 +671,7 @@ def _pre_hook(
         state_dict.pop(k)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class T5RelativeAttentionLogitBias(nn.Module):
     """
     This module implements the relative position bias described in Section 
@@ -794,6 +804,7 @@ class T5RelativeAttentionLogitBias(nn.Module):
         return relative_buckets
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AbsolutePositionalEncoding(nn.Module):
     """Absolute Positional encoding module.
     This module implement Absolute sinusoidal positional encoding
@@ -856,6 +867,7 @@ class AbsolutePositionalEncoding(nn.Module):
 
 
 #### forward embedding layers starts here
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MeanVarianceNormLayer(nn.Module):
     """Mean/variance normalization layer.
 
@@ -883,6 +895,7 @@ class MeanVarianceNormLayer(nn.Module):
         return (input_ - self.global_mean) * self.global_invstd
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CausalConv1D(nn.Conv1d):
     """
     A causal version of nn.Conv1d where each step would have limited access to
@@ -971,6 +984,7 @@ class CausalConv1D(nn.Conv1d):
             return x, cache
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CausalConv2D(nn.Conv2d):
     """
     A causal version of nn.Conv2d where each location in the 2D matrix would
@@ -1026,6 +1040,7 @@ class CausalConv2D(nn.Conv2d):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NemoConvSubsampling(torch.nn.Module):
     """Convlutional subsampling module, taken from NeMo ASR
     (https://github.com/NVIDIA/NeMo/blob/b367413645d5c72db3c2c96e46e95a
@@ -1569,6 +1584,7 @@ def calc_length(lengths,
 
 
 ####  multihead attention starts here
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttModule(nn.Module):
     """Attention abstraction module"""
 
@@ -1602,6 +1618,7 @@ class AttModule(nn.Module):
         return x, memory, pos_emb, att_mask
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttBlock(Block, AttModule):
     """Attention Block module to support both Attention and Block module."""
 
@@ -1624,6 +1641,7 @@ def masked_softmax(
     return attn
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiHeadedAttention(nn.Module):
     """Multi-Head Attention layer with optional relative position embedding 
     and GLU.
@@ -1827,6 +1845,7 @@ class MultiHeadedAttention(nn.Module):
         return self.linear_out(x)  # (batch, time1, d_model)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiSequential(torch.nn.Sequential):
     """Multi-input multi-output torch.nn.Sequential"""
 

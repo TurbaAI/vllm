@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -52,6 +53,7 @@ from .interfaces import SupportsLoRA, SupportsPP
 from .utils import AutoWeightsLoader, make_layers, maybe_prefix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeMoE(nn.Module):
     """A tensor-parallel MoE implementation for GraniteMoe that shards each
     expert across all ranks.
@@ -101,6 +103,7 @@ class GraniteMoeMoE(nn.Module):
         return final_hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeAttention(nn.Module):
 
     def __init__(
@@ -182,6 +185,7 @@ class GraniteMoeAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeDecoderLayer(nn.Module):
 
     def __init__(
@@ -242,6 +246,7 @@ class GraniteMoeDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -341,6 +346,7 @@ class GraniteMoeModel(nn.Module):
         return mixtral.MixtralModel.load_weights(self, new_weights.items())
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     fall_back_to_pt_during_load = False
 

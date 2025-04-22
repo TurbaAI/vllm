@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/gpt2/modeling_gpt2.py
@@ -48,6 +49,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPT2Attention(nn.Module):
 
     def __init__(
@@ -100,6 +102,7 @@ class GPT2Attention(nn.Module):
         return attn_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPT2MLP(nn.Module):
 
     def __init__(
@@ -134,6 +137,7 @@ class GPT2MLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPT2Block(nn.Module):
 
     def __init__(
@@ -178,6 +182,7 @@ class GPT2Block(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPT2Model(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -236,6 +241,7 @@ class GPT2Model(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GPT2LMHeadModel(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

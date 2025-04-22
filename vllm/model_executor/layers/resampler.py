@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -147,6 +148,7 @@ def get_2d_sincos_pos_embed(
     return pos_embed
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseResampler(nn.Module):
     """
     A 2D perceiver-resampler network with one cross attention layers by
@@ -197,6 +199,7 @@ class BaseResampler(nn.Module):
         return query.unsqueeze(1).repeat(1, N, 1)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Resampler2(BaseResampler):
     """Resampler-perceiver network to be used for a variety of model types,
     e.g., Qwen-vl / Minicpmv 2.0. The main difference is the addition of the

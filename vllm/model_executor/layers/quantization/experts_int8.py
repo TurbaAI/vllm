@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Callable, Dict, List, Optional
 
@@ -13,6 +14,7 @@ from vllm.model_executor.layers.quantization.base_config import (
 from vllm.model_executor.utils import set_weight_attrs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExpertsInt8Config(QuantizationConfig):
     """Config class for Int8 experts quantization."""
 
@@ -48,6 +50,7 @@ class ExpertsInt8Config(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExpertsInt8MoEMethod(FusedMoEMethodBase):
 
     def __init__(self, quant_config: ExpertsInt8Config):

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import List, Optional
@@ -8,6 +9,7 @@ from vllm.lora.request import LoRARequest
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseTokenizerGroup(ABC):
     """A group of tokenizers that can be used for LoRA adapters."""
 

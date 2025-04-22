@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://huggingface.co/Qwen/Qwen2.5-Math-RM-72B/blob/main/modeling_qwen2_rm.py
@@ -22,6 +23,7 @@ from .qwen2 import Qwen2Model
 from .utils import AutoWeightsLoader, maybe_prefix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ReLU(nn.Module):
 
     def __init__(self):
@@ -33,6 +35,7 @@ class ReLU(nn.Module):
         return self.activation(input)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2RewardBaseModel(nn.Module, SupportsLoRA, SupportsPP,
                            SupportsV0Only):
     packed_modules_mapping = {
@@ -102,6 +105,7 @@ class Qwen2RewardBaseModel(nn.Module, SupportsLoRA, SupportsPP,
         return loader.load_weights(weights)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2ForRewardModel(Qwen2RewardBaseModel):
 
     def __init__(self, *, vllm_config, prefix=""):
@@ -115,6 +119,7 @@ class Qwen2ForRewardModel(Qwen2RewardBaseModel):
             softmax=False)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2ForProcessRewardModel(Qwen2RewardBaseModel):
 
     def __init__(self, *, vllm_config, prefix=""):

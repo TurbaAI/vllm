@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Optional, Tuple
 
@@ -16,6 +17,7 @@ from vllm.model_executor.parameter import (BasevLLMParameter,
 from .MPLinearKernel import MPLinearKernel, MPLinearLayerConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MarlinLinearKernel(MPLinearKernel):
 
     @classmethod

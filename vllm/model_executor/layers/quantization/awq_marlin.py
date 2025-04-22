@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Callable, Dict, List, Optional
 
@@ -33,6 +34,7 @@ from vllm.scalar_type import scalar_types
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AWQMarlinConfig(QuantizationConfig):
     """Config class for AWQ Marlin"""
 
@@ -172,6 +174,7 @@ class AWQMarlinConfig(QuantizationConfig):
                                       has_zp=zero_point)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AWQMarlinLinearMethod(LinearMethodBase):
     """Linear method for AWQ Marlin.
 
@@ -316,6 +319,7 @@ class AWQMarlinLinearMethod(LinearMethodBase):
             bias=bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AWQMoEMethod(FusedMoEMethodBase):
 
     def __init__(self, quant_config: AWQMarlinConfig):

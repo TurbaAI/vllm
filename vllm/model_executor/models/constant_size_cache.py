@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
 from vllm.attention.backends.utils import PAD_SLOT_ID
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConstantSizeCache(ABC):
     """
     Abstract base class for managing constant size caches 

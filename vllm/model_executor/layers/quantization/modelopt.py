@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional, Union
 
@@ -28,6 +29,7 @@ QUANT_ALGOS = ["FP8", "NVFP4"]
 KV_CACHE_QUANT_ALGOS = ["FP8"]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelOptFp8Config(QuantizationConfig):
     """Config class for ModelOpt FP8."""
 
@@ -80,6 +82,7 @@ class ModelOptFp8Config(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelOptFp8LinearMethod(LinearMethodBase):
     """Linear method for Model Optimizer static quantization.
     Supports loading FP8 checkpoints with static weight scale and
@@ -163,6 +166,7 @@ class ModelOptFp8LinearMethod(LinearMethodBase):
                                      bias=bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelOptNvFp4Config(QuantizationConfig):
     """Config class for ModelOpt FP4."""
 
@@ -239,6 +243,7 @@ def cutlass_fp4_supported() -> bool:
     return cutlass_scaled_mm_supports_fp4(capability)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelOptFp8KVCacheMethod(BaseKVCacheMethod):
     """
     Supports loading kv-cache scaling factors from FP8 checkpoints.
@@ -249,6 +254,7 @@ class ModelOptFp8KVCacheMethod(BaseKVCacheMethod):
         super().__init__(quant_config)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelOptNvFp4LinearMethod(LinearMethodBase):
     """Linear method for Model Optimizer NVFP4.
     Supports loading NVFP4 checkpoints with the following structure:

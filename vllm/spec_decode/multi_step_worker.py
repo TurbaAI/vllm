@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import copy
 import weakref
@@ -22,6 +23,7 @@ from vllm.spec_decode.top1_proposer import Top1Proposer
 from vllm.worker.worker_base import DelegateWorkerBase
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiStepWorker(ProposerWorkerBase, DelegateWorkerBase):
     """The MultiStepWorker is equivalent to a Worker except that it allows
     multiple forward passes in a single call, assuming the scheduler has

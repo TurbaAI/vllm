@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 import re
@@ -27,6 +28,7 @@ logger = init_logger(__name__)
 
 
 @ToolParserManager.register_module("llama3_json")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Llama3JsonToolParser(ToolParser):
     """
     Tool call parser for Llama 3.1 models intended for use with the

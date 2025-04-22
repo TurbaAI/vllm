@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional
 
@@ -24,6 +25,7 @@ from vllm.scalar_type import scalar_types
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HQQMarlinConfig(QuantizationConfig):
     """Config class for HQQ Marlin"""
 
@@ -91,6 +93,7 @@ class HQQMarlinConfig(QuantizationConfig):
 
 
 # Empty HQQ parameter, will be ignored during loading
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HQQEmptyParameter(BasevLLMParameter):
 
     def load_merged_column_weight(self, loaded_weight: torch.Tensor, **kwargs):
@@ -109,6 +112,7 @@ def error_loader(param: torch.Tensor, loaded_weight: torch.Tensor) -> None:
 
 # HQQ packing creates issues with sharding - therefore, prior to loading, we
 # repack to GPTQ. We also reshape the weights to their proper GPTQ shape.
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HQQweightParameter(PackedvLLMParameter):
 
     # unpack function from https://github.com/mobiusml/hqq
@@ -162,6 +166,7 @@ class HQQweightParameter(PackedvLLMParameter):
 
 # Zero points and scales in HQQ must also be reshaped to correspond to W_q's
 # GPTQ shape (transposed - we transpose them too when processing weights).
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HQQZeroScaleParameter(GroupQuantScaleParameter):
 
     def load_merged_column_weight(self, loaded_weight: torch.Tensor, **kwargs):
@@ -177,6 +182,7 @@ class HQQZeroScaleParameter(GroupQuantScaleParameter):
         super().load_qkv_weight(loaded_weight, **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HQQMarlinMethod(LinearMethodBase):
     """Linear method for HQQ Marlin.
     """

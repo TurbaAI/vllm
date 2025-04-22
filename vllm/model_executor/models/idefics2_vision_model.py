@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://github.com/huggingface/transformers/blob/v4.43.2/src/transformers/models/idefics2/modeling_idefics2.py
 # Copyright 2024 The vLLM team.
@@ -34,6 +35,7 @@ from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics2VisionEmbeddings(nn.Module):
     """
     This is a modified version of `siglip.modelign_siglip.SiglipVisionEmbeddings
@@ -108,6 +110,7 @@ class Idefics2VisionEmbeddings(nn.Module):
         return embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics2VisionAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -160,6 +163,7 @@ class Idefics2VisionAttention(nn.Module):
         return attn_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics2VisionMLP(nn.Module):
 
     def __init__(
@@ -193,6 +197,7 @@ class Idefics2VisionMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics2EncoderLayer(nn.Module):
 
     def __init__(
@@ -235,6 +240,7 @@ class Idefics2EncoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics2Encoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention
@@ -289,6 +295,7 @@ class Idefics2Encoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Idefics2VisionTransformer(nn.Module):
 
     def __init__(

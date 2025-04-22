@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Callable, List, Optional, Set
 
@@ -34,6 +35,7 @@ WNA16_ZP_SUPPORTED_TYPES_MAP = {4: scalar_types.uint4, 8: scalar_types.uint8}
 WNA16_SUPPORTED_BITS = list(WNA16_SUPPORTED_TYPES_MAP.keys())
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsWNA16(CompressedTensorsScheme):
     _kernel_backends_being_used: Set[str] = set()
 

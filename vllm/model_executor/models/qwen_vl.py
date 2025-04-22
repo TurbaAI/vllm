@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://huggingface.co/Qwen/Qwen-VL/blob/main/modeling_qwen.py
@@ -47,6 +48,7 @@ from .qwen import QWenBaseModel, QWenModel
 from .utils import flatten_bn, merge_multimodal_embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: torch.Tensor
@@ -59,6 +61,7 @@ class QwenImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: torch.Tensor
@@ -72,6 +75,7 @@ class QwenImageEmbeddingInputs(TypedDict):
 QwenImageInputs = Union[QwenImagePixelInputs, QwenImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisualAttention(nn.Module):
     """self-attention layer class.
     Self-attention layer takes input with size [s, b, h]
@@ -169,6 +173,7 @@ class VisualAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenVLMLP(nn.Module):
     """MLP for the visual component of the Qwen model."""
 
@@ -198,6 +203,7 @@ class QwenVLMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisualAttentionBlock(nn.Module):
 
     def __init__(
@@ -238,6 +244,7 @@ class VisualAttentionBlock(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TransformerBlock(nn.Module):
 
     def __init__(
@@ -276,6 +283,7 @@ class TransformerBlock(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionTransformer(nn.Module):
 
     def __init__(self,
@@ -366,6 +374,7 @@ class VisionTransformer(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenVLModel(QWenModel):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -390,6 +399,7 @@ def _get_tokenizer_without_image_pad(
     """
     new_tokenizer = copy.deepcopy(tokenizer)
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class TokenizerWithoutImagePad(tokenizer.__class__):  # type: ignore
 
         def tokenize(
@@ -431,6 +441,7 @@ def _get_tokenizer_without_image_pad(
     return new_tokenizer
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenVLProcessor:
     """
     This model doesn't define its own HF processor,
@@ -512,6 +523,7 @@ class QwenVLProcessor:
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenVLProcessingInfo(BaseProcessingInfo):
 
     def get_tokenizer(self) -> PreTrainedTokenizer:
@@ -541,6 +553,7 @@ class QwenVLProcessingInfo(BaseProcessingInfo):
         return grid_length * grid_length
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenVLDummyInputsBuilder(BaseDummyInputsBuilder[QwenVLProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -572,6 +585,7 @@ class QwenVLDummyInputsBuilder(BaseDummyInputsBuilder[QwenVLProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenVLMultiModalProcessor(BaseMultiModalProcessor[QwenVLProcessingInfo]):
 
     def _call_hf_processor(
@@ -652,6 +666,7 @@ class QwenVLMultiModalProcessor(BaseMultiModalProcessor[QwenVLProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(QwenVLMultiModalProcessor,
                                         info=QwenVLProcessingInfo,
                                         dummy_inputs=QwenVLDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QwenVLForConditionalGeneration(QWenBaseModel, SupportsPP, SupportsLoRA,
                                      SupportsMultiModal):
     packed_modules_mapping = {

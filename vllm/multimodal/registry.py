@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import functools
 from collections import UserDict
@@ -35,6 +36,7 @@ _I = TypeVar("_I", bound=BaseProcessingInfo)
 _I_co = TypeVar("_I_co", bound=BaseProcessingInfo, covariant=True)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ProcessingInfoFactory(Protocol[_I_co]):
     """Constructs a :class:`MultiModalProcessor` instance from the context."""
 
@@ -45,6 +47,7 @@ class ProcessingInfoFactory(Protocol[_I_co]):
         ...
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DummyInputsBuilderFactory(Protocol[_I]):
     """
     Constructs a :class:`BaseDummyInputsBuilder` instance from the context.
@@ -54,6 +57,7 @@ class DummyInputsBuilderFactory(Protocol[_I]):
         ...
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalProcessorFactory(Protocol[_I]):
     """Constructs a :class:`MultiModalProcessor` instance from the context."""
 
@@ -84,6 +88,7 @@ class _ProcessorFactories(Generic[_I]):
         return self.processor(info, dummy_inputs_builder, cache=cache)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _MultiModalLimits(UserDict["ModelConfig", dict[str, int]]):
     """
     Wraps `_limits_by_model` for a more informative error message
@@ -99,6 +104,7 @@ class _MultiModalLimits(UserDict["ModelConfig", dict[str, int]]):
             raise KeyError(msg) from exc
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalRegistry:
     """
     A registry that dispatches data processing according to the model.

@@ -5,6 +5,7 @@ from bisect import bisect_left
 from os.path import commonprefix
 from typing import (Callable, Dict, FrozenSet, Iterable, List, Optional, Set,
                     Tuple)
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.core.block.common import (CacheMetricData, CopyOnWriteTracker,
                                     get_all_blocks_recursively)
@@ -26,6 +27,7 @@ _DEFAULT_LAST_ACCESSED_TIME = -1
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockTracker:
     """Used to track the status of a block inside the prefix caching allocator
     """
@@ -50,6 +52,7 @@ class BlockTracker:
         self.reset()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrefixCachingBlockAllocator(BlockAllocator):
     """A block allocator that implements prefix caching.
 
@@ -723,6 +726,7 @@ class PrefixCachingBlockAllocator(BlockAllocator):
         return block_hashes[:idx]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PrefixCachingBlock(Block):
     """A block implementation that supports prefix caching.
 
@@ -952,6 +956,7 @@ class PrefixCachingBlock(Block):
                      extra_hash))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ComputedBlocksTracker:
     """
     Tracks the computed blocks for each sequence.
@@ -1089,6 +1094,7 @@ class ComputedBlocksTracker:
         del self._seq_id_to_num_tokens_computed[seq_id]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LastAccessBlocksTracker:
     """Manages the last access time of the tracked sequences, in order to allow
     an efficient update of allocator's block last access times

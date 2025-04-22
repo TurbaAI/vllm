@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -54,6 +55,7 @@ from .utils import (AutoWeightsLoader, PPMissingLayer, is_pp_missing_parameter,
                     make_layers, maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMLP(nn.Module):
 
     def __init__(
@@ -89,6 +91,7 @@ class GraniteMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteAttention(nn.Module):
 
     def __init__(
@@ -175,6 +178,7 @@ class GraniteAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteDecoderLayer(nn.Module):
 
     def __init__(
@@ -249,6 +253,7 @@ class GraniteDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -382,6 +387,7 @@ class GraniteModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

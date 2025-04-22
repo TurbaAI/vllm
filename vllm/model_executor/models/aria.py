@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 from collections.abc import Iterable, Mapping, Sequence
 from typing import List, Optional, Set, Tuple, TypedDict, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -42,6 +43,7 @@ from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
                     merge_multimodal_embeddings)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaImagePixelInputs(TypedDict):
     pixel_values: torch.Tensor
     pixel_mask: Optional[torch.Tensor]
@@ -52,6 +54,7 @@ class AriaImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaVisionTransformer(Idefics3VisionTransformer, SupportsQuant):
     packed_modules_mapping = {"qkv_proj": ["q_proj", "k_proj", "v_proj"]}
 
@@ -100,6 +103,7 @@ class AriaVisionTransformer(Idefics3VisionTransformer, SupportsQuant):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaProjectorMLP(nn.Module):
 
     def __init__(
@@ -125,6 +129,7 @@ class AriaProjectorMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaProjector(nn.Module):
     """
     A projection module with one cross attention layer and one FFN layer, which
@@ -194,6 +199,7 @@ class AriaProjector(nn.Module):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaFusedMoE(FusedMoE):
 
     def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor,
@@ -226,6 +232,7 @@ class AriaFusedMoE(FusedMoE):
                 param.data.copy_(loaded_weight.transpose(1, 2))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaTextMoELayer(nn.Module):
     """
     Mixture of Experts (MoE) Layer for the AriaMoE model.
@@ -288,6 +295,7 @@ class AriaTextMoELayer(nn.Module):
         return sparse_expert_output + shared_expert_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaTextDecoderLayer(LlamaDecoderLayer):
     """
     Custom Decoder Layer for the AriaMoE model which modifies the standard
@@ -308,6 +316,7 @@ class AriaTextDecoderLayer(LlamaDecoderLayer):
                                     prefix=f"{prefix}.mlp")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaTextModel(LlamaModel, SupportsQuant):
     """
     Custom LlamaModel for the AriaMoE model which modifies the standard
@@ -395,6 +404,7 @@ class AriaTextModel(LlamaModel, SupportsQuant):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -414,6 +424,7 @@ class AriaProcessingInfo(BaseProcessingInfo):
         return max(hf_config.projector_patch_to_query_dict.values())
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaDummyInputsBuilder(BaseDummyInputsBuilder[AriaProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -442,6 +453,7 @@ class AriaDummyInputsBuilder(BaseDummyInputsBuilder[AriaProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaMultiModalProcessor(BaseMultiModalProcessor[AriaProcessingInfo]):
 
     def _get_mm_fields_config(
@@ -477,6 +489,7 @@ class AriaMultiModalProcessor(BaseMultiModalProcessor[AriaProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(AriaMultiModalProcessor,
                                         info=AriaProcessingInfo,
                                         dummy_inputs=AriaDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AriaForConditionalGeneration(nn.Module, SupportsMultiModal):
     """
     Aria model for conditional generation tasks.

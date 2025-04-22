@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copied from
 # https://huggingface.co/LGAI-EXAONE/EXAONE-3.0-7.8B-Instruct/blob/main/configuration_exaone.py
@@ -27,6 +28,7 @@ logger = logging.get_logger(__name__)
 EXAONE_PRETRAINED_CONFIG_ARCHIVE_MAP: Dict[str, str] = {}
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ExaoneConfig(PretrainedConfig):
     r"""
     This is the configuration class to store the configuration of a :class:

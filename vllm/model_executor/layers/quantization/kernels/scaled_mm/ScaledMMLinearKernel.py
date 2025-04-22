@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -8,12 +9,14 @@ import torch
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScaledMMLinearLayerConfig:
     is_channelwise: bool
     is_static_input_scheme: bool
     input_symmetric: bool
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ScaledMMLinearKernel(ABC):
 
     @classmethod

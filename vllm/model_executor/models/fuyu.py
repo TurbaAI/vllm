@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://github.com/huggingface/transformers/blob/v4.39.3/src/transformers/models/fuyu/modeling_fuyu.py
 # Copyright 2023 The vLLM team.
@@ -50,6 +51,7 @@ _IMAGE_TOKEN_ID = 71011
 _NEWLINE_TOKEN_ID = 71019
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FuyuImagePatchInputs(TypedDict):
     type: Literal["image_patches"]
     flat_data: torch.Tensor
@@ -67,6 +69,7 @@ class FuyuImagePatchInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FuyuProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -124,6 +127,7 @@ class FuyuProcessingInfo(BaseProcessingInfo):
                          height=image_processor.size["height"])
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FuyuDummyInputsBuilder(BaseDummyInputsBuilder[FuyuProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -146,6 +150,7 @@ class FuyuDummyInputsBuilder(BaseDummyInputsBuilder[FuyuProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FuyuMultiModalProcessor(BaseMultiModalProcessor[FuyuProcessingInfo]):
 
     def _call_hf_processor(
@@ -243,6 +248,7 @@ class FuyuMultiModalProcessor(BaseMultiModalProcessor[FuyuProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(FuyuMultiModalProcessor,
                                         info=FuyuProcessingInfo,
                                         dummy_inputs=FuyuDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FuyuForCausalLM(nn.Module, SupportsMultiModal, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

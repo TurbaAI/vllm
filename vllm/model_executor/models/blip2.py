@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections.abc import Iterable, Mapping, Sequence
 from functools import cached_property
@@ -35,12 +36,14 @@ from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
 _IMAGE_TOKEN_ID = 50265
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2ImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: torch.Tensor
     """Shape: `(batch_size * num_images, num_channels, height, width)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2ImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: torch.Tensor
@@ -53,6 +56,7 @@ class Blip2ImageEmbeddingInputs(TypedDict):
 Blip2ImageInputs = Union[Blip2ImagePixelInputs, Blip2ImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2QFormerMultiHeadAttention(nn.Module):
 
     def __init__(
@@ -139,6 +143,7 @@ class Blip2QFormerMultiHeadAttention(nn.Module):
         return context_layer
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2QFormerSelfOutput(nn.Module):
 
     def __init__(self, config: Blip2QFormerConfig) -> None:
@@ -160,6 +165,7 @@ class Blip2QFormerSelfOutput(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2QFormerAttention(nn.Module):
 
     def __init__(
@@ -195,6 +201,7 @@ class Blip2QFormerAttention(nn.Module):
         return attention_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2QFormerIntermediate(nn.Module):
 
     def __init__(self, config: Blip2QFormerConfig) -> None:
@@ -209,6 +216,7 @@ class Blip2QFormerIntermediate(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2QFormerOutput(nn.Module):
 
     def __init__(self, config: Blip2QFormerConfig) -> None:
@@ -230,6 +238,7 @@ class Blip2QFormerOutput(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2QFormerLayer(nn.Module):
 
     def __init__(
@@ -319,6 +328,7 @@ class Blip2QFormerLayer(nn.Module):
         return layer_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2QFormerEncoder(nn.Module):
 
     def __init__(
@@ -359,6 +369,7 @@ class Blip2QFormerEncoder(nn.Module):
 
 
 # Adapted from https://github.com/huggingface/transformers/blob/v4.41.2/src/transformers/models/blip_2/modeling_blip_2.py#L1025
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2QFormerModel(nn.Module):
 
     def __init__(
@@ -399,6 +410,7 @@ class Blip2QFormerModel(nn.Module):
         return sequence_output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2ProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -412,6 +424,7 @@ class Blip2ProcessingInfo(BaseProcessingInfo):
         return hf_config.num_query_tokens
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2DummyInputsBuilder(BaseDummyInputsBuilder[Blip2ProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -436,6 +449,7 @@ class Blip2DummyInputsBuilder(BaseDummyInputsBuilder[Blip2ProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2MultiModalProcessor(BaseMultiModalProcessor[Blip2ProcessingInfo]):
 
     def _call_hf_processor(
@@ -491,6 +505,7 @@ class Blip2MultiModalProcessor(BaseMultiModalProcessor[Blip2ProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(Blip2MultiModalProcessor,
                                         info=Blip2ProcessingInfo,
                                         dummy_inputs=Blip2DummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Blip2ForConditionalGeneration(nn.Module, SupportsMultiModal, SupportsPP,
                                     SupportsQuant):
 

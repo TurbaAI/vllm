@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """A layer that samples the next tokens from the model's outputs."""
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -14,6 +15,7 @@ from vllm.v1.sample.ops.topk_topp_sampler import TopKTopPSampler
 _SAMPLING_EPS = 1e-5
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Sampler(nn.Module):
 
     def __init__(self):

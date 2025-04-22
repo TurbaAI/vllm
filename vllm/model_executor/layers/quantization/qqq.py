@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional
 
@@ -27,6 +28,7 @@ MARLIN_QQQ_SUPPORTED_GROUP_SIZES = [-1, 128]
 MARLIN_QQQ_SUPPORTED_SYM = [True]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QQQConfig(QuantizationConfig):
     """Config class for QQQ
     
@@ -116,6 +118,7 @@ class QQQConfig(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QQQLinearMethod(LinearMethodBase):
     """Linear method for QQQ.
 

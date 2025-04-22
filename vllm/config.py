@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import ast
 import copy
@@ -93,18 +94,21 @@ HfOverrides = Union[dict[str, Any], Callable[[PretrainedConfig],
                                              PretrainedConfig]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsHash(Protocol):
 
     def compute_hash(self) -> str:
         ...
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SupportsMetricsInfo(Protocol):
 
     def metrics_info(self) -> dict[str, str]:
         ...
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelImpl(str, enum.Enum):
     AUTO = "auto"
     VLLM = "vllm"
@@ -199,6 +203,7 @@ def get_field(cls: type[Config], name: str) -> Field:
         f"{cls.__name__}.{name} must have a default value or default factory.")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelConfig:
     """Configuration for the model.
 
@@ -1246,6 +1251,7 @@ class ModelConfig:
                 or getattr(self.hf_config, "is_matryoshka", False))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CacheConfig:
     """Configuration for the KV cache.
 
@@ -1386,6 +1392,7 @@ PoolType = Literal["ray"]
 
 @config
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenizerPoolConfig:
     """Configuration for the tokenizer pool."""
 
@@ -1460,6 +1467,7 @@ class TokenizerPoolConfig:
         return tokenizer_pool_config
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoadFormat(str, enum.Enum):
     AUTO = "auto"
     PT = "pt"
@@ -1477,6 +1485,7 @@ class LoadFormat(str, enum.Enum):
 
 @config
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoadConfig:
     """Configuration for loading the model weights."""
 
@@ -1554,6 +1563,7 @@ DistributedExecutorBackend = Literal["ray", "mp", "uni", "external_launcher"]
 
 @config
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ParallelConfig:
     """Configuration for the distributed execution."""
 
@@ -1790,6 +1800,7 @@ SchedulerPolicy = Literal["fcfs", "priority"]
 
 @config
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerConfig:
     """Scheduler configuration."""
 
@@ -2053,6 +2064,7 @@ Device = Literal["auto", "cuda", "neuron", "cpu", "tpu", "xpu", "hpu"]
 
 @config
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeviceConfig:
     """Configuration for the device to use for vLLM execution."""
 
@@ -2107,6 +2119,7 @@ class DeviceConfig:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpeculativeConfig:
     """
     Configuration for speculative decoding.
@@ -2599,6 +2612,7 @@ class SpeculativeConfig:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAConfig:
     max_lora_rank: int
     max_loras: int
@@ -2682,6 +2696,7 @@ class LoRAConfig:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptAdapterConfig:
     max_prompt_adapters: int
     max_prompt_adapter_token: int
@@ -2726,6 +2741,7 @@ class PromptAdapterConfig:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalConfig:
     """Controls the behavior of multimodal models."""
 
@@ -2772,6 +2788,7 @@ class MultiModalConfig:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolerConfig:
     """Controls the behavior of output pooling in pooling models."""
 
@@ -3096,6 +3113,7 @@ def get_served_model_name(model: str,
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DecodingConfig:
     """Dataclass which contains the decoding strategy of the engine"""
 
@@ -3142,6 +3160,7 @@ class DecodingConfig:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ObservabilityConfig:
     """Configuration for observability - metrics and tracing."""
     show_hidden_metrics: bool = False
@@ -3183,6 +3202,7 @@ class ObservabilityConfig:
                 f"installed. Original error:\n{otel_import_error_traceback}")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVTransferConfig(BaseModel):
     """Configuration for distributed KV cache transfer."""
 
@@ -3277,6 +3297,7 @@ class KVTransferConfig(BaseModel):
         return self.kv_connector_extra_config.get(key, default)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompilationLevel:
     # constants for the levels of the compilation process
     NO_COMPILATION = 0
@@ -3610,6 +3631,7 @@ class CompilationConfig(BaseModel):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VllmConfig:
     """Dataclass which contains all vllm-related configuration. This
     simplifies passing around the distinct configurations in the codebase.

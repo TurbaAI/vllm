@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Attention layer."""
 from typing import Any, Dict, List, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn as nn
@@ -19,6 +20,7 @@ from vllm.platforms import _Backend, current_platform
 from vllm.utils import direct_register_custom_op
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Attention(nn.Module):
     """Attention layer.
 
@@ -251,6 +253,7 @@ class Attention(nn.Module):
             self.impl.process_weights_after_loading(act_dtype)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiHeadAttention(nn.Module):
     """Multi-headed attention without any cache, used for ViT."""
 

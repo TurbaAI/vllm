@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -62,6 +63,7 @@ def _find_multiple(n: int, k: int) -> int:
     return n + k - (n % k)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeciLMDecoderLayer(nn.Module):
 
     def __init__(
@@ -162,6 +164,7 @@ class DeciLMDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeciModel(nn.Module):
 
     def __init__(
@@ -328,6 +331,7 @@ class DeciModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeciLMForCausalLM(nn.Module, SupportsLoRA, SupportsPP, HasNoOps):
     packed_modules_mapping = {
         "qkv_proj": ["q_proj", "k_proj", "v_proj"],

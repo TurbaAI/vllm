@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from https://github.com/fixie-ai/ultravox/blob/ecd58c4041030bae2ad15aa6bcf04ab43199ea02/ultravox/model/ultravox_config.py
 from typing import Any, Dict, Optional
@@ -6,6 +7,7 @@ from typing import Any, Dict, Optional
 import transformers
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UltravoxConfig(transformers.PretrainedConfig):
     r"""
     This is the configuration class to store the configuration of a

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from collections.abc import Iterable, Mapping, Sequence
 from functools import cached_property
@@ -48,12 +49,14 @@ from .utils import (flatten_bn, is_pp_missing_parameter,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: torch.Tensor
     """Shape: `(batch_size * num_images, num_channels, height, width)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -70,6 +73,7 @@ class ChameleonProcessingInfo(BaseProcessingInfo):
         return processor.image_seq_length
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonDummyInputsBuilder(
         BaseDummyInputsBuilder[ChameleonProcessingInfo]):
 
@@ -99,6 +103,7 @@ class ChameleonDummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonMultiModalProcessor(
         BaseMultiModalProcessor[ChameleonProcessingInfo]):
 
@@ -167,6 +172,7 @@ class ChameleonMultiModalProcessor(
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonLayerNorm(nn.LayerNorm):
 
     def __init__(self, hidden_size, *args, **kwargs):
@@ -189,6 +195,7 @@ class ChameleonLayerNorm(nn.LayerNorm):
 
 
 # Copied from vllm.model_executor.models.llama.LlamaMLP -> ChameleonMLP
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonMLP(nn.Module):
 
     def __init__(
@@ -222,6 +229,7 @@ class ChameleonMLP(nn.Module):
 
 
 # Modified from vllm.model_executor.models.llama.LlamaAttention -> ChameleonAttention #noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonAttention(nn.Module):
 
     def __init__(
@@ -318,6 +326,7 @@ class ChameleonAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonDecoderLayer(nn.Module):
 
     def __init__(
@@ -389,6 +398,7 @@ class ChameleonDecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonSwinDecoderLayer(nn.Module):
 
     def __init__(
@@ -460,6 +470,7 @@ class ChameleonSwinDecoderLayer(nn.Module):
 
 
 # Copied from transformers.models.chameleon.modeling_chameleon.ChameleonVQVAEVectorQuantizer #noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonVQVAEVectorQuantizer(nn.Module):
 
     def __init__(self, config: ChameleonVQVAEConfig):
@@ -503,6 +514,7 @@ class ChameleonVQVAEVectorQuantizer(nn.Module):
 
 
 # Copied from transformers.models.chameleon.modeling_chameleon.ChameleonVQVAEEncoderConvDownsample #noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonVQVAEEncoderConvDownsample(nn.Module):
 
     def __init__(self, in_channels: int):
@@ -524,6 +536,7 @@ class ChameleonVQVAEEncoderConvDownsample(nn.Module):
 
 
 # Copied from transformers.models.chameleon.modeling_chameleon.ChameleonVQVAEEncoderResnetBlock #noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonVQVAEEncoderResnetBlock(nn.Module):
 
     def __init__(
@@ -593,6 +606,7 @@ class ChameleonVQVAEEncoderResnetBlock(nn.Module):
 
 
 # Copied from transformers.models.chameleon.modeling_chameleon.ChameleonVQVAEEncoderAttnBlock #noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonVQVAEEncoderAttnBlock(nn.Module):
 
     def __init__(self, in_channels: int):
@@ -653,6 +667,7 @@ class ChameleonVQVAEEncoderAttnBlock(nn.Module):
 
 
 # Copied from transformers.models.chameleon.modeling_chameleon.ChameleonVQVAEEncoder #noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonVQVAEEncoder(nn.Module):
 
     def __init__(self, config: ChameleonVQVAEConfig):
@@ -760,6 +775,7 @@ class ChameleonVQVAEEncoder(nn.Module):
 
 
 # Adapted from transformers.models.chameleon.modeling_chameleon.ChameleonVQVAE #noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonVQVAE(nn.Module):
 
     def __init__(self, config: ChameleonVQVAEConfig):
@@ -782,6 +798,7 @@ class ChameleonVQVAE(nn.Module):
 
 
 # Copied from transformers.models.chameleon.modeling_chameleon.ChameleonImageVocabularyMapping #noqa
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonImageVocabularyMapping:
     """
     A class for mapping discrete image tokens from VQGAN to BPE tokens.
@@ -838,6 +855,7 @@ class ChameleonImageVocabularyMapping:
         return img_tokens.to(device)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -924,6 +942,7 @@ class ChameleonModel(nn.Module):
     ChameleonMultiModalProcessor,
     info=ChameleonProcessingInfo,
     dummy_inputs=ChameleonDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChameleonForConditionalGeneration(nn.Module, SupportsMultiModal,
                                         SupportsPP, SupportsQuant):
     packed_modules_mapping = {

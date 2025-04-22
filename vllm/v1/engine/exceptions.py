@@ -1,9 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineGenerateError(Exception):
     """Raised when a AsyncLLM.generate() fails. Recoverable."""
     pass
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineDeadError(Exception):
     """Raised when the EngineCore dies. Unrecoverable."""
 

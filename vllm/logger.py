@@ -11,6 +11,7 @@ from logging.config import dictConfig
 from os import path
 from types import MethodType
 from typing import Any, Optional, cast
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import vllm.envs as envs
 
@@ -63,6 +64,7 @@ def _print_warning_once(logger: Logger, msg: str) -> None:
     logger.warning(msg, stacklevel=2)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _VllmLogger(Logger):
     """
     Note:

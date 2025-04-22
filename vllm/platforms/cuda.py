@@ -2,6 +2,7 @@
 """Code inside this file can safely assume cuda platform, e.g. importing
 pynvml. However, it should not initialize cuda context.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from functools import wraps
@@ -68,6 +69,7 @@ def with_nvml_context(fn: Callable[_P, _R]) -> Callable[_P, _R]:
     return wrapper
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CudaPlatformBase(Platform):
     _enum = PlatformEnum.CUDA
     device_name: str = "cuda"
@@ -317,6 +319,7 @@ class CudaPlatformBase(Platform):
 # Note that NVML is not affected by `CUDA_VISIBLE_DEVICES`,
 # all the related functions work on real physical device ids.
 # the major benefit of using NVML is that it will not initialize CUDA
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NvmlCudaPlatform(CudaPlatformBase):
 
     @classmethod
@@ -414,6 +417,7 @@ class NvmlCudaPlatform(CudaPlatformBase):
                 )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NonNvmlCudaPlatform(CudaPlatformBase):
 
     @classmethod

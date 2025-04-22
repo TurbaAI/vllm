@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -54,6 +55,7 @@ from .utils import (AutoWeightsLoader, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiMoEConfig(PretrainedConfig):
 
     model_type = "phimoe"
@@ -123,6 +125,7 @@ class PhiMoEConfig(PretrainedConfig):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class mp(torch.autograd.Function):
 
     @staticmethod
@@ -231,6 +234,7 @@ def phimoe_routing_function(
     return topk_weights, topk_ids
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiMoE(nn.Module):
     """A tensor-parallel MoE implementation for PhiMoE that shards each expert
     across all ranks.
@@ -286,6 +290,7 @@ class PhiMoE(nn.Module):
         return final_hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiMoEAttention(nn.Module):
 
     def __init__(
@@ -368,6 +373,7 @@ class PhiMoEAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiMoEDecoderLayer(nn.Module):
 
     def __init__(
@@ -434,6 +440,7 @@ class PhiMoEDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiMoEModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -589,6 +596,7 @@ class PhiMoEModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PhiMoEForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     fall_back_to_pt_during_load = False
 

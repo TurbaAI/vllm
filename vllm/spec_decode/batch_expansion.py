@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from array import array
 from itertools import chain, count
@@ -22,6 +23,7 @@ TokenId = int
 DEFAULT_SIMPLE_SAMPLING_PARAMS = SamplingParams()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BatchExpansionTop1Scorer(SpeculativeScorer):
     """Implements a speculative scorer that uses batch expansion to get
     probabilities of speculative tokens according to the scoring model.

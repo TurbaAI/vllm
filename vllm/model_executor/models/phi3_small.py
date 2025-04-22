@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from typing import Iterable, Optional, Set, Tuple, Union
@@ -43,6 +44,7 @@ def load_column_parallel_weight(param: torch.nn.Parameter,
     param.data.copy_(loaded_weight)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HeadMajorQKVParallelLinear(QKVParallelLinear):
 
     def weight_loader(self, param: torch.nn.Parameter,
@@ -50,6 +52,7 @@ class HeadMajorQKVParallelLinear(QKVParallelLinear):
         return load_column_parallel_weight(param, loaded_weight)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class HeadMajorColumnParallelLinear(MergedColumnParallelLinear):
 
     def weight_loader(self, param: torch.nn.Parameter,
@@ -77,6 +80,7 @@ def gegelu(input, limit: Optional[float] = None):
     return out_gelu * (a_linear + 1)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3SmallMLP(nn.Module):
 
     def __init__(
@@ -112,6 +116,7 @@ class Phi3SmallMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3SmallSelfAttention(nn.Module):
 
     def __init__(
@@ -252,6 +257,7 @@ class Phi3SmallSelfAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3SmallDecoderLayer(nn.Module):
 
     def __init__(
@@ -297,6 +303,7 @@ class Phi3SmallDecoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3SmallModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -354,6 +361,7 @@ class Phi3SmallModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Phi3SmallForCausalLM(nn.Module, SupportsPP):
     _tied_weights_keys = ["lm_head.weight"]
 

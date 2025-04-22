@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 import re
@@ -23,6 +24,7 @@ logger = init_logger(__name__)
 
 
 @ToolParserManager.register_module("hermes")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Hermes2ProToolParser(ToolParser):
 
     def __init__(self, tokenizer: AnyTokenizer):

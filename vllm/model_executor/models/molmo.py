@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from collections.abc import Iterable, Mapping, Sequence
@@ -70,6 +71,7 @@ IM_END_TOKEN = "<im_end>"
 POOLING_SIZE = 2
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoImageInputs(TypedDict):
     images: Union[torch.Tensor, list[torch.Tensor]]
     """Shape: `(batch_size * num_images, num_crops, num_patch, patch_dim)`"""
@@ -90,6 +92,7 @@ class MolmoImageInputs(TypedDict):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionBackboneConfig:
     image_default_input_size: Tuple[int, int] = (336, 336)
     image_patch_size: int = 14
@@ -113,6 +116,7 @@ class VisionBackboneConfig:
         return h // self.image_patch_size, w // self.image_patch_size
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ViTMLP(nn.Module):
     """MLP used in Vision Transformer."""
 
@@ -145,6 +149,7 @@ class ViTMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiHeadDotProductAttention(nn.Module):
     """Multi-head attention used in Vision Transformer."""
 
@@ -227,6 +232,7 @@ class MultiHeadDotProductAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ResidualAttentionBlock(nn.Module):
     """Residual attention block used in Vision Transformer."""
 
@@ -254,6 +260,7 @@ class ResidualAttentionBlock(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BlockCollection(nn.Module):
     """Collection of residual attention blocks used in Vision Transformer."""
 
@@ -280,6 +287,7 @@ def _expand_token(token: torch.Tensor, batch_size: int) -> torch.Tensor:
     return token.view(1, 1, -1).expand(batch_size, -1, -1)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionTransformer(nn.Module):
     """Vision Transformer used in Vision Backbone."""
 
@@ -357,6 +365,7 @@ class VisionTransformer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoAttention(nn.Module):
     """Molmo's LLM attention."""
 
@@ -463,6 +472,7 @@ class MolmoAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LanguageModelMLP(nn.Module):
     """Molmo's LLM mlp."""
 
@@ -500,6 +510,7 @@ class LanguageModelMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ImageProjectorMLP(nn.Module):
     """Molmo's image_projector mlp."""
 
@@ -540,6 +551,7 @@ class ImageProjectorMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoDecoderLayer(nn.Module):
 
     def __init__(
@@ -590,6 +602,7 @@ class MolmoDecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoDecoderNormAfterLayer(MolmoDecoderLayer):
 
     def forward(
@@ -616,6 +629,7 @@ class MolmoDecoderNormAfterLayer(MolmoDecoderLayer):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoVisionBackbone(nn.Module, SupportsQuant):
     packed_modules_mapping = {"merged_linear": ["gate_proj", "up_proj"]}
 
@@ -779,6 +793,7 @@ class MolmoVisionBackbone(nn.Module, SupportsQuant):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoModel(nn.Module, SupportsQuant):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -964,6 +979,7 @@ def select_tiling(
     return candidate_tilings[ix]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoProcessorWrapper:
     """
     Wraps :class:`MolmoProcessor` so that it can be called directly.
@@ -1156,6 +1172,7 @@ class MolmoProcessorWrapper:
         return BatchFeature(outputs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoProcessingInfo(BaseProcessingInfo):
 
     def get_hf_processor(self, **kwargs: object) -> MolmoProcessorWrapper:
@@ -1215,6 +1232,7 @@ class MolmoProcessingInfo(BaseProcessingInfo):
         return largest_feature_pinpoint
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoDummyInputsBuilder(BaseDummyInputsBuilder[MolmoProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -1237,6 +1255,7 @@ class MolmoDummyInputsBuilder(BaseDummyInputsBuilder[MolmoProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoMultiModalProcessor(BaseMultiModalProcessor[MolmoProcessingInfo]):
 
     def _apply_hf_processor_tokens_only(
@@ -1330,6 +1349,7 @@ class MolmoMultiModalProcessor(BaseMultiModalProcessor[MolmoProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(MolmoMultiModalProcessor,
                                         info=MolmoProcessingInfo,
                                         dummy_inputs=MolmoDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MolmoForCausalLM(nn.Module, SupportsMultiModal, SupportsPP, SupportsLoRA,
                        SupportsQuant):
     hf_to_vllm_mapper = WeightsMapper(

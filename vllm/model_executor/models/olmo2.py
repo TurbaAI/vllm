@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/main/src/transformers/models/olmo2/modeling_olmo2.py
@@ -55,6 +56,7 @@ from vllm.sequence import IntermediateTensors
 from vllm.transformers_utils.configs.olmo2 import Olmo2Config
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Olmo2Attention(nn.Module):
     """
     This is the attention block where the output is computed as
@@ -163,6 +165,7 @@ class Olmo2Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Olmo2MLP(nn.Module):
     """
     This is the MLP block where the output is computed as
@@ -208,6 +211,7 @@ class Olmo2MLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Olmo2DecoderLayer(nn.Module):
     """
     This is a typical transformer block where the output is
@@ -252,6 +256,7 @@ class Olmo2DecoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Olmo2Model(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -315,6 +320,7 @@ class Olmo2Model(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Olmo2ForCausalLM(nn.Module, SupportsPP):
     """
     Extremely barebones HF model wrapper.

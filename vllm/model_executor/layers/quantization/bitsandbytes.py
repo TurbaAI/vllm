@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Any, Dict, List, Optional
 
@@ -12,6 +13,7 @@ from vllm.model_executor.layers.quantization.base_config import (
 from vllm.utils import direct_register_custom_op
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BitsAndBytesConfig(QuantizationConfig):
     """Config class for BitsAndBytes Quantization.
 
@@ -146,6 +148,7 @@ def is_layer_skipped_bnb(prefix: str, llm_int8_skip_modules: List[str]):
     return substr_check or prefix_check
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BitsAndBytesLinearMethod(LinearMethodBase):
     """Linear method for BitsAndBytes.
 

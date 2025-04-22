@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 Cohere and the HuggingFace Inc. team. All rights reserved.
 #
@@ -67,6 +68,7 @@ def layer_norm_func(hidden_states, weight, variance_epsilon):
     return hidden_states.to(input_dtype)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LayerNorm(nn.Module):
 
     def __init__(self, param_shape=None, eps=1e-5):
@@ -83,6 +85,7 @@ class LayerNorm(nn.Module):
 
 
 # Copied from transformers.models.llama.modeling_llama.LlamaMLP Llama->Cohere
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CohereMLP(nn.Module):
 
     def __init__(
@@ -115,6 +118,7 @@ class CohereMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CohereAttention(nn.Module):
 
     def __init__(
@@ -229,6 +233,7 @@ class CohereAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CohereDecoderLayer(nn.Module):
 
     def __init__(self,
@@ -269,6 +274,7 @@ class CohereDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CohereModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -332,6 +338,7 @@ class CohereModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CohereForCausalLM(nn.Module, SupportsLoRA, SupportsPP, SupportsQuant):
     packed_modules_mapping = {
         "qkv_proj": [

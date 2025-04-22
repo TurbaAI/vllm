@@ -183,6 +183,7 @@ for chunk_idx in range(cdiv(C, MCC)):
 
 return curr_o @ W_O
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import functools
 from abc import abstractmethod
@@ -219,6 +220,7 @@ if TYPE_CHECKING:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonBackend(AttentionBackend):
 
     accept_output_buffer: bool = True
@@ -254,10 +256,12 @@ class MLACommonBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonPrefillMetadata:
     """ Prefill Specific Metadata """
 
     @dataclass
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class ChunkedContextMetadata:
         # New for MLA (compared to FlashAttention)
         # For handling chunked prefill
@@ -277,6 +281,7 @@ class MLACommonPrefillMetadata:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonDecodeMetadata:
     # Input positions for rotrary embeddings since for MLA the rotary
     # position embeddings are applied inside the attention backend
@@ -289,6 +294,7 @@ D = TypeVar("D", bound=MLACommonDecodeMetadata)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonMetadata(Generic[D]):
     """Metadata for MLACommon.
 
@@ -334,6 +340,7 @@ class MLACommonMetadata(Generic[D]):
 M = TypeVar("M", bound=MLACommonMetadata)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonMetadataBuilder(Generic[M]):
     """
     NOTE: Please read the comment at the top of the file before trying to
@@ -567,6 +574,7 @@ class MLACommonMetadataBuilder(Generic[M]):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLACommonImpl(MLAAttentionImpl[M], Generic[M]):
     """
     NOTE: Please read the comment at the top of the file before trying to

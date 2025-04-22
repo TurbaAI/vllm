@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from dataclasses import dataclass
@@ -12,6 +13,7 @@ from msgspec import field as msgspec_field
 from vllm.sampling_params import SamplingParams
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestStatsUpdate(
         msgspec.Struct,  # type: ignore
         array_like=True,
@@ -33,6 +35,7 @@ class RequestStatsUpdate(
     on one single machine or use something else.
     """
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Type(IntEnum):
         """See `RequestStats` for the lifecycle of a request."""
 
@@ -177,6 +180,7 @@ class RequestStatsUpdate(
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RequestStats:
     """Stats associated with a request (`Request`)."""
 
@@ -397,6 +401,7 @@ class RequestStats:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVCacheStats:
     #   KV Cache Usage in %
     gpu_cache_usage_sys: float = 0.0
@@ -404,6 +409,7 @@ class KVCacheStats:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SchedulerStats:
     """Stats associated with the scheduler."""
 
@@ -417,6 +423,7 @@ class SchedulerStats:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreProcessStats:
     """Stats associated with the engine core process."""
 
@@ -428,6 +435,7 @@ class EngineCoreProcessStats:
     output_queue_size: Optional[int] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreStatsSnapshot(
         msgspec.Struct,  # type: ignore
         array_like=True,

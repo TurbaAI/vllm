@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 from numba import jit
@@ -7,6 +8,7 @@ from numba import jit
 from vllm.config import VllmConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NgramProposer:
 
     def __init__(self, vllm_config: VllmConfig):

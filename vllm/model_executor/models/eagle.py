@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Iterable, Optional, Tuple
 
@@ -22,6 +23,7 @@ from .utils import maybe_prefix
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DummyInputLayerNorm(nn.Module):
 
     def __init__(self, weight=None, bias=None):
@@ -33,6 +35,7 @@ class DummyInputLayerNorm(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DummyOutputNorm(nn.Module):
 
     def forward(self, x, residual):
@@ -42,6 +45,7 @@ class DummyOutputNorm(nn.Module):
             return x + residual, None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EAGLE(nn.Module):
     """This class implements the EAGLE draft model from the paper: https://arxiv.org/pdf/2401.15077
     Reference implementation: https://github.com/SafeAILab/EAGLE

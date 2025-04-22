@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import base64
 from functools import partial
@@ -25,6 +26,7 @@ if TYPE_CHECKING:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VideoPlugin(ImagePlugin):
     """Plugin for video data."""
 
@@ -112,6 +114,7 @@ def sample_frames_from_video(frames: npt.NDArray,
     return sampled_frames
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VideoLoader:
 
     @classmethod
@@ -119,6 +122,7 @@ class VideoLoader:
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OpenCVVideoBackend(VideoLoader):
 
     def get_cv2_video_api(self):
@@ -175,6 +179,7 @@ class OpenCVVideoBackend(VideoLoader):
         return frames
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VideoMediaIO(MediaIO[npt.NDArray]):
 
     def __init__(

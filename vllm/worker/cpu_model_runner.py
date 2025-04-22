@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 import weakref
@@ -117,8 +118,10 @@ class ModelInputForCPUWithSamplingMetadata(ModelInputForCPU):
         return cls(**tensor_dict)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelInputForCPUBuilder(ModelRunnerInputBuilderBase[ModelInputForCPU]):
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class ModelInputData:
 
         def __init__(self, use_mrope: bool):
@@ -429,6 +432,7 @@ class ModelInputForCPUBuilder(ModelRunnerInputBuilderBase[ModelInputForCPU]):
                            is_prefill=is_prefill)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CPUModelRunnerBase(ModelRunnerBase[TModelInputForCPU]):
     """
     Helper class for shared methods between CPU model runners.
@@ -578,6 +582,7 @@ class CPUModelRunnerBase(ModelRunnerBase[TModelInputForCPU]):
         return self.lora_manager.list_adapters()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CPUModelRunner(CPUModelRunnerBase[ModelInputForCPUWithSamplingMetadata]):
     _model_input_cls: Type[ModelInputForCPUWithSamplingMetadata] = (
         ModelInputForCPUWithSamplingMetadata)

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from typing import Iterable, List, Set, Tuple
@@ -17,6 +18,7 @@ from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 SQRT2 = 2**0.5
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLPSpeculatorLayerNorm(nn.Module):
     """
     A L2 normalization implementation
@@ -56,6 +58,7 @@ class MLPSpeculatorLayerNorm(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MLPSpeculator(nn.Module):
     """
     An implementation of the speculative models introduced in

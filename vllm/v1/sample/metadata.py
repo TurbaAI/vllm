@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Optional
@@ -7,6 +8,7 @@ import torch
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SamplingMetadata:
 
     temperature: Optional[torch.Tensor]

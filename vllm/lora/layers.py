@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # pylint: disable=unused-argument
 import math
@@ -75,10 +76,12 @@ def _not_fully_sharded_can_replace(can_replace):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAMapping(AdapterMapping):
     is_prefill: bool = False
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseLayerWithLoRA(nn.Module):
 
     def slice_lora_a(
@@ -135,6 +138,7 @@ class BaseLayerWithLoRA(nn.Module):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VocabParallelEmbeddingWithLoRA(BaseLayerWithLoRA):
 
     def __init__(self, base_layer: VocabParallelEmbedding) -> None:
@@ -282,6 +286,7 @@ class VocabParallelEmbeddingWithLoRA(BaseLayerWithLoRA):
         return self.base_layer.weight
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseLinearLayerWithLoRA(BaseLayerWithLoRA):
 
     def __init__(self, base_layer: LinearBase):
@@ -445,6 +450,7 @@ class BaseLinearLayerWithLoRA(BaseLayerWithLoRA):
             return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ReplicatedLinearWithLoRA(BaseLinearLayerWithLoRA):
 
     def __init__(self, base_layer: ReplicatedLinear) -> None:
@@ -493,6 +499,7 @@ class ReplicatedLinearWithLoRA(BaseLinearLayerWithLoRA):
         return type(source_layer) is ReplicatedLinear
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ColumnParallelLinearWithLoRA(BaseLinearLayerWithLoRA):
     """
     LoRA on top of ColumnParallelLinear layer.
@@ -595,6 +602,7 @@ class ColumnParallelLinearWithLoRA(BaseLinearLayerWithLoRA):
             and len(packed_modules_list) == 1)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MergedColumnParallelLinearWithLoRA(ColumnParallelLinearWithLoRA):
     """ColumnParallelLinear layer that is composed of 2 sublayers (slices)
     packed together (eg. gate_proj + up_proj -> gate_up_proj).
@@ -737,6 +745,7 @@ class MergedColumnParallelLinearWithLoRA(ColumnParallelLinearWithLoRA):
                 and len(packed_modules_list) == 2)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QKVParallelLinearWithLoRA(ColumnParallelLinearWithLoRA):
     """
     ColumnParallelLinear layer that is specifically designed for
@@ -805,6 +814,7 @@ class QKVParallelLinearWithLoRA(ColumnParallelLinearWithLoRA):
             packed_modules_list) == 1
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MergedQKVParallelLinearWithLoRA(MergedColumnParallelLinearWithLoRA):
     """MergedColumnParallelLinear layer that is composed of 3 sublayers (slices)
     packed together in qkv proj fashion
@@ -867,10 +877,12 @@ class MergedQKVParallelLinearWithLoRA(MergedColumnParallelLinearWithLoRA):
 
 
 #TODO: Implement this
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QKVCrossParallelLinearWithLoRA(BaseLayerWithLoRA):
     pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RowParallelLinearWithLoRA(BaseLinearLayerWithLoRA):
 
     def __init__(self, base_layer: RowParallelLinear) -> None:
@@ -954,6 +966,7 @@ class RowParallelLinearWithLoRA(BaseLinearLayerWithLoRA):
         return type(source_layer) is RowParallelLinear
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LogitsProcessorWithLoRA(BaseLayerWithLoRA):
     """
     LoRA wrapper for LogitsProcessor, with extra logic to handle the
@@ -1175,6 +1188,7 @@ class LogitsProcessorWithLoRA(BaseLayerWithLoRA):
         return False
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LinearScalingRotaryEmbeddingWithLoRA(BaseLayerWithLoRA):
     """Implements RoPE-scaled embeddings with linear scaling for
     multiple LoRA adapters with a specialized kernel.

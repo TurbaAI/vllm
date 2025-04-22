@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 BigCode and the HuggingFace Inc. team. All rights reserved.
 #
@@ -50,6 +51,7 @@ from .utils import (AutoWeightsLoader, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Starcoder2Attention(nn.Module):
 
     def __init__(self,
@@ -127,6 +129,7 @@ class Starcoder2Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Starcoder2MLP(nn.Module):
 
     def __init__(self,
@@ -157,6 +160,7 @@ class Starcoder2MLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Starcoder2DecoderLayer(nn.Module):
 
     def __init__(self,
@@ -202,6 +206,7 @@ class Starcoder2DecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Starcoder2Model(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -292,6 +297,7 @@ class Starcoder2Model(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Starcoder2ForCausalLM(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

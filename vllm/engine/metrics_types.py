@@ -11,6 +11,7 @@ before prometheus_client is imported. Typically, this is done by setting
 the env variable before launch, but since we are a library, we need to
 do this in Python code and lazily import prometheus_client.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from abc import ABC, abstractmethod
@@ -22,6 +23,7 @@ from vllm.spec_decode.metrics import SpecDecodeWorkerMetrics
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Stats:
     """Created by LLMEngine for use by StatLogger."""
     now: float

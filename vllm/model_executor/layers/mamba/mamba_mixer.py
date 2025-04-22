@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -23,6 +24,7 @@ from vllm.model_executor.utils import set_weight_attrs
 
 # Adapted from transformers.models.mamba.modeling_mamba.MambaMixer
 @CustomOp.register("mamba_mixer")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MambaMixer(CustomOp):
     """
     Compute ∆, A, B, C, and D the state space parameters and compute

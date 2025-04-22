@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import importlib
 from abc import ABC, abstractmethod
@@ -8,6 +9,7 @@ if TYPE_CHECKING:
     from vllm.entrypoints.chat_utils import ChatCompletionMessageParam
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenizerBase(ABC):
 
     @property
@@ -123,6 +125,7 @@ class TokenizerBase(ABC):
         raise NotImplementedError()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenizerRegistry:
     # Tokenizer name -> (tokenizer module, tokenizer class)
     REGISTRY: Dict[str, Tuple[str, str]] = {}

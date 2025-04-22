@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import dataclasses
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
@@ -28,6 +29,7 @@ class ModelInputForGPUWithPoolingMetadata(ModelInputForGPU):
     pooling_metadata: Optional["PoolingMetadata"] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PoolingModelRunner(
         GPUModelRunnerBase[ModelInputForGPUWithPoolingMetadata]):
     _model_input_cls: Type[ModelInputForGPUWithPoolingMetadata] = (

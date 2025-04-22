@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from importlib.util import find_spec
 from math import inf
 from typing import Dict, Iterator, List, Optional, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import msgspec
 import torch
@@ -62,6 +63,7 @@ SampleResultsDictType = Dict[int, Tuple[List[int], List[int]]]
 # * For single-step scheduling: consumed immediately
 #   inside `Sampler.forward()` to compute pythonized sample_result.
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SampleResultArgsType:
     sample_metadata: SampleMetadataType
     multinomial_samples: MultinomialSamplesType
@@ -79,6 +81,7 @@ MaybeDeferredSampleResultType = Union[SampleResultType, SampleResultArgsType]
 SampleReturnType = Tuple[MaybeDeferredSampleResultType, Optional[torch.Tensor]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SamplerOutput(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]
@@ -157,6 +160,7 @@ class SamplerOutput(
             f"spec_decode_worker_metrics={self.spec_decode_worker_metrics})")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Sampler(nn.Module):
     """Samples the next tokens from the model's outputs.
 

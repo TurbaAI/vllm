@@ -4,6 +4,7 @@ import logging
 from collections.abc import AsyncGenerator, Mapping
 from copy import copy
 from typing import Optional, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 
@@ -40,6 +41,7 @@ from vllm.v1.metrics.stats import IterationStats, SchedulerStats
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncLLM(EngineClient):
 
     def __init__(

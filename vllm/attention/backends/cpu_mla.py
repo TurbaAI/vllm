@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Type
@@ -17,6 +18,7 @@ from vllm.utils import make_tensor_with_pad
 from vllm.worker.cpu_model_runner import ModelInputForCPUBuilder
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CPUMLABackend(AttentionBackend):
 
     @staticmethod
@@ -69,6 +71,7 @@ class CPUMLABackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CPUMLAMetadata(TorchSDPAMetadata):
     # New for MLA
     # Input positions for rotrary embeddings since for MLA the rotary
@@ -79,6 +82,7 @@ class CPUMLAMetadata(TorchSDPAMetadata):
     is_profile_run: bool = False
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CPUMLAMetadataBuilder(AttentionMetadataBuilder[CPUMLAMetadata]):
 
     def __init__(self, input_builder: ModelInputForCPUBuilder) -> None:
@@ -191,6 +195,7 @@ class CPUMLAMetadataBuilder(AttentionMetadataBuilder[CPUMLAMetadata]):
             input_positions=torch.tensor([self.input_data.input_positions]))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CPUMLAImpl(MLACommonImpl[CPUMLAMetadata]):
 
     def __init__(

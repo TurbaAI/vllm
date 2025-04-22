@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Callable, Dict, List, NamedTuple, Optional, Tuple
 
@@ -33,6 +34,7 @@ RMS_OP = torch.ops._C.rms_norm.default
 RMS_ADD_OP = torch.ops._C.fused_add_rms_norm.default
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuantKey(NamedTuple):
     """
     Named tuple for identifying the type of quantization.
@@ -66,6 +68,7 @@ QUANT_OPS: Dict[QuantKey, OpOverload] = {
 }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FusedRMSQuantKey(NamedTuple):
     """
     Named tuple for identifying the type of RMSNorm + quant fusion.
@@ -92,6 +95,7 @@ FUSED_OPS: Dict[FusedRMSQuantKey, OpOverload] = {
 }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuantMultiOutputMatch(MultiOutputMatch):
 
     def __init__(self, match: pm.Match, quant_op, fused_op):
@@ -154,6 +158,7 @@ class QuantMultiOutputMatch(MultiOutputMatch):
         fused_node.meta["val"] = tuple(meta_val)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RMSNormQuantPattern:
 
     def __init__(self, epsilon: float, key: FusedRMSQuantKey):
@@ -169,6 +174,7 @@ class RMSNormQuantPattern:
         self.FUSED_OP = FUSED_OPS[key]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RMSNormStaticQuantPattern(RMSNormQuantPattern):
 
     def __init__(self,
@@ -225,6 +231,7 @@ class RMSNormStaticQuantPattern(RMSNormQuantPattern):
                                 pm_pass)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FusedAddRMSNormStaticQuantPattern(RMSNormQuantPattern):
 
     def __init__(self,
@@ -288,6 +295,7 @@ class FusedAddRMSNormStaticQuantPattern(RMSNormQuantPattern):
             extra_check=lambda m: record_match(
                 self.Match(m, self.QUANT_OP, self.FUSED_OP)))
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Match(QuantMultiOutputMatch):
 
         def process(self):
@@ -317,6 +325,7 @@ class FusedAddRMSNormStaticQuantPattern(RMSNormQuantPattern):
                                        **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RMSNormDynamicQuantPattern(RMSNormQuantPattern):
 
     def __init__(self,
@@ -383,6 +392,7 @@ class RMSNormDynamicQuantPattern(RMSNormQuantPattern):
             extra_check=lambda m: record_match(
                 self.Match(m, self.QUANT_OP, self.FUSED_OP)))
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Match(QuantMultiOutputMatch):
 
         def process(self):
@@ -415,6 +425,7 @@ class RMSNormDynamicQuantPattern(RMSNormQuantPattern):
                     **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FusedAddRMSNormDynamicQuantPattern(RMSNormQuantPattern):
 
     def __init__(self,
@@ -481,6 +492,7 @@ class FusedAddRMSNormDynamicQuantPattern(RMSNormQuantPattern):
             extra_check=lambda m: record_match(
                 self.Match(m, self.QUANT_OP, self.FUSED_OP)))
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Match(QuantMultiOutputMatch):
 
         def process(self):
@@ -516,6 +528,7 @@ class FusedAddRMSNormDynamicQuantPattern(RMSNormQuantPattern):
                     **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FusionPass(VllmInductorPass):
     """
     This pass fuses a pre-defined set of custom ops into fused ops.

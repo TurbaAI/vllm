@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # yapf: disable
 # ruff: noqa: E501
@@ -13,6 +14,7 @@ from transformers.utils import logging
 logger = logging.get_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Olmo2Config(PretrainedConfig):
     r"""
     This is the configuration class to store the configuration of a [`Olmo2Model`]. It is used to instantiate an OLMo2

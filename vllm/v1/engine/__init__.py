@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import enum
 import time
@@ -19,6 +20,7 @@ from vllm.v1.outputs import LogprobsLists, LogprobsTensors
 FINISH_REASON_STRINGS = ("stop", "length", "abort")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FinishReason(enum.IntEnum):
     """
     Reason a request finished - stop, length, or abort.
@@ -38,6 +40,7 @@ class FinishReason(enum.IntEnum):
         return FINISH_REASON_STRINGS[self.value]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreRequest(
         msgspec.Struct,
         array_like=True,  # type: ignore[call-arg]
@@ -62,6 +65,7 @@ class EngineCoreRequest(
     lora_request: Optional[LoRARequest]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreEventType(enum.IntEnum):
     """The type of engine core request event."""
     QUEUED = 1
@@ -69,6 +73,7 @@ class EngineCoreEventType(enum.IntEnum):
     PREEMPTED = 3
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreEvent(msgspec.Struct):
     """A timestamped engine core event associated with a request.
 
@@ -87,6 +92,7 @@ class EngineCoreEvent(msgspec.Struct):
         return cls(event_type, timestamp)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreOutput(
         msgspec.Struct,
         array_like=True,  # type: ignore[call-arg]
@@ -108,6 +114,7 @@ class EngineCoreOutput(
         return self.finish_reason is not None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UtilityOutput(
         msgspec.Struct,
         array_like=True,  # type: ignore[call-arg]
@@ -120,6 +127,7 @@ class UtilityOutput(
     result: Any = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreOutputs(
         msgspec.Struct,
         array_like=True,  # type: ignore[call-arg]
@@ -147,6 +155,7 @@ class EngineCoreOutputs(
             self.timestamp = time.monotonic()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EngineCoreRequestType(enum.Enum):
     """
     Request types defined as hex byte strings, so it can be sent over sockets

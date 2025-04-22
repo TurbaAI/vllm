@@ -4,6 +4,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from itertools import accumulate
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -37,6 +38,7 @@ if TYPE_CHECKING:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashAttentionBackend(AttentionBackend):
 
     accept_output_buffer: bool = True
@@ -101,6 +103,7 @@ class FlashAttentionBackend(AttentionBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashAttentionMetadata(AttentionMetadata):
     """Metadata for FlashAttentionBackend.
 
@@ -382,6 +385,7 @@ class FlashAttentionMetadata(AttentionMetadata):
                                    block_tables=self.block_tables)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashAttentionMetadataBuilder(
         AttentionMetadataBuilder[FlashAttentionMetadata]):
 
@@ -579,6 +583,7 @@ class FlashAttentionMetadataBuilder(
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FlashAttentionImpl(AttentionImpl):
     """
     If the input tensors contain prompt tokens, the layout is as follows:

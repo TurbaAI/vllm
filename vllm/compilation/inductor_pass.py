@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import hashlib
 import inspect
@@ -19,6 +20,7 @@ else:
         Torch25CustomGraphPass as CustomGraphPass)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InductorPass(CustomGraphPass):
     """
     A custom graph pass that uses a hash of its source as the UUID.
@@ -63,6 +65,7 @@ class InductorPass(CustomGraphPass):
         return hashlib.sha256(encoded).hexdigest()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CallableInductorPass(InductorPass):
     """
     This class is a wrapper for a callable that automatically provides an

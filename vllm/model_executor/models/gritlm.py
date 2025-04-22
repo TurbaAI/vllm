@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from array import array
 from typing import Optional, Union
@@ -24,6 +25,7 @@ from .interfaces import SupportsV0Only
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GritLMPooler(nn.Module):
 
     def __init__(self, model_config: ModelConfig):
@@ -180,6 +182,7 @@ class GritLMPooler(nn.Module):
         return PoolerOutput(outputs=pooled_outputs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GritLM(LlamaForCausalLM, SupportsV0Only):
     """This class implements the embedding model for parasail-ai/GritLM-7B-vllm.
 

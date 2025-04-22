@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import base64
@@ -43,6 +44,7 @@ def _get_data(
     assert_never(encoding_format)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OpenAIServingPooling(OpenAIServing):
 
     def __init__(

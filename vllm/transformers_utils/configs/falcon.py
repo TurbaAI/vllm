@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://huggingface.co/tiiuae/falcon-7b/blob/main/configuration_RW.py
@@ -21,6 +22,7 @@
 from transformers.configuration_utils import PretrainedConfig
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RWConfig(PretrainedConfig):
     model_type = "falcon"
     keys_to_ignore_at_inference = ["past_key_values"]

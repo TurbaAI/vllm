@@ -6,6 +6,7 @@ The LMCacheConnector can (1) transfer KV caches between prefill vLLM worker
 (KV cache producer) and decode vLLM worker (KV cache consumer) using LMCache;
 (2) offload and share KV caches.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import TYPE_CHECKING, List, Tuple, Union
 
@@ -22,6 +23,7 @@ if TYPE_CHECKING:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LMCacheConnector(KVConnectorBase):
 
     def __init__(

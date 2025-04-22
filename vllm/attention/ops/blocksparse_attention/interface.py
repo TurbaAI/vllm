@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 
@@ -15,6 +16,7 @@ if IS_COMPUTE_8_OR_ABOVE:
     from .blocksparse_attention_kernel import blocksparse_flash_attn_varlen_fwd
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LocalStridedBlockSparseAttn(torch.nn.Module):
 
     def __init__(

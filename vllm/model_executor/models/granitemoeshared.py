@@ -5,6 +5,7 @@ The architecture is the same as granitemoe but with the addition of shared
 experts.
 """
 from typing import Iterable, Optional, Set, Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from torch import nn
@@ -32,6 +33,7 @@ from .interfaces import SupportsLoRA, SupportsPP
 from .utils import AutoWeightsLoader, make_layers, maybe_prefix
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeSharedMLP(nn.Module):
 
     def __init__(
@@ -68,6 +70,7 @@ class GraniteMoeSharedMLP(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeSharedDecoderLayer(nn.Module):
 
     def __init__(
@@ -142,6 +145,7 @@ class GraniteMoeSharedDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeSharedModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -244,6 +248,7 @@ class GraniteMoeSharedModel(nn.Module):
         return mixtral.MixtralModel.load_weights(self, new_weights.items())
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraniteMoeSharedForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     fall_back_to_pt_during_load = False
 

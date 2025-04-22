@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # yapf: disable
 # ruff: noqa: E501
@@ -17,6 +18,7 @@ logger = logging.get_logger(__name__)
 DBRX_PRETRAINED_CONFIG_ARCHIVE_MAP = {} # type: ignore
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxAttentionConfig(PretrainedConfig):
     """Configuration class for Dbrx Attention.
 
@@ -82,6 +84,7 @@ class DbrxAttentionConfig(PretrainedConfig):
         return cls.from_dict(config_dict, **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxFFNConfig(PretrainedConfig):
     """Configuration class for Dbrx FFN.
 
@@ -161,6 +164,7 @@ class DbrxFFNConfig(PretrainedConfig):
         return cls.from_dict(config_dict, **kwargs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DbrxConfig(PretrainedConfig):
     """Configuration class for Dbrx.
 

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # ruff: noqa
 
@@ -8,6 +9,7 @@ from transformers import PretrainedConfig
 from transformers.modeling_rope_utils import rope_config_validation
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Cohere2Config(PretrainedConfig):
     r"""
     This is the configuration class to store the configuration of a [`CohereModel`]. It is used to instantiate an Cohere

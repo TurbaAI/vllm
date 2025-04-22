@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import fnmatch
 import re
@@ -23,6 +24,7 @@ from vllm.platforms import current_platform
 __all__ = ["QuarkLinearMethod"]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuarkConfig(QuantizationConfig):
 
     def __init__(self,
@@ -313,6 +315,7 @@ class QuarkConfig(QuantizationConfig):
         return None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuarkLinearMethod(LinearMethodBase):
 
     def __init__(self, quantization_config: QuarkConfig):
@@ -357,6 +360,7 @@ class QuarkLinearMethod(LinearMethodBase):
         return scheme.apply_weights(layer, x, bias=bias)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuarkKVCacheMethod(BaseKVCacheMethod):
     """
     Supports loading kv-cache scaling factors from quark checkpoints.

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import warnings
 from typing import Optional
@@ -8,6 +9,7 @@ import msgspec
 from vllm.adapter_commons.request import AdapterRequest
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRARequest(
         msgspec.Struct,
         omit_defaults=True,  # type: ignore[call-arg]

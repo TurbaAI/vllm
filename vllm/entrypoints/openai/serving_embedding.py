@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import base64
@@ -44,6 +45,7 @@ def _get_embedding(
     assert_never(encoding_format)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class OpenAIServingEmbedding(OpenAIServing):
 
     def __init__(

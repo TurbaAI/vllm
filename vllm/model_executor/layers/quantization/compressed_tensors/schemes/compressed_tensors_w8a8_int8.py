@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Callable, List, Optional, Set
 
@@ -18,6 +19,7 @@ from vllm.model_executor.parameter import (BasevLLMParameter,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CompressedTensorsW8A8Int8(CompressedTensorsScheme):
     _kernel_backends_being_used: Set[str] = set()
 

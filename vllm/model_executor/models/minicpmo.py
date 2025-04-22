@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -55,6 +56,7 @@ from .utils import (AutoWeightsLoader, cast_overflow_tensors, flatten_bn,
 CPU_DEVICE = torch.device("cpu")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMOAudioFeatureInputs(TypedDict):
     type: Literal["audio_features"]
     audio_features: Union[torch.Tensor, list[torch.Tensor]]
@@ -74,6 +76,7 @@ class MiniCPMOAudioFeatureInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMOAudioEmbeddingInputs(TypedDict):
     type: Literal["audio_embeds"]
     audio_embeds: Union[torch.Tensor, list[torch.Tensor]]
@@ -103,6 +106,7 @@ def _minicpmo_field_config(hf_inputs: Mapping[str, torch.Tensor]):
     )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMOAudioEmbeddingItems(DictEmbeddingItems):
 
     def __init__(
@@ -121,6 +125,7 @@ class MiniCPMOAudioEmbeddingItems(DictEmbeddingItems):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMOMultiModalDataParser(MiniCPMVMultiModalDataParser):
 
     def _parse_audio_data(
@@ -136,6 +141,7 @@ class MiniCPMOMultiModalDataParser(MiniCPMVMultiModalDataParser):
         return super()._parse_audio_data(data)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMOProcessingInfo(MiniCPMVProcessingInfo):
     audio_pattern = "(<audio>./</audio>)"
 
@@ -203,6 +209,7 @@ class MiniCPMOProcessingInfo(MiniCPMVProcessingInfo):
         return max(max_frames_per_video, 1)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMODummyInputsBuilder(
         MiniCPMVDummyInputsBuilder[MiniCPMOProcessingInfo]):
 
@@ -233,6 +240,7 @@ class MiniCPMODummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMOMultiModalProcessor(
         MiniCPMVMultiModalProcessor[MiniCPMOProcessingInfo]):
 
@@ -349,6 +357,7 @@ class MiniCPMOMultiModalProcessor(
         return _minicpmo_field_config(hf_inputs)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalProjector(nn.Module):
 
     def __init__(self, in_dim: int, out_dim: int):
@@ -367,6 +376,7 @@ class MultiModalProjector(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMWhisperEncoderLayer(nn.Module):
 
     def __init__(self, config: WhisperConfig, layer_idx: int):
@@ -426,6 +436,7 @@ class MiniCPMWhisperEncoderLayer(nn.Module):
         return outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMWhisperEncoder(WhisperEncoder):
 
     def __init__(self, config: WhisperConfig):
@@ -492,6 +503,7 @@ class MiniCPMWhisperEncoder(WhisperEncoder):
     MiniCPMOMultiModalProcessor,
     info=MiniCPMOProcessingInfo,
     dummy_inputs=MiniCPMODummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMO(MiniCPMV2_6):
     packed_modules_mapping = {
         "qkv_proj": [

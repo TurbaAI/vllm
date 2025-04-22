@@ -10,6 +10,7 @@ from enum import Enum
 from functools import lru_cache
 from typing import (TYPE_CHECKING, Generic, NamedTuple, Optional, Protocol,
                     TypeVar, Union, cast)
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from transformers import BatchFeature, PretrainedConfig, ProcessorMixin
@@ -41,11 +42,13 @@ PromptSeq = Union[str, list[int]]
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptIndex:
     """Resolves to an index in the prompt."""
     get_match_index: Callable[[AnyTokenizer, PromptSeq], Optional[int]]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptIndexTargets:
 
     @staticmethod
@@ -102,6 +105,7 @@ The token sequence or text to update.
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptUpdateDetails(Generic[_S]):
     """Details about the token sequence or text that are part of the update."""
 
@@ -169,12 +173,14 @@ instead of a function if it does not depend on the input.
 """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UpdateMode(str, Enum):
     INSERT = "insert"
     REPLACE = "replace"
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptUpdate(ABC):
     """
     Defines how to update a prompt with placeholder tokens.
@@ -206,6 +212,7 @@ class PromptUpdate(ABC):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptInsertion(PromptUpdate):
     """
     Defines how to insert placeholder tokens into a prompt.
@@ -273,6 +280,7 @@ class PromptInsertion(PromptUpdate):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptReplacement(PromptUpdate):
     """
     Defines how to replace portions of an input prompt with placeholder tokens.
@@ -368,10 +376,12 @@ def _cached_decode(
                          skip_special_tokens=skip_special_tokens)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _HasModalityAttr(Protocol):
     modality: str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _HasModalityProp(Protocol):
 
     @property
@@ -388,6 +398,7 @@ def full_groupby_modality(values: Iterable[_M]) -> ItemsView[str, list[_M]]:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _BoundPromptSequence:
     """
     A :data:`_PromptSeq` bound to a tokenizer to automatically
@@ -434,12 +445,14 @@ class _BoundPromptSequence:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _BoundPromptContent:
     full: _BoundPromptSequence
     is_embed: Optional[Callable[["_BoundPromptSequence"], torch.Tensor]]
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BoundPromptUpdate:
     """
     A :class:`PromptUpdate` bound to a tokenizer to automatically convert
@@ -505,6 +518,7 @@ class BoundPromptUpdate:
         return bound_content
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _TokenMatch(NamedTuple):
     start_idx: int
     end_idx: int
@@ -566,6 +580,7 @@ def replace_token_matches(
 
 
 @dataclass(repr=False)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptTargetMatch(ABC):
     _origin: BoundPromptUpdate
 
@@ -589,6 +604,7 @@ class PromptTargetMatch(ABC):
 
 
 @dataclass(repr=False)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _PromptTargetIndexMatch(PromptTargetMatch):
     match_idx: int
 
@@ -602,6 +618,7 @@ class _PromptTargetIndexMatch(PromptTargetMatch):
 
 
 @dataclass(repr=False)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _PromptTargetTokenMatch(PromptTargetMatch):
     match: _TokenMatch
 
@@ -615,6 +632,7 @@ class _PromptTargetTokenMatch(PromptTargetMatch):
 
 
 @dataclass(repr=False)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _PromptTargetTextMatch(PromptTargetMatch):
     match: re.Match[str]
 
@@ -628,6 +646,7 @@ class _PromptTargetTextMatch(PromptTargetMatch):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PlaceholderFeaturesInfo:
     modality: str
     item_idx: int
@@ -997,6 +1016,7 @@ class ProcessingCache:
         self._cache[cache_key] = output_kwargs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseProcessingInfo:
     """Base class to provide the information necessary for data processing."""
 
@@ -1052,6 +1072,7 @@ class BaseProcessingInfo:
 _I = TypeVar("_I", bound=BaseProcessingInfo)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseMultiModalProcessor(ABC, Generic[_I]):
     """
     Abstract base class to process multi-modal inputs to be used in vLLM.
@@ -1665,6 +1686,7 @@ class BaseMultiModalProcessor(ABC, Generic[_I]):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EncDecMultiModalProcessor(BaseMultiModalProcessor[_I]):
 
     @abstractmethod

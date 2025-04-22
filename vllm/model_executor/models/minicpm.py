@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -60,6 +61,7 @@ from .utils import (AutoWeightsLoader, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMMoE(nn.Module):
     """A tensor-parallel MoE implementation that shards each expert
     across all ranks.
@@ -149,6 +151,7 @@ class MiniCPMMoE(nn.Module):
         return final_hidden_states.view(num_tokens, hidden_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMMLP(nn.Module):
 
     def __init__(
@@ -183,6 +186,7 @@ class MiniCPMMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMAttention(nn.Module):
 
     def __init__(
@@ -269,6 +273,7 @@ class MiniCPMAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMDecoderLayer(nn.Module):
 
     def __init__(
@@ -352,6 +357,7 @@ class MiniCPMDecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -497,6 +503,7 @@ class MiniCPMModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MiniCPMForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from https://huggingface.co/mosaicml/mpt-7b/tree/main
 import math
@@ -45,6 +46,7 @@ def _get_alibi_slopes(
     return slopes
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPTAttention(nn.Module):
 
     def __init__(
@@ -139,6 +141,7 @@ class MPTAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPTMLP(nn.Module):
 
     def __init__(
@@ -171,6 +174,7 @@ class MPTMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPTBlock(nn.Module):
 
     def __init__(
@@ -208,6 +212,7 @@ class MPTBlock(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPTModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -284,6 +289,7 @@ class MPTModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MPTForCausalLM(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

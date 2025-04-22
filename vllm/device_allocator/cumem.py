@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # cumem-based pytorch pluggable allocator to implement sleep mode.
 # other approaches tried but failed:
@@ -67,6 +68,7 @@ HandleType = Tuple[int, int, int, int]
 
 
 @dataclasses.dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AllocationData:
     handle: HandleType
     tag: str
@@ -102,6 +104,7 @@ def use_memory_pool_with_allocator(
         yield mem_pool, new_alloc
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CuMemAllocator:
     """
     A singleton class that manages a memory pool for CUDA tensors.

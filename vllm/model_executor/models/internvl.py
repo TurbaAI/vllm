@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # adapted from https://huggingface.co/OpenGVLab/InternVL2-4B/blob/main/modeling_internvl_chat.py
 # --------------------------------------------------------
@@ -48,6 +49,7 @@ IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVLImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values_flat: torch.Tensor
@@ -60,6 +62,7 @@ class InternVLImagePixelInputs(TypedDict):
     """Shape: `(batch_size * num_images)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVLImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     data: Union[torch.Tensor, list[torch.Tensor]]
@@ -232,6 +235,7 @@ def image_to_pixel_values_internvl(
     return pixel_values
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseInternVLProcessor(ABC):
     """
     This model doesn't define its own HF processor,
@@ -425,6 +429,7 @@ class BaseInternVLProcessor(ABC):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVLProcessor(BaseInternVLProcessor):
 
     @property
@@ -442,6 +447,7 @@ class InternVLProcessor(BaseInternVLProcessor):
         return PromptUpdateDetails.select_text(repl_full, IMG_CONTEXT)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseInternVLProcessingInfo(BaseProcessingInfo):
 
     @abstractmethod
@@ -502,6 +508,7 @@ class BaseInternVLProcessingInfo(BaseProcessingInfo):
 _I = TypeVar("_I", bound=BaseInternVLProcessingInfo)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVLDummyInputsBuilder(BaseDummyInputsBuilder[_I]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -526,6 +533,7 @@ class InternVLDummyInputsBuilder(BaseDummyInputsBuilder[_I]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVLMultiModalProcessor(BaseMultiModalProcessor[_I]):
 
     def _call_hf_processor(
@@ -614,6 +622,7 @@ class InternVLMultiModalProcessor(BaseMultiModalProcessor[_I]):
         ]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVLProcessingInfo(BaseInternVLProcessingInfo):
 
     def get_hf_processor(
@@ -643,6 +652,7 @@ class InternVLProcessingInfo(BaseInternVLProcessingInfo):
     InternVLMultiModalProcessor,
     info=InternVLProcessingInfo,
     dummy_inputs=InternVLDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InternVLChatModel(nn.Module, SupportsMultiModal, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = "") -> None:

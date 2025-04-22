@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -58,6 +59,7 @@ from .utils import (PPMissingLayer, is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV2MLP(nn.Module):
 
     def __init__(
@@ -93,6 +95,7 @@ class DeepseekV2MLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV2MoE(nn.Module):
 
     def __init__(
@@ -186,6 +189,7 @@ def yarn_get_mscale(scale: float = 1, mscale: float = 1) -> float:
     return 0.1 * mscale * math.log(scale) + 1.0
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV2Attention(nn.Module):
 
     def __init__(
@@ -332,6 +336,7 @@ class DeepseekV2Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV2MLAAttention(nn.Module):
     """
     Main reference: DeepseekV2 paper, and FlashInfer Implementation
@@ -482,6 +487,7 @@ class DeepseekV2MLAAttention(nn.Module):
                              output_shape=hidden_states.shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV2DecoderLayer(nn.Module):
 
     def __init__(
@@ -592,6 +598,7 @@ class DeepseekV2DecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV2Model(nn.Module):
 
     fall_back_to_pt_during_load = False
@@ -669,6 +676,7 @@ class DeepseekV2Model(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV2ForCausalLM(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -824,6 +832,7 @@ class DeepseekV2ForCausalLM(nn.Module, SupportsPP):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekV3ForCausalLM(DeepseekV2ForCausalLM):
     pass
 

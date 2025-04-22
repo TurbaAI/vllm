@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 HuggingFace Inc. team. All rights reserved.
 # Copyright (c) 2024, NVIDIA CORPORATION. All rights reserved.
@@ -22,6 +23,7 @@ from transformers.utils import logging
 logger = logging.get_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NemotronConfig(PretrainedConfig):
     r"""
     This is the configuration class to store the configuration of a

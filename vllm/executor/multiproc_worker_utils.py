@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import os
@@ -32,6 +33,7 @@ JOIN_TIMEOUT_S = 2
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Result(Generic[T]):
     """Result of task dispatched to worker"""
 
@@ -40,6 +42,7 @@ class Result(Generic[T]):
     exception: Optional[BaseException] = None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ResultFuture(threading.Event, Generic[T]):
     """Synchronous future for non-async case"""
 
@@ -72,6 +75,7 @@ def _set_future_result(future: Union[ResultFuture, asyncio.Future],
             loop.call_soon_threadsafe(future.set_result, result.value)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ResultHandler(threading.Thread):
     """Handle results from all workers (in background thread)"""
 
@@ -95,6 +99,7 @@ class ResultHandler(threading.Thread):
         self.result_queue.put(_TERMINATE)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WorkerMonitor(threading.Thread):
     """Monitor worker status (in background thread)"""
 
@@ -141,6 +146,7 @@ class WorkerMonitor(threading.Thread):
         self.result_handler.close()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ProcessWorkerWrapper:
     """Local process wrapper for vllm.worker.Worker,
     for handling single-node multi-GPU tensor parallel."""

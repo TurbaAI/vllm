@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 import re
@@ -27,6 +28,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Encoding:
     input_ids: Union[List[int], List[List[int]]]
 
@@ -177,6 +179,7 @@ def make_mistral_chat_completion_request(
                                  tools=tools)  # type: ignore[type-var]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MistralTokenizer(TokenizerBase):
 
     def __init__(self, tokenizer: "PublicMistralTokenizer") -> None:

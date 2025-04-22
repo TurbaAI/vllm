@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/llama/modeling_llama.py
@@ -57,6 +58,7 @@ from .utils import (AutoWeightsLoader, extract_layer_index,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekMLP(nn.Module):
 
     def __init__(
@@ -90,6 +92,7 @@ class DeepseekMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekMoE(nn.Module):
 
     def __init__(
@@ -177,6 +180,7 @@ class DeepseekMoE(nn.Module):
         return final_hidden_states.view(num_tokens, hidden_dim)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekAttention(nn.Module):
 
     def __init__(
@@ -258,6 +262,7 @@ class DeepseekAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekDecoderLayer(nn.Module):
 
     def __init__(
@@ -329,6 +334,7 @@ class DeepseekDecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekModel(nn.Module):
 
     fall_back_to_pt_during_load = False
@@ -437,6 +443,7 @@ class DeepseekModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeepseekForCausalLM(nn.Module, SupportsPP):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):

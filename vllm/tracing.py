@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from collections.abc import Mapping
@@ -31,15 +32,19 @@ except ImportError:
     import traceback
     otel_import_error_traceback = traceback.format_exc()
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Context:  # type: ignore
         pass
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class BaseSpanAttributes:  # type: ignore
         pass
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class SpanKind:  # type: ignore
         pass
 
+    @decorate_all_methods(profile_function) # added by auto-decorator-script
     class Tracer:  # type: ignore
         pass
 
@@ -94,6 +99,7 @@ def extract_trace_headers(headers: Mapping[str, str]) -> Mapping[str, str]:
     return {h: headers[h] for h in TRACE_HEADERS if h in headers}
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SpanAttributes:
     # Attribute names copied from here to avoid version conflicts:
     # https://github.com/open-telemetry/semantic-conventions/blob/main/docs/gen-ai/gen-ai-spans.md

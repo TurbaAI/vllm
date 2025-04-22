@@ -9,6 +9,7 @@ import json
 import os
 from dataclasses import dataclass
 from typing import Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 from safetensors.torch import load as safetensors_load
@@ -26,6 +27,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MooncakeStoreConfig:
     local_hostname: str
     metadata_server: str
@@ -62,6 +64,7 @@ class MooncakeStoreConfig:
         return MooncakeStoreConfig.from_file(config_file_path)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MooncakeStore(KVStoreBufferBase):
 
     def __init__(

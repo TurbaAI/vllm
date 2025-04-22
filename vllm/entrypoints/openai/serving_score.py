@@ -3,6 +3,7 @@ import asyncio
 import time
 from collections.abc import AsyncGenerator, Mapping
 from typing import Any, Optional, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from fastapi import Request
 
@@ -31,6 +32,7 @@ from vllm.utils import make_async, merge_async_iterators
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ServingScores(OpenAIServing):
 
     def __init__(

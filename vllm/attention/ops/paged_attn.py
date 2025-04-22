@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
@@ -16,6 +17,7 @@ _PARTITION_SIZE = 512
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PagedAttentionMetadata:
     """Metadata for PagedAttention."""
     # (batch_size,). The length of sequences (entire tokens seen so far) per
@@ -32,6 +34,7 @@ class PagedAttentionMetadata:
     block_tables: Optional[torch.Tensor]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PagedAttention:
 
     @staticmethod

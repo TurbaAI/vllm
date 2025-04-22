@@ -3,6 +3,7 @@
 from typing import Dict, List, Optional
 from typing import Sequence as GenericSequence
 from typing import Tuple
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from vllm.core.block.block_table import BlockTable
 from vllm.core.block.cpu_gpu_block_allocator import CpuGpuBlockAllocator
@@ -18,6 +19,7 @@ SeqId = int
 EncoderSeqId = str
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SelfAttnBlockSpaceManager(BlockSpaceManager):
     """BlockSpaceManager which manages the allocation of KV cache.
 

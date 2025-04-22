@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -10,6 +11,7 @@ from vllm.lora.request import LoRARequest
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAResolver(ABC):
     """Base class for LoRA adapter resolvers.
 
@@ -39,6 +41,7 @@ class LoRAResolver(ABC):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _LoRAResolverRegistry:
     resolvers: Dict[str, LoRAResolver] = field(default_factory=dict)
 

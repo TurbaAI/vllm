@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Helper functions for 3D sparse pattern
 # These function are not optimized and very inefficient.
@@ -11,6 +12,7 @@ import torch
 import triton
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class csr_matrix:
     """Simple implementation of CSR matrix conversion without scipy.
     This replaced scipy.sparse.csr_matrix() previously used."""

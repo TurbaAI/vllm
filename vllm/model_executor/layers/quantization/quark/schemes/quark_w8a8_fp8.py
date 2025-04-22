@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Callable, List, Optional
 
@@ -16,6 +17,7 @@ from vllm.platforms import current_platform
 __all__ = ["QuarkW8A8Fp8"]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuarkW8A8Fp8(QuarkScheme):
 
     def __init__(self, qscheme: str, is_static_input_scheme: Optional[bool]):

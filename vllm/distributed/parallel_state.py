@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2023 The vLLM team.
 # Adapted from
@@ -51,6 +52,7 @@ if TYPE_CHECKING:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GraphCaptureContext:
     stream: torch.cuda.Stream
 
@@ -129,6 +131,7 @@ if supports_custom_op():
     )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GroupCoordinator:
     """
     PyTorch ProcessGroup wrapper for a group of processes.

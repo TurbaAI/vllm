@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 from dataclasses import dataclass, field
@@ -28,6 +29,7 @@ else:
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XgrammarBackend(StructuredOutputBackend):
 
     def __init__(self, vllm_config: VllmConfig):
@@ -120,6 +122,7 @@ class XgrammarBackend(StructuredOutputBackend):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XgrammarGrammar(StructuredOutputGrammar):
     # NOTE: This would be a generic-enough class for
     # supporting different backends, in the future.

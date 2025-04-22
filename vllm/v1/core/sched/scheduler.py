@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import annotations
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import time
 from collections import deque
@@ -30,6 +31,7 @@ from vllm.v1.structured_output import StructuredOutputManager
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Scheduler(SchedulerInterface):
 
     def __init__(

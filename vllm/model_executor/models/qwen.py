@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://huggingface.co/Qwen/Qwen-7B/blob/main/modeling_qwen.py
@@ -37,6 +38,7 @@ from .utils import (is_pp_missing_parameter,
                     maybe_prefix)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QWenMLP(nn.Module):
     """MLP for the language component of the Qwen model, which contains a
     MergedColumnParallelLinear merging 2 outputs via silu activation."""
@@ -69,6 +71,7 @@ class QWenMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QWenAttention(nn.Module):
 
     def __init__(
@@ -133,6 +136,7 @@ class QWenAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QWenBlock(nn.Module):
 
     def __init__(
@@ -186,6 +190,7 @@ class QWenBlock(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QWenModel(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -248,6 +253,7 @@ class QWenModel(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QWenBaseModel(nn.Module):
 
     def __init__(
@@ -335,6 +341,7 @@ class QWenBaseModel(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QWenLMHeadModel(QWenBaseModel, SupportsPP, SupportsLoRA):
     packed_modules_mapping = {
         "c_attn": ["c_attn"],

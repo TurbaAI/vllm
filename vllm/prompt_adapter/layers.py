@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Optional
@@ -13,10 +14,12 @@ from vllm.model_executor.layers.vocab_parallel_embedding import (
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PromptAdapterMapping(AdapterMapping):
     pass
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VocabParallelEmbeddingWithPromptAdapter(nn.Module):
 
     def __init__(self, base_layer: VocabParallelEmbedding) -> None:

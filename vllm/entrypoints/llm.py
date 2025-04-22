@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import itertools
 import warnings
@@ -50,6 +51,7 @@ logger = init_logger(__name__)
 _R = TypeVar("_R", default=Any)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LLM:
     """An LLM for generating texts from given prompts and sampling parameters.
 

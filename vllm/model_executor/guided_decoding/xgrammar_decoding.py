@@ -2,6 +2,7 @@
 
 # noqa: UP007
 from __future__ import annotations
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 import re
@@ -54,6 +55,7 @@ class TokenizerData:
     encoded_vocab: list[str] = field(default_factory=list)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TokenizerDataCache:
     """Cache manager for tokenizer data to avoid repeated processing."""
     _cache: dict[int, TokenizerData] = {}
@@ -109,6 +111,7 @@ class TokenizerDataCache:
         return cls._cache[tokenizer_hash]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GrammarCompilerCache:
     """
     Cache for GrammarCompiler instances based on tokenizer.
@@ -144,6 +147,7 @@ class GrammarCompilerCache:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GrammarConfig:
     """Serializable configuration for grammar compilation"""
     tokenizer_hash: int
@@ -291,6 +295,7 @@ class GrammarConfig:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class XGrammarLogitsProcessor:
     """Wrapper class to support pickle protocol"""
     config: GrammarConfig

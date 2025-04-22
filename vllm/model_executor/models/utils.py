@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import itertools
 from dataclasses import dataclass, field
@@ -26,6 +27,7 @@ WeightsMapping = Mapping[str, Optional[str]]
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class WeightsMapper:
     """Maps the name of each weight if they match the following patterns."""
 
@@ -64,6 +66,7 @@ class WeightsMapper:
                 if (out_name := self._map_name(name)) is not None)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AutoWeightsLoader:
     """
     Helper class to load weights into a :class:`torch.nn.Module`. It is able
@@ -485,12 +488,14 @@ def merge_multimodal_embeddings(
     )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LayerFn(Protocol):
 
     def __call__(self, prefix: str) -> torch.nn.Module:
         ...
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PPMissingLayer(torch.nn.Identity):
     """
     A placeholder layer for missing layers in a pipeline parallel model.

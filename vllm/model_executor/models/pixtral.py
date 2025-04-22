@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from collections.abc import Iterable, Mapping, Sequence
@@ -58,6 +59,7 @@ except ImportError:
 PATCH_MERGE = "patch_merge"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
 
@@ -69,6 +71,7 @@ class PixtralImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralProcessorAdapter:
     """
     Provide a HF-compatible interface for
@@ -153,6 +156,7 @@ class PixtralProcessorAdapter:
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralProcessingInfo(BaseProcessingInfo):
 
     def get_tokenizer(self) -> MistralTokenizer:
@@ -202,6 +206,7 @@ class PixtralProcessingInfo(BaseProcessingInfo):
         return ImageSize(width=max_image_size, height=max_image_size)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralDummyInputsBuilder(BaseDummyInputsBuilder[PixtralProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -225,6 +230,7 @@ class PixtralDummyInputsBuilder(BaseDummyInputsBuilder[PixtralProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralMultiModalProcessor(BaseMultiModalProcessor[PixtralProcessingInfo]
                                  ):
 
@@ -286,6 +292,7 @@ class PixtralMultiModalProcessor(BaseMultiModalProcessor[PixtralProcessingInfo]
 @MULTIMODAL_REGISTRY.register_processor(PixtralMultiModalProcessor,
                                         info=PixtralProcessingInfo,
                                         dummy_inputs=PixtralDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralForConditionalGeneration(nn.Module, SupportsMultiModal,
                                       SupportsPP):
 
@@ -510,6 +517,7 @@ class PixtralForConditionalGeneration(nn.Module, SupportsMultiModal,
 
 # Vision encoder
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionEncoderArgs:
     hidden_size: int
     num_channels: int
@@ -586,6 +594,7 @@ def apply_rotary_emb_vit(
     return xq_out.type_as(xq), xk_out.type_as(xk)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FeedForward(nn.Module):
 
     def __init__(self, args: VisionEncoderArgs):
@@ -605,6 +614,7 @@ class FeedForward(nn.Module):
         return self.w2(F.silu(self.w1(x)) * self.w3(x))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Attention(nn.Module):
 
     def __init__(self, args: VisionEncoderArgs):
@@ -638,6 +648,7 @@ class Attention(nn.Module):
         return self.wo(out)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class TransformerBlock(nn.Module):
 
     def __init__(self, args: VisionEncoderArgs):
@@ -662,6 +673,7 @@ class TransformerBlock(nn.Module):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Transformer(nn.Module):
 
     def __init__(self, args: VisionEncoderArgs):
@@ -695,6 +707,7 @@ def position_meshgrid(patch_embeds_list: List[torch.Tensor], ) -> torch.Tensor:
     return positions
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionTransformer(nn.Module):
 
     def __init__(self, args: VisionEncoderArgs):
@@ -784,6 +797,7 @@ class VisionTransformer(nn.Module):
         return torch.split(out.squeeze(0), embed_sizes)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionLanguageAdapter(nn.Module):
 
     def __init__(self, args: VisionEncoderArgs, dim: int):
@@ -801,6 +815,7 @@ class VisionLanguageAdapter(nn.Module):
         return self.w_out(self.gelu(self.w_in(x)))
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PatchMerger(nn.Module):
     """
     Learned merging of spatial_merge_size ** 2 patches
@@ -908,6 +923,7 @@ def get_sub_grids(
 # and [`MistralForCausalLM`] for its language decoder.
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFEncoderInfo(VisionEncoderInfo[PixtralVisionConfig]):
 
     def get_num_image_tokens(
@@ -961,6 +977,7 @@ class PixtralHFEncoderInfo(VisionEncoderInfo[PixtralVisionConfig]):
         return ncols, nrows
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFMLP(nn.Module):
 
     def __init__(
@@ -993,6 +1010,7 @@ class PixtralHFMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFAttention(nn.Module):
 
     def __init__(
@@ -1067,6 +1085,7 @@ class PixtralHFAttention(nn.Module):
         return attn_output, None
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFTransformerBlock(nn.Module):
 
     def __init__(
@@ -1102,6 +1121,7 @@ class PixtralHFTransformerBlock(nn.Module):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFTransformer(nn.Module):
 
     def __init__(
@@ -1146,6 +1166,7 @@ class PixtralHFTransformer(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PixtralHFVisionModel(nn.Module):
 
     def __init__(

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024- the Outlines developers
 # This file is adapted from
@@ -47,6 +48,7 @@ else:
     disable_cache()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseLogitsProcessor:
 
     def __init__(self, guide: Guide, reasoner: Optional[ReasoningParser]):
@@ -129,6 +131,7 @@ class BaseLogitsProcessor:
         return scores
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class RegexLogitsProcessor(BaseLogitsProcessor):
 
     @classmethod
@@ -158,6 +161,7 @@ class RegexLogitsProcessor(BaseLogitsProcessor):
             RegexLogitsProcessor._get_guide(regex_string, tokenizer), reasoner)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class JSONLogitsProcessor(RegexLogitsProcessor):
 
     def __init__(self, schema: Union[str, Dict, BaseModel],
@@ -194,6 +198,7 @@ class JSONLogitsProcessor(RegexLogitsProcessor):
         super().__init__(regex_string, tokenizer, reasoner)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CFGLogitsProcessor(BaseLogitsProcessor):
 
     @classmethod

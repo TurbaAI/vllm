@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2023 The vLLM team.
 # Adapted from
@@ -115,6 +116,7 @@ def get_pp_indices(num_hidden_layers: int, pp_rank: int,
 
 
 @dataclasses.dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class StatelessProcessGroup:
     """A dataclass to hold a metadata store, and the rank, world_size of the
     group. Only use it to communicate metadata between processes.

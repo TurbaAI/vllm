@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import json
@@ -43,6 +44,7 @@ from vllm.transformers_utils.tokenizer import AnyTokenizer, MistralTokenizer
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AudioURL(TypedDict, total=False):
     url: Required[str]
     """
@@ -50,6 +52,7 @@ class AudioURL(TypedDict, total=False):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionContentPartAudioParam(TypedDict, total=False):
     audio_url: Required[AudioURL]
 
@@ -57,6 +60,7 @@ class ChatCompletionContentPartAudioParam(TypedDict, total=False):
     """The type of the content part."""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionContentPartImageEmbedsParam(TypedDict, total=False):
     image_embeds: Required[Union[str, dict[str, str]]]
     """
@@ -68,6 +72,7 @@ class ChatCompletionContentPartImageEmbedsParam(TypedDict, total=False):
     """The type of the content part."""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VideoURL(TypedDict, total=False):
     url: Required[str]
     """
@@ -75,6 +80,7 @@ class VideoURL(TypedDict, total=False):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ChatCompletionContentPartVideoParam(TypedDict, total=False):
     video_url: Required[VideoURL]
 
@@ -82,6 +88,7 @@ class ChatCompletionContentPartVideoParam(TypedDict, total=False):
     """The type of the content part."""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CustomChatCompletionContentSimpleImageParam(TypedDict, total=False):
     """A simpler version of the param that only accepts a plain image_url.
     This is supported by OpenAI API, although it is not documented.
@@ -94,6 +101,7 @@ class CustomChatCompletionContentSimpleImageParam(TypedDict, total=False):
     image_url: Required[str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CustomChatCompletionContentSimpleAudioParam(TypedDict, total=False):
     """A simpler version of the param that only accepts a plain audio_url.
 
@@ -105,6 +113,7 @@ class CustomChatCompletionContentSimpleAudioParam(TypedDict, total=False):
     audio_url: Required[str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CustomChatCompletionContentSimpleVideoParam(TypedDict, total=False):
     """A simpler version of the param that only accepts a plain audio_url.
 
@@ -126,6 +135,7 @@ ChatCompletionContentPartParam: TypeAlias = Union[
     CustomChatCompletionContentSimpleVideoParam, str]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CustomChatCompletionMessageParam(TypedDict, total=False):
     """Enables custom roles in the Chat Completion API."""
     role: Required[str]
@@ -153,6 +163,7 @@ ChatCompletionMessageParam = Union[OpenAIChatCompletionMessageParam,
 
 
 # TODO: Make fields ReadOnly once mypy supports it
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ConversationMessage(TypedDict, total=False):
     role: Required[str]
     """The role of the message's author."""
@@ -440,6 +451,7 @@ ModalityStr = Literal["image", "audio", "video", "image_embeds"]
 _T = TypeVar("_T")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseMultiModalItemTracker(ABC, Generic[_T]):
     """
     Tracks multi-modal items in a given request and ensures that the number
@@ -577,6 +589,7 @@ class BaseMultiModalItemTracker(ABC, Generic[_T]):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalItemTracker(BaseMultiModalItemTracker[object]):
 
     def all_mm_data(self) -> Optional[MultiModalDataDict]:
@@ -606,6 +619,7 @@ class MultiModalItemTracker(BaseMultiModalItemTracker[object]):
         return MultiModalContentParser(self)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncMultiModalItemTracker(BaseMultiModalItemTracker[Awaitable[object]]):
 
     async def all_mm_data(self) -> Optional[MultiModalDataDict]:
@@ -639,6 +653,7 @@ class AsyncMultiModalItemTracker(BaseMultiModalItemTracker[Awaitable[object]]):
         return AsyncMultiModalContentParser(self)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BaseMultiModalContentParser(ABC):
 
     def __init__(self) -> None:
@@ -676,6 +691,7 @@ class BaseMultiModalContentParser(ABC):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MultiModalContentParser(BaseMultiModalContentParser):
 
     def __init__(self, tracker: MultiModalItemTracker) -> None:
@@ -728,6 +744,7 @@ class MultiModalContentParser(BaseMultiModalContentParser):
         self._add_placeholder(placeholder)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AsyncMultiModalContentParser(BaseMultiModalContentParser):
 
     def __init__(self, tracker: AsyncMultiModalItemTracker) -> None:

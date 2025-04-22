@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import os
 from dataclasses import dataclass
@@ -52,6 +53,7 @@ class ModelInputForNeuron(ModelRunnerInputBase):
         return cls.from_broadcasted_tensor_dict(tensor_dict)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NeuronModelRunner(ModelRunnerBase[ModelInputForNeuron]):
 
     # NEURON has an upper limit on the top_k

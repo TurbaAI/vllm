@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/main/src/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py
@@ -74,6 +75,7 @@ logger = init_logger(__name__)
 # === Vision Inputs === #
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VLImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     pixel_values: torch.Tensor
@@ -87,6 +89,7 @@ class Qwen2_5_VLImagePixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VLImageEmbeddingInputs(TypedDict):
     type: Literal["image_embeds"]
     image_embeds: torch.Tensor
@@ -112,6 +115,7 @@ Qwen2_5_VLImageInputs = Union[Qwen2_5_VLImagePixelInputs,
                               Qwen2_5_VLImageEmbeddingInputs]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VLVideoPixelInputs(TypedDict):
     type: Literal["pixel_values_videos"]
     pixel_values_videos: torch.Tensor
@@ -133,6 +137,7 @@ class Qwen2_5_VLVideoPixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VLVideoEmbeddingInputs(TypedDict):
     type: Literal["video_embeds"]
     video_embeds: torch.Tensor
@@ -160,6 +165,7 @@ Qwen2_5_VLVideoInputs = Union[Qwen2_5_VLVideoPixelInputs,
 # === Vision Encoder === #
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VisionMLP(nn.Module):
 
     def __init__(self,
@@ -195,6 +201,7 @@ class Qwen2_5_VisionMLP(nn.Module):
         return x_down
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VisionAttention(nn.Module):
 
     def __init__(
@@ -336,6 +343,7 @@ class Qwen2_5_VisionAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VisionBlock(nn.Module):
 
     def __init__(
@@ -383,6 +391,7 @@ class Qwen2_5_VisionBlock(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VisionPatchEmbed(nn.Module):
 
     def __init__(
@@ -412,6 +421,7 @@ class Qwen2_5_VisionPatchEmbed(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VisionPatchMerger(nn.Module):
 
     def __init__(
@@ -453,6 +463,7 @@ class Qwen2_5_VisionPatchMerger(nn.Module):
         return out
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VisionRotaryEmbedding(nn.Module):
 
     def __init__(self, dim: int, theta: float = 10000.0) -> None:
@@ -483,6 +494,7 @@ class Qwen2_5_VisionRotaryEmbedding(nn.Module):
         return self._freqs_cached[:seqlen]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VisionTransformer(nn.Module):
 
     def __init__(
@@ -720,6 +732,7 @@ class Qwen2_5_VisionTransformer(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VLProcessingInfo(Qwen2VLProcessingInfo):
 
     def get_hf_config(self):
@@ -746,6 +759,7 @@ class Qwen2_5_VLProcessingInfo(Qwen2VLProcessingInfo):
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VLMultiModalProcessor(Qwen2VLMultiModalProcessor):
 
     def _get_mm_fields_config(
@@ -763,6 +777,7 @@ class Qwen2_5_VLMultiModalProcessor(Qwen2VLMultiModalProcessor):
     Qwen2_5_VLMultiModalProcessor,
     info=Qwen2_5_VLProcessingInfo,
     dummy_inputs=Qwen2_5_VLDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2_5_VLForConditionalGeneration(nn.Module, SupportsMultiModal,
                                          SupportsLoRA, SupportsPP):
     packed_modules_mapping = {

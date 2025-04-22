@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import pickle
 import signal
@@ -40,6 +41,7 @@ POLLING_TIMEOUT_MS = 10000
 HEALTHY_RESPONSE = (pickle.dumps(VLLM_RPC_SUCCESS_STR), )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MQLLMEngine:
     """A multiprocessing wrapper for :class:`LLMEngine`.
 

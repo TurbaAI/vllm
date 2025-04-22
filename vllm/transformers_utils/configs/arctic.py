@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # yapf: disable
 # ruff: noqa: E501
@@ -21,6 +22,7 @@ ARCTIC_PRETRAINED_CONFIG_ARCHIVE_MAP = {
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticLoRAConfig:
     lora_r: int = 64
     lora_alpha: float = 16
@@ -28,6 +30,7 @@ class ArcticLoRAConfig:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticQuantizationConfig:
     q_bits: int = 8
     rounding: str = "nearest"
@@ -35,6 +38,7 @@ class ArcticQuantizationConfig:
     group_size: int = 128
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ArcticConfig(PretrainedConfig):
     r"""
     This is the configuration class to store the configuration of a [`ArcticModel`]. It is used to instantiate an

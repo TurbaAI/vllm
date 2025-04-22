@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # copied from https://pypi.org/project/nvidia-ml-py
 # version 12.570.86
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 #####
 # Copyright (c) 2011-2023, NVIDIA Corporation.  All rights reserved.
@@ -960,10 +961,12 @@ NVML_CC_KEY_ROTATION_THRESH_ATTACKER_ADVANTAGE_MAX = 65
 # GSP firmware
 NVML_GSP_FIRMWARE_VERSION_BUF_SIZE = 0x40
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NVMLLibraryMismatchError(Exception):
     pass
 
 ## Error Checking ##
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class NVMLError(Exception):
     _valClassMapping = dict()
     # List of currently known error codes
@@ -1072,6 +1075,7 @@ def _nvmlGetFunctionPointer(name):
 # Allows the object to be printed
 # Allows mismatched types to be assigned
 #  - like None when the Structure variant requires c_uint
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class nvmlFriendlyObject(object):
     def __init__(self, dictionary):
         for x in dictionary:
@@ -1102,10 +1106,12 @@ def nvmlFriendlyObjectToStruct(obj, model):
     return model
 
 ## Unit structures
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class struct_c_nvmlUnit_t(Structure):
     pass # opaque handle
 c_nvmlUnit_t = POINTER(struct_c_nvmlUnit_t)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _PrintableStructure(Structure):
     """
     Abstract class that produces nicer __str__ output than ctypes.Structure.
@@ -1158,6 +1164,7 @@ class _PrintableStructure(Structure):
             value = value.encode()
         super(_PrintableStructure, self).__setattr__(name, value)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlUnitInfo_t(_PrintableStructure):
     _fields_ = [
         ('name', c_char * 96),
@@ -1166,6 +1173,7 @@ class c_nvmlUnitInfo_t(_PrintableStructure):
         ('firmwareVersion', c_char * 96),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlC2cModeInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('isC2cEnabled', c_uint)
@@ -1173,12 +1181,14 @@ class c_nvmlC2cModeInfo_v1_t(_PrintableStructure):
 
 nvmlC2cModeInfo_v1 = 0x1000008;
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlLedState_t(_PrintableStructure):
     _fields_ = [
         ('cause', c_char * 256),
         ('color', _nvmlLedColor_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlPSUInfo_t(_PrintableStructure):
     _fields_ = [
         ('state', c_char * 256),
@@ -1187,12 +1197,14 @@ class c_nvmlPSUInfo_t(_PrintableStructure):
         ('power', c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlUnitFanInfo_t(_PrintableStructure):
     _fields_ = [
         ('speed', c_uint),
         ('state', _nvmlFanState_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlUnitFanSpeeds_t(_PrintableStructure):
     _fields_ = [
         ('fans', c_nvmlUnitFanInfo_t * 24),
@@ -1200,10 +1212,12 @@ class c_nvmlUnitFanSpeeds_t(_PrintableStructure):
     ]
 
 ## Device structures
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class struct_c_nvmlDevice_t(Structure):
     pass # opaque handle
 c_nvmlDevice_t = POINTER(struct_c_nvmlDevice_t)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class nvmlPciInfoExt_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1230,6 +1244,7 @@ class nvmlPciInfoExt_v1_t(_PrintableStructure):
 nvmlPciInfoExt_v1 = 0x1000040
 
 # Legacy pciInfo used for _v1 and _v2
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class nvmlPciInfo_v2_t(_PrintableStructure):
     _fields_ = [
         ('busId', c_char * NVML_DEVICE_PCI_BUS_ID_BUFFER_V2_SIZE),
@@ -1253,6 +1268,7 @@ class nvmlPciInfo_v2_t(_PrintableStructure):
             'pciSubSystemId' : "0x%08X",
             }
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class nvmlPciInfo_t(_PrintableStructure):
     _fields_ = [
         # Moved to the new busId location below
@@ -1276,6 +1292,7 @@ class nvmlPciInfo_t(_PrintableStructure):
             'pciSubSystemId' : "0x%08X",
             }
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlSystemDriverBranchInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1284,18 +1301,21 @@ class c_nvmlSystemDriverBranchInfo_v1_t(_PrintableStructure):
 
 SystemDriverBranchInfo_v1 = 0x1000054
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlExcludedDeviceInfo_t(_PrintableStructure):
     _fields_ = [
         ('pci', nvmlPciInfo_t),
         ('uuid', c_char * NVML_DEVICE_UUID_BUFFER_SIZE)
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class nvmlNvLinkUtilizationControl_t(_PrintableStructure):
     _fields_ = [
         ('units', _nvmlNvLinkUtilizationCountUnits_t),
         ('pktfilter', _nvmlNvLinkUtilizationCountPktTypes_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlMemory_t(_PrintableStructure):
     _fields_ = [
         ('total', c_ulonglong),
@@ -1304,6 +1324,7 @@ class c_nvmlMemory_t(_PrintableStructure):
     ]
     _fmt_ = {'<default>': "%d B"}
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlMemory_v2_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1316,6 +1337,7 @@ class c_nvmlMemory_v2_t(_PrintableStructure):
 
 nvmlMemory_v2 = 0x02000028
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlBAR1Memory_t(_PrintableStructure):
     _fields_ = [
         ('bar1Total', c_ulonglong),
@@ -1324,6 +1346,7 @@ class c_nvmlBAR1Memory_t(_PrintableStructure):
     ]
     _fmt_ = {'<default>': "%d B"}
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class nvmlClkMonFaultInfo_t(Structure):
     _fields_ = [("clkApiDomain", c_uint),
                 ("clkDomainFaultMask", c_uint)
@@ -1331,6 +1354,7 @@ class nvmlClkMonFaultInfo_t(Structure):
 
 MAX_CLK_DOMAINS = 32
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class nvmlClkMonStatus_t(Structure):
     _fields_ = [("bGlobalStatus", c_uint),
                 ("clkMonListSize", c_uint),
@@ -1348,6 +1372,7 @@ class nvmlClkMonStatus_t(Structure):
 # endif
 #
 # See NVML documentation for more information
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlProcessInfo_v2_t(_PrintableStructure):
     _fields_ = [
         ('pid', c_uint),
@@ -1366,6 +1391,7 @@ NVML_PROCESS_MODE_COMPUTE  = 0
 NVML_PROCESS_MODE_GRAPHICS = 1
 NVML_PROCESS_MODE_MPS      = 2
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlProcessDetail_v1_t(Structure):
     _fields_ = [
         ('pid', c_uint),
@@ -1375,6 +1401,7 @@ class c_nvmlProcessDetail_v1_t(Structure):
         ('usedGpuCcProtectedMemory', c_ulonglong),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlProcessDetailList_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1388,18 +1415,21 @@ c_nvmlProcessDetailList_t = c_nvmlProcessDetailList_v1_t
 
 nvmlProcessDetailList_v1 = 0x1000018
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlBridgeChipInfo_t(_PrintableStructure):
     _fields_ = [
         ('type', _nvmlBridgeChipType_t),
         ('fwVersion', c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlBridgeChipHierarchy_t(_PrintableStructure):
     _fields_ = [
         ('bridgeCount', c_uint),
         ('bridgeChipInfo', c_nvmlBridgeChipInfo_t * 128),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlEccErrorCounts_t(_PrintableStructure):
     _fields_ = [
         ('l1Cache', c_ulonglong),
@@ -1408,6 +1438,7 @@ class c_nvmlEccErrorCounts_t(_PrintableStructure):
         ('registerFile', c_ulonglong),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlUtilization_t(_PrintableStructure):
     _fields_ = [
         ('gpu', c_uint),
@@ -1416,12 +1447,14 @@ class c_nvmlUtilization_t(_PrintableStructure):
     _fmt_ = {'<default>': "%d %%"}
 
 # Added in 2.285
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlHwbcEntry_t(_PrintableStructure):
     _fields_ = [
         ('hwbcId', c_uint),
         ('firmwareVersion', c_char * 32),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlValue_t(Union):
     _fields_ = [
         ('dVal', c_double),
@@ -1433,18 +1466,21 @@ class c_nvmlValue_t(Union):
         ('usVal', c_ushort),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlSample_t(_PrintableStructure):
     _fields_ = [
         ('timeStamp', c_ulonglong),
         ('sampleValue', c_nvmlValue_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlViolationTime_t(_PrintableStructure):
     _fields_ = [
         ('referenceTime', c_ulonglong),
         ('violationTime', c_ulonglong),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlFieldValue_t(_PrintableStructure):
     _fields_ = [
         ('fieldId', c_uint32),
@@ -1459,6 +1495,7 @@ class c_nvmlFieldValue_t(_PrintableStructure):
 NVML_NVLINK_TOTAL_SUPPORTED_BW_MODES = 23
 
 nvmlNvlinkSupportedBwModes_v1 = 0x100001c
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlNvlinkSupportedBwModes_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1470,6 +1507,7 @@ class c_nvmlNvlinkSupportedBwModes_v1_t(_PrintableStructure):
         super(c_nvmlNvlinkSupportedBwModes_v1_t, self).__init__(version=nvmlNvlinkSupportedBwModes_v1)
 
 nvmlNvlinkGetBwMode_v1 = 0x100000c
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlNvlinkGetBwMode_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1481,6 +1519,7 @@ class c_nvmlNvlinkGetBwMode_v1_t(_PrintableStructure):
         super(c_nvmlNvlinkGetBwMode_v1_t, self).__init__(version=nvmlNvlinkGetBwMode_v1)
 
 nvmlNvlinkSetBwMode_v1 = 0x100000c
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlNvlinkSetBwMode_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1491,6 +1530,7 @@ class c_nvmlNvlinkSetBwMode_v1_t(_PrintableStructure):
     def __init__(self):
         super(c_nvmlNvlinkSetBwMode_v1_t, self).__init__(version=nvmlNvlinkSetBwMode_v1)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuHeterogeneousMode_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1499,6 +1539,7 @@ class c_nvmlVgpuHeterogeneousMode_v1_t(_PrintableStructure):
 
 VgpuHeterogeneousMode_v1 = 0x1000008
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuPlacementId_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1507,6 +1548,7 @@ class c_nvmlVgpuPlacementId_v1_t(_PrintableStructure):
 
 VgpuPlacementId_v1 = 0x1000008
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuPlacementList_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1520,6 +1562,7 @@ VgpuPlacementList_v1 = 0x1000018
 NVML_VGPU_PGPU_HETEROGENEOUS_MODE   = 0
 NVML_VGPU_PGPU_HOMOGENEOUS_MODE     = 1
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuPlacementList_v2_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1531,6 +1574,7 @@ class c_nvmlVgpuPlacementList_v2_t(_PrintableStructure):
 
 VgpuPlacementList_v2 = 0x2000020
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuTypeBar1Info_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1539,6 +1583,7 @@ class c_nvmlVgpuTypeBar1Info_v1_t(_PrintableStructure):
 
 VgpuTypeBar1Info_v1 = 0x1000010
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuInstanceUtilizationSample_t(_PrintableStructure):
     _fields_ = [
         ('vgpuInstance', _nvmlVgpuInstance_t),
@@ -1549,6 +1594,7 @@ class c_nvmlVgpuInstanceUtilizationSample_t(_PrintableStructure):
         ('decUtil', c_nvmlValue_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuInstanceUtilizationInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('timeStamp', c_ulonglong),
@@ -1561,6 +1607,7 @@ class c_nvmlVgpuInstanceUtilizationInfo_v1_t(_PrintableStructure):
         ('ofaUtil', c_nvmlValue_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuInstancesUtilizationInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1572,6 +1619,7 @@ class c_nvmlVgpuInstancesUtilizationInfo_v1_t(_PrintableStructure):
 
 VgpuInstancesUtilizationInfo_v1 = 0x01000020
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuProcessUtilizationSample_t(_PrintableStructure):
     _fields_ = [
         ('vgpuInstance', _nvmlVgpuInstance_t),
@@ -1584,6 +1632,7 @@ class c_nvmlVgpuProcessUtilizationSample_t(_PrintableStructure):
         ('decUtil', c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuProcessUtilizationInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('processName', c_char * NVML_VGPU_NAME_BUFFER_SIZE),
@@ -1598,6 +1647,7 @@ class c_nvmlVgpuProcessUtilizationInfo_v1_t(_PrintableStructure):
         ('ofaUtil', c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuProcessesUtilizationInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1608,6 +1658,7 @@ class c_nvmlVgpuProcessesUtilizationInfo_v1_t(_PrintableStructure):
 
 VgpuProcessesUtilizationInfo_v1 = 0x01000018
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class nvmlVgpuRuntimeState_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1616,6 +1667,7 @@ class nvmlVgpuRuntimeState_v1_t(_PrintableStructure):
 
 VgpuRuntimeState_v1 = 0x1000010
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuLicenseExpiry_t(_PrintableStructure):
     _fields_ = [
         ('year',    c_uint32),
@@ -1634,6 +1686,7 @@ NVML_GRID_LICENSE_STATE_UNLICENSED_RESTRICTED   = 3
 NVML_GRID_LICENSE_STATE_UNLICENSED              = 4
 NVML_GRID_LICENSE_STATE_LICENSED                = 5
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuLicenseInfo_t(_PrintableStructure):
     _fields_ = [
         ('isLicensed',      c_uint8),
@@ -1641,6 +1694,7 @@ class c_nvmlVgpuLicenseInfo_t(_PrintableStructure):
         ('currentState',    c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlEncoderSession_t(_PrintableStructure):
     _fields_ = [
         ('sessionId', c_uint),
@@ -1653,6 +1707,7 @@ class c_nvmlEncoderSession_t(_PrintableStructure):
         ('encodeLatency', c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlProcessUtilizationSample_t(_PrintableStructure):
     _fields_ = [
         ('pid', c_uint),
@@ -1663,6 +1718,7 @@ class c_nvmlProcessUtilizationSample_t(_PrintableStructure):
         ('decUtil', c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlProcessUtilizationInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('timeStamp', c_ulonglong),
@@ -1675,6 +1731,7 @@ class c_nvmlProcessUtilizationInfo_v1_t(_PrintableStructure):
         ('ofaUtil', c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlProcessesUtilizationInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1685,6 +1742,7 @@ class c_nvmlProcessesUtilizationInfo_v1_t(_PrintableStructure):
 
 ProcessesUtilizationInfo_v1 = 0x01000018
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicenseExpiry_t(_PrintableStructure):
     _fields_ = [
         ('year',    c_uint32),
@@ -1696,6 +1754,7 @@ class c_nvmlGridLicenseExpiry_t(_PrintableStructure):
         ('status',  c_uint8),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicensableFeature_v4_t(_PrintableStructure):
     _fields_ = [
         ('featureCode',    _nvmlGridLicenseFeatureCode_t),
@@ -1706,6 +1765,7 @@ class c_nvmlGridLicensableFeature_v4_t(_PrintableStructure):
         ('licenseExpiry',  c_nvmlGridLicenseExpiry_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicensableFeatures_v4_t(_PrintableStructure):
     _fields_ = [
         ('isGridLicenseSupported',  c_int),
@@ -1713,6 +1773,7 @@ class c_nvmlGridLicensableFeatures_v4_t(_PrintableStructure):
         ('gridLicensableFeatures',  c_nvmlGridLicensableFeature_v4_t * NVML_GRID_LICENSE_FEATURE_MAX_COUNT),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicensableFeature_v3_t(_PrintableStructure):
     _fields_ = [
         ('featureCode', _nvmlGridLicenseFeatureCode_t),
@@ -1722,6 +1783,7 @@ class c_nvmlGridLicensableFeature_v3_t(_PrintableStructure):
         ('featureEnabled', c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicensableFeatures_v3_t(_PrintableStructure):
     _fields_ = [
         ('isGridLicenseSupported', c_int),
@@ -1729,6 +1791,7 @@ class c_nvmlGridLicensableFeatures_v3_t(_PrintableStructure):
         ('gridLicensableFeatures', c_nvmlGridLicensableFeature_v3_t * NVML_GRID_LICENSE_FEATURE_MAX_COUNT),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicensableFeature_v2_t(_PrintableStructure):
     _fields_ = [
         ('featureCode', _nvmlGridLicenseFeatureCode_t),
@@ -1737,6 +1800,7 @@ class c_nvmlGridLicensableFeature_v2_t(_PrintableStructure):
         ('productName', c_char * NVML_GRID_LICENSE_BUFFER_SIZE),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicensableFeatures_v2_t(_PrintableStructure):
     _fields_ = [
         ('isGridLicenseSupported', c_int),
@@ -1744,6 +1808,7 @@ class c_nvmlGridLicensableFeatures_v2_t(_PrintableStructure):
         ('gridLicensableFeatures', c_nvmlGridLicensableFeature_v2_t * NVML_GRID_LICENSE_FEATURE_MAX_COUNT),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicensableFeature_t(_PrintableStructure):
     _fields_ = [
         ('featureCode', _nvmlGridLicenseFeatureCode_t),
@@ -1751,6 +1816,7 @@ class c_nvmlGridLicensableFeature_t(_PrintableStructure):
         ('licenseInfo', c_char * NVML_GRID_LICENSE_BUFFER_SIZE),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGridLicensableFeatures_t(_PrintableStructure):
     _fields_ = [
         ('isGridLicenseSupported', c_int),
@@ -1758,6 +1824,7 @@ class c_nvmlGridLicensableFeatures_t(_PrintableStructure):
         ('gridLicensableFeatures', c_nvmlGridLicensableFeature_t * NVML_GRID_LICENSE_FEATURE_MAX_COUNT),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlMarginTemperature_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -1767,6 +1834,7 @@ class c_nvmlMarginTemperature_v1_t(_PrintableStructure):
 nvmlMarginTemperature_v1 = 0x1000008
 
 ## Event structures
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class struct_c_nvmlEventSet_t(Structure):
     pass # opaque handle
 c_nvmlEventSet_t = POINTER(struct_c_nvmlEventSet_t)
@@ -1854,6 +1922,7 @@ nvmlClocksThrottleReasonAll                  = (
                                                   nvmlClocksThrottleReasonDisplayClockSetting
                                                )
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlEventData_t(_PrintableStructure):
     _fields_ = [
         ('device', c_nvmlDevice_t),
@@ -1864,6 +1933,7 @@ class c_nvmlEventData_t(_PrintableStructure):
     ]
     _fmt_ = {'eventType': "0x%08X"}
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlAccountingStats_t(_PrintableStructure):
     _fields_ = [
         ('gpuUtilization', c_uint),
@@ -1875,11 +1945,13 @@ class c_nvmlAccountingStats_t(_PrintableStructure):
         ('reserved', c_uint * 5)
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuVersion_t(Structure):
     _fields_ = [("minVersion", c_uint),
                 ("maxVersion", c_uint)
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuMetadata_t(_PrintableStructure):
     _fields_ = [("version", c_uint),
                 ("revision", c_uint),
@@ -1893,6 +1965,7 @@ class c_nvmlVgpuMetadata_t(_PrintableStructure):
                 ("opaqueData", c_char * NVML_VGPU_METADATA_OPAQUE_DATA_SIZE)
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuPgpuMetadata_t(_PrintableStructure):
     _fields_ = [("version", c_uint),
                 ("revision", c_uint),
@@ -1904,6 +1977,7 @@ class c_nvmlVgpuPgpuMetadata_t(_PrintableStructure):
                 ("opaqueData", c_char * NVML_VGPU_PGPU_METADATA_OPAQUE_DATA_SIZE)
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuPgpuCompatibility_t(Structure):
     _fields_ = [("vgpuVmCompatibility", _nvmlVgpuVmCompatibility_t),
                 ("compatibilityLimitCode", _nvmlVgpuPgpuCompatibilityLimitCode_t)
@@ -1924,23 +1998,27 @@ NVML_VGPU_SCHEDULER_ARR_DEFAULT   = 0
 NVML_VGPU_SCHEDULER_ARR_DISABLE   = 1
 NVML_VGPU_SCHEDULER_ARR_ENABLE    = 2
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedDataWithARR_t(_PrintableStructure):
     _fields_ = [
         ('avgFactor',   c_uint),
         ('timeslice',   c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedData_t(_PrintableStructure):
     _fields_ = [
         ('timeslice',   c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedulerParams_t(Union):
     _fields_ = [
         ('vgpuSchedDataWithARR', c_nvmlVgpuSchedDataWithARR_t),
         ('vgpuSchedData',        c_nvmlVgpuSchedData_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedulerLogEntry_t(_PrintableStructure):
     _fields_ = [
         ('timestamp',                   c_ulonglong),
@@ -1951,6 +2029,7 @@ class c_nvmlVgpuSchedulerLogEntry_t(_PrintableStructure):
         ('cumulativePreemptionTime',    c_ulonglong),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedulerLog_t(_PrintableStructure):
     _fields_ = [
         ('engineId',        c_uint),
@@ -1961,6 +2040,7 @@ class c_nvmlVgpuSchedulerLog_t(_PrintableStructure):
         ('logEntries',      c_nvmlVgpuSchedulerLogEntry_t * NVML_SCHEDULER_SW_MAX_LOG_ENTRIES),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedulerGetState_t(_PrintableStructure):
     _fields_ = [
         ('schedulerPolicy', c_uint),
@@ -1968,23 +2048,27 @@ class c_nvmlVgpuSchedulerGetState_t(_PrintableStructure):
         ('schedulerParams', c_nvmlVgpuSchedulerParams_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedSetDataWithARR_t(_PrintableStructure):
     _fields_ = [
         ('avgFactor',   c_uint),
         ('frequency',   c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedSetData_t(_PrintableStructure):
     _fields_ = [
         ('timeslice',   c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedulerSetParams_t(Union):
     _fields_ = [
         ('vgpuSchedDataWithARR', c_nvmlVgpuSchedSetDataWithARR_t),
         ('vgpuSchedData',        c_nvmlVgpuSchedSetData_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedulerSetState_t(_PrintableStructure):
     _fields_ = [
         ('schedulerPolicy', c_uint),
@@ -1992,6 +2076,7 @@ class c_nvmlVgpuSchedulerSetState_t(_PrintableStructure):
         ('schedulerParams', c_nvmlVgpuSchedulerSetParams_t),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlVgpuSchedulerCapabilities_t(_PrintableStructure):
     _fields_ = [
         ('supportedSchedulers', c_uint * NVML_SUPPORTED_VGPU_SCHEDULER_POLICY_COUNT),
@@ -2004,12 +2089,14 @@ class c_nvmlVgpuSchedulerCapabilities_t(_PrintableStructure):
         ('minAvgFactorForARR',  c_uint),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlFBCStats_t(Structure):
     _fields_ = [("sessionsCount", c_uint),
                 ("averageFPS", c_uint),
                 ("averageLatency", c_uint)
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlFBCSession_t(_PrintableStructure):
     _fields_ = [
         ('sessionId', c_uint),
@@ -2044,11 +2131,13 @@ NVML_GPU_INSTANCE_PROFILE_2_SLICE_GFX  = 0xB
 NVML_GPU_INSTANCE_PROFILE_4_SLICE_GFX  = 0xC
 NVML_GPU_INSTANCE_PROFILE_COUNT        = 0xD
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuInstancePlacement_t(Structure):
     _fields_ = [("start", c_uint),
                 ("size", c_uint)
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuInstanceProfileInfo_t(Structure):
     _fields_ = [("id", c_uint),
                 ("isP2pSupported", c_uint),
@@ -2065,6 +2154,7 @@ class c_nvmlGpuInstanceProfileInfo_t(Structure):
 
 nvmlGpuInstanceProfileInfo_v2 = 0x02000098
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuInstanceProfileInfo_v2_t(_PrintableStructure):
     _fields_ = [("version", c_uint),
                 ("id", c_uint),
@@ -2084,6 +2174,7 @@ class c_nvmlGpuInstanceProfileInfo_v2_t(_PrintableStructure):
     def __init__(self):
         super(c_nvmlGpuInstanceProfileInfo_v2_t, self).__init__(version=nvmlGpuInstanceProfileInfo_v2)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuInstanceInfo_t(Structure):
     _fields_ = [("device", c_nvmlDevice_t),
                 ("id", c_uint),
@@ -2091,6 +2182,7 @@ class c_nvmlGpuInstanceInfo_t(Structure):
                 ("placement", c_nvmlGpuInstancePlacement_t)
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class struct_c_nvmlGpuInstance_t(Structure):
     pass # opaque handle
 c_nvmlGpuInstance_t = POINTER(struct_c_nvmlGpuInstance_t)
@@ -2108,11 +2200,13 @@ NVML_COMPUTE_INSTANCE_PROFILE_COUNT        = 0x8
 NVML_COMPUTE_INSTANCE_ENGINE_PROFILE_SHARED = 0x0
 NVML_COMPUTE_INSTANCE_ENGINE_PROFILE_COUNT = 0x1
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlComputeInstancePlacement_t(Structure):
     _fields_ = [("start", c_uint),
                 ("size", c_uint)
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlComputeInstanceProfileInfo_t(Structure):
     _fields_ = [("id", c_uint),
                 ("sliceCount", c_uint),
@@ -2127,6 +2221,7 @@ class c_nvmlComputeInstanceProfileInfo_t(Structure):
 
 nvmlComputeInstanceProfileInfo_v2 = 0x02000088
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlComputeInstanceProfileInfo_v2_t(_PrintableStructure):
     _fields_ = [("version", c_uint),
                 ("id", c_uint),
@@ -2144,6 +2239,7 @@ class c_nvmlComputeInstanceProfileInfo_v2_t(_PrintableStructure):
     def __init__(self):
         super(c_nvmlComputeInstanceProfileInfo_v2_t, self).__init__(version=nvmlComputeInstanceProfileInfo_v2)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlComputeInstanceInfo_t(Structure):
     _fields_ = [("device", c_nvmlDevice_t),
                 ("gpuInstance", c_nvmlGpuInstance_t),
@@ -2157,11 +2253,13 @@ NVML_GPU_UTILIZATION_DOMAIN_GPU    = 0
 NVML_GPU_UTILIZATION_DOMAIN_FB     = 1
 NVML_GPU_UTILIZATION_DOMAIN_VID    = 2
 NVML_GPU_UTILIZATION_DOMAIN_BUS    = 3
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuDynamicPstatesUtilization_t(Structure):
     _fields_ = [("bIsPresent", c_uint, 1),
                 ("percentage", c_uint),
                 ("incThreshold", c_uint),
                 ("decThreshold", c_uint)]
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuDynamicPstatesInfo_t(Structure):
     _fields_ = [("flags", c_uint),
                 ("utilization", c_nvmlGpuDynamicPstatesUtilization_t * NVML_MAX_GPU_UTILIZATIONS)]
@@ -2199,12 +2297,14 @@ NVML_THERMAL_CONTROLLER_MAX6649R        = 16
 NVML_THERMAL_CONTROLLER_ADT7473S        = 17
 NVML_THERMAL_CONTROLLER_UNKNOWN         = -1
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuThermalSensor_t(Structure):
     _fields_ = [("controller", c_int),
                 ("defaultMinTemp", c_int),
                 ("defaultMaxTemp", c_int),
                 ("currentTemp", c_int),
                 ("target", c_int)]
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuThermalSettings_t(Structure):
     _fields_ = [("count", c_uint),
                 ("sensor", c_nvmlGpuThermalSensor_t * NVML_MAX_THERMAL_SENSORS_PER_GPU)]
@@ -2222,6 +2322,7 @@ NVML_THERMAL_COOLER_TARGET_MEMORY        = (1 << 2)
 NVML_THERMAL_COOLER_TARGET_POWER_SUPPLY  = (1 << 3)
 NVML_THERMAL_COOLER_TARGET_GPU_RELATED   = (NVML_THERMAL_COOLER_TARGET_GPU | NVML_THERMAL_COOLER_TARGET_MEMORY | NVML_THERMAL_COOLER_TARGET_POWER_SUPPLY)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlCoolerInfo_t(_PrintableStructure):
     _fields_ = [("version", c_uint),
                 ("index", c_uint),
@@ -2240,10 +2341,12 @@ def nvmlDeviceGetCoolerInfo(handle):
     _nvmlCheckReturn(ret)
     return [c_coolerInfo.coolerControlType, c_coolerInfo.coolerTarget]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class struct_c_nvmlComputeInstance_t(Structure):
     pass # opaque handle
 c_nvmlComputeInstance_t = POINTER(struct_c_nvmlComputeInstance_t)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlDeviceAttributes(Structure):
     _fields_ = [("multiprocessorCount", c_uint),
                 ("sharedCopyEngineCount", c_uint),
@@ -2256,6 +2359,7 @@ class c_nvmlDeviceAttributes(Structure):
                 ("memorySizeMB", c_ulonglong),
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlRowRemapperHistogramValues(Structure):
     _fields_ = [("max", c_uint),
                 ("high", c_uint),
@@ -2272,6 +2376,7 @@ NVML_CC_GPU_CEC_ATTESTATION_REPORT_SIZE = 0x1000
 NVML_CC_CEC_ATTESTATION_REPORT_NOT_PRESENT = 0
 NVML_CC_CEC_ATTESTATION_REPORT_PRESENT     = 1
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlConfComputeSystemState_t(Structure):
     _fields_ = [('environment', c_uint),
                 ('ccFeature', c_uint),
@@ -2280,6 +2385,7 @@ class c_nvmlConfComputeSystemState_t(Structure):
 
 nvmlSystemConfComputeSettings_v1 = 0x1000014
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlSystemConfComputeSettings_v1_t(Structure):
     _fields_ = [('version', c_uint),
                 ('environment', c_uint),
@@ -2290,16 +2396,19 @@ class c_nvmlSystemConfComputeSettings_v1_t(Structure):
     def __init__(self):
         super(c_nvmlSystemConfComputeSettings_v1_t, self).__init__(version=nvmlSystemConfComputeSettings_v1)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlConfComputeSystemCaps_t(Structure):
     _fields_ = [('cpuCaps', c_uint),
                 ('gpusCaps', c_uint),
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlConfComputeMemSizeInfo_t(Structure):
     _fields_ = [('protectedMemSizeKib', c_ulonglong),
                 ('unprotectedMemSizeKib', c_ulonglong),
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlConfComputeGpuCertificate_t(Structure):
     _fields_ = [('certChainSize', c_uint),
                 ('attestationCertChainSize', c_uint),
@@ -2307,6 +2416,7 @@ class c_nvmlConfComputeGpuCertificate_t(Structure):
                 ('attestationCertChain', c_uint8 * NVML_GPU_ATTESTATION_CERT_CHAIN_SIZE),
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlConfComputeGpuAttestationReport_t(Structure):
     _fields_ = [('isCecAttestationReportPresent', c_uint),
                 ('attestationReportSize', c_uint),
@@ -2316,12 +2426,14 @@ class c_nvmlConfComputeGpuAttestationReport_t(Structure):
                 ('cecAttestationReport', c_uint8 * NVML_CC_GPU_CEC_ATTESTATION_REPORT_SIZE),
                ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlConfComputeSetKeyRotationThresholdInfo_t(Structure):
     _fields_ = [('version', c_uint),
                 ('maxAttackerAdvantage', c_ulong),
                ]
 ConfComputeSetKeyRotationThresholdInfo_v1 = 0x1000010
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlConfComputeGetKeyRotationThresholdInfo_t(Structure):
     _fields_ = [('version', c_uint),
                 ('attackerAdvantage', c_ulong),
@@ -2643,6 +2755,7 @@ def nvmlDeviceGetName(handle):
     _nvmlCheckReturn(ret)
     return c_name.value
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlDevicePerfModes_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -2660,6 +2773,7 @@ def nvmlDeviceGetPerformanceModes(handle):
     _nvmlCheckReturn(ret)
     return perfModes.str
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlDeviceCurrentClockFreqs_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -2987,6 +3101,7 @@ def nvmlDeviceGetFanSpeed_v2(handle, fan):
     _nvmlCheckReturn(ret)
     return c_speed.value
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlFanSpeedInfo_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -3048,6 +3163,7 @@ def nvmlDeviceSetFanControlPolicy(handle, fan, fanControlPolicy):
     _nvmlCheckReturn(ret)
     return NVML_SUCCESS
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlTemperature_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5389,6 +5505,7 @@ def nvmlDeviceGetMinMaxClockOfPState(device, clockType, pstate, minClockMHz=c_ui
     _nvmlCheckReturn(ret)
     return NVML_SUCCESS if isReference else (minClockMHz.value, maxClockMHz.value)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlClockOffset_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5642,6 +5759,7 @@ NVML_GPM_METRIC_MAX                         = 98
 
 ## Structs
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlUnitInfo_t(_PrintableStructure):
     _fields_ = [
         ('name', c_char * 96),
@@ -5650,10 +5768,12 @@ class c_nvmlUnitInfo_t(_PrintableStructure):
         ('firmwareVersion', c_char * 96),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class struct_c_nvmlGpmSample_t(Structure):
     pass # opaque handle
 c_nvmlGpmSample_t = POINTER(struct_c_nvmlGpmSample_t)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_metricInfo_t(Structure):
     _fields_ = [
         ("shortName", c_char_p),
@@ -5661,6 +5781,7 @@ class c_metricInfo_t(Structure):
         ("unit", c_char_p),
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpmMetric_t(_PrintableStructure):
     _fields_ = [
         ('metricId', c_uint),
@@ -5669,6 +5790,7 @@ class c_nvmlGpmMetric_t(_PrintableStructure):
         ('metricInfo', c_metricInfo_t)
     ]
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpmMetricsGet_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5680,6 +5802,7 @@ class c_nvmlGpmMetricsGet_t(_PrintableStructure):
 
 NVML_GPM_METRICS_GET_VERSION = 1
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpmSupport_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5753,6 +5876,7 @@ NVML_NVLINK_LOW_POWER_THRESHOLD_MAX     = 0x1FFF
 NVML_NVLINK_LOW_POWER_THRESHOLD_RESET   = 0xFFFFFFFF
 NVML_NVLINK_LOW_POWER_THRESHOLD_DEFAULT = NVML_NVLINK_LOW_POWER_THRESHOLD_RESET
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlNvLinkPowerThres_t(Structure):
     _fields_ = [
         ("lowPwrThreshold", c_uint),
@@ -5774,6 +5898,7 @@ NVML_GPU_FABRIC_STATE_NOT_STARTED   = 1
 NVML_GPU_FABRIC_STATE_IN_PROGRESS   = 2
 NVML_GPU_FABRIC_STATE_COMPLETED     = 3
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuFabricInfo_t(_PrintableStructure):
     _fields_ = [
         ("clusterUuid", c_char * NVML_DEVICE_UUID_BUFFER_SIZE),
@@ -5808,6 +5933,7 @@ NVML_GPU_FABRIC_HEALTH_MASK_WIDTH_ACCESS_TIMEOUT_RECOVERY         = 0x11
 
 nvmlGpuFabricInfo_v2 = 0x02000024
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlGpuFabricInfoV_t(_PrintableStructure):
     _fields_ = [
         ("version", c_uint),
@@ -5861,6 +5987,7 @@ NVML_POWER_SCOPE_GPU     = 0
 NVML_POWER_SCOPE_MODULE  = 1
 NVML_POWER_SCOPE_MEMORY  = 2
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlPowerValue_v2_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5881,6 +6008,7 @@ def nvmlDeviceSetPowerManagementLimit_v2(device, powerScope, powerLimit, version
     ret = fn(device, byref(c_powerValue))
     return NVML_SUCCESS
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlEccSramErrorStatus_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5911,6 +6039,7 @@ def nvmlDeviceGetSramEccErrorStatus(device, status):
 NVML_DEV_CAP_EGM = (1 << 0)
 nvmlDeviceCapabilities_v1 = 0x1000008
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlDeviceCapabilities_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5925,6 +6054,7 @@ def nvmlDeviceGetCapabilities(device, caps):
     fn = _nvmlGetFunctionPointer("nvmlDeviceGetCapabilities")
     return fn(device, caps)
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlPlatformInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5947,6 +6077,7 @@ def nvmlDeviceGetPlatformInfo(device, platformInfo):
     _nvmlCheckReturn(ret)
     return NVML_SUCCESS
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlMask255_t(_PrintableStructure):
     _fields_ = [
         ('mask', c_uint * 8),
@@ -5971,6 +6102,7 @@ NVML_POWER_PROFILE_MIG              = 14
 NVML_POWER_PROFILE_MAX              = 15
 
 nvmlWorkloadPowerProfileInfo_v1 = 0x100002c
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlWorkloadPowerProfileInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5983,6 +6115,7 @@ class c_nvmlWorkloadPowerProfileInfo_v1_t(_PrintableStructure):
         super(c_nvmlWorkloadPowerProfileInfo_v1_t, self).__init__(version=nvmlWorkloadPowerProfileInfo_v1)
 
 nvmlWorkloadPowerProfileProfilesInfo_v1 = 0x1002bf8
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlWorkloadPowerProfileProfilesInfo_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -5994,6 +6127,7 @@ class c_nvmlWorkloadPowerProfileProfilesInfo_v1_t(_PrintableStructure):
         super(c_nvmlWorkloadPowerProfileProfilesInfo_v1_t, self).__init__(version=nvmlWorkloadPowerProfileProfilesInfo_v1)
 
 nvmlWorkloadPowerProfileCurrentProfiles_v1 = 0x1000064
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlWorkloadPowerProfileCurrentProfiles_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -6006,6 +6140,7 @@ class c_nvmlWorkloadPowerProfileCurrentProfiles_v1_t(_PrintableStructure):
         super(c_nvmlWorkloadPowerProfileCurrentProfiles_v1_t, self).__init__(version=nvmlWorkloadPowerProfileCurrentProfiles_v1)
 
 nvmlWorkloadPowerProfileRequestedProfiles_v1 = 0x1000024
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlWorkloadPowerProfileRequestedProfiles_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -6059,6 +6194,7 @@ def nvmlDeviceSetNvlinkBwMode(device, setBwMode):
 
 nvmlDramEncryptionInfo_v1 = 0x01000008
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlDramEncryptionInfo_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -6101,6 +6237,7 @@ NVML_POWER_SMOOTHING_PROFILE_PARAM_RAMP_DOWN_RATE       = 2
 NVML_POWER_SMOOTHING_PROFILE_PARAM_RAMP_DOWN_HYSTERESIS = 3
 
 nvmlPowerSmoothingState_v1=0x1000008
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlPowerSmoothingState_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),
@@ -6111,6 +6248,7 @@ class c_nvmlPowerSmoothingState_v1_t(_PrintableStructure):
         super(c_nvmlPowerSmoothingState_v1_t, self).__init__(version=nvmlPowerSmoothingState_v1)
 
 nvmlPowerSmoothingProfile_v1=0x1000018
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class c_nvmlPowerSmoothingProfile_v1_t(_PrintableStructure):
     _fields_ = [
         ('version', c_uint),

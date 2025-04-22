@@ -22,6 +22,7 @@
 # limitations under the License.
 """Inference-only Grok1 model."""
 from typing import Iterable, List, Optional, Set, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 import torch.nn.functional as F
@@ -58,6 +59,7 @@ DEFAULT_OUTPUT_MULTIPLIER_SCALE = 0.5773502691896257
 DEFAULT_EMBEDDING_MULTIPLIER_SCALE = 78.38367176906169
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Grok1MoE(nn.Module):
     """A tensor-parallel MoE implementation for Grok1 that shards each expert
     across all ranks.
@@ -110,6 +112,7 @@ class Grok1MoE(nn.Module):
         return final_hidden_states.view(orig_shape)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Grok1Attention(nn.Module):
 
     def __init__(
@@ -204,6 +207,7 @@ class Grok1Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Grok1DecoderLayer(nn.Module):
 
     def __init__(
@@ -292,6 +296,7 @@ class Grok1DecoderLayer(nn.Module):
 
 
 @support_torch_compile
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Grok1Model(nn.Module):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -472,6 +477,7 @@ class Grok1Model(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Grok1ForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     fall_back_to_pt_during_load = False
 

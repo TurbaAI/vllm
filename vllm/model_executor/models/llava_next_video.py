@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import math
 from collections.abc import Iterable, Mapping, Sequence
@@ -35,6 +36,7 @@ from .utils import (AutoWeightsLoader, init_vllm_registered_model,
 from .vision import get_vision_encoder_info
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextVideoPixelInputs(TypedDict):
     type: Literal["pixel_values_videos"]
     data: Union[torch.Tensor, List[torch.Tensor]]
@@ -48,6 +50,7 @@ class LlavaNextVideoPixelInputs(TypedDict):
     """
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextVideoProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -128,6 +131,7 @@ class LlavaNextVideoProcessingInfo(BaseProcessingInfo):
         return max(max_total_frames // max(max_videos, 1), 1)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextVideoDummyInputsBuilder(
         BaseDummyInputsBuilder[LlavaNextVideoProcessingInfo]):
 
@@ -162,6 +166,7 @@ class LlavaNextVideoDummyInputsBuilder(
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextVideoMultiModalProcessor(
         BaseMultiModalProcessor[LlavaNextVideoProcessingInfo]):
 
@@ -207,6 +212,7 @@ class LlavaNextVideoMultiModalProcessor(
 
 
 # adopted from transformers modeling_llava_next_video.py
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextVideoPooler(nn.Module):
 
     def __init__(self, config: LlavaNextVideoConfig):
@@ -242,6 +248,7 @@ class LlavaNextVideoPooler(nn.Module):
         return image_features_spatial.flatten(2).transpose(1, 2).contiguous()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextMultiModalProjector(nn.Module):
 
     def __init__(self, vision_hidden_size: int, text_hidden_size: int,
@@ -268,6 +275,7 @@ class LlavaNextMultiModalProjector(nn.Module):
     info=LlavaNextVideoProcessingInfo,
     dummy_inputs=LlavaNextVideoDummyInputsBuilder,
 )
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LlavaNextVideoForConditionalGeneration(nn.Module, SupportsMultiModal,
                                              SupportsPP):
 

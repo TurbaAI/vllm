@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 
@@ -12,6 +13,7 @@ logger = init_logger(__name__)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVCacheSpec:
     """
     A base class for specifying the KV cache format of one layer.
@@ -55,6 +57,7 @@ class KVCacheSpec:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AttentionSpec(KVCacheSpec):
     num_kv_heads: int
     head_size: int
@@ -70,6 +73,7 @@ class AttentionSpec(KVCacheSpec):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class FullAttentionSpec(AttentionSpec):
 
     @property
@@ -82,6 +86,7 @@ class FullAttentionSpec(AttentionSpec):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SlidingWindowSpec(AttentionSpec):
     sliding_window: int
 
@@ -112,6 +117,7 @@ class SlidingWindowSpec(AttentionSpec):
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVCacheTensor:
     """
     A dataclass for specifying how the workers should initialize the KV cache
@@ -122,6 +128,7 @@ class KVCacheTensor:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVCacheGroupSpec:
     """
     Represents a group of model layers that share the same KV cache block table.
@@ -134,6 +141,7 @@ class KVCacheGroupSpec:
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVCacheConfig:
     """
     The KV cache configuration of a model.

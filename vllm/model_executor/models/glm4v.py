@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/THUDM/CogAgent
@@ -44,12 +45,14 @@ from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
 from .utils import flatten_bn, merge_multimodal_embeddings
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLMVImagePixelInputs(TypedDict):
     type: Literal["pixel_values"]
     data: torch.Tensor
     """Shape: `(batch_size, num_channels, height, width)`"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EVA2CLIPPatchEmbedding(nn.Module):
 
     def __init__(self, config):
@@ -82,6 +85,7 @@ class EVA2CLIPPatchEmbedding(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EVA2CLIPAttention(nn.Module):
 
     def __init__(
@@ -125,6 +129,7 @@ class EVA2CLIPAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EVA2CLIPMLP(nn.Module):
 
     def __init__(
@@ -156,6 +161,7 @@ class EVA2CLIPMLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EVA2CLIPTransformerLayer(nn.Module):
 
     def __init__(
@@ -187,6 +193,7 @@ class EVA2CLIPTransformerLayer(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EVA2CLIPTransformer(nn.Module):
 
     def __init__(
@@ -209,6 +216,7 @@ class EVA2CLIPTransformer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EVA2CLIPGLU(nn.Module):
 
     def __init__(
@@ -286,6 +294,7 @@ class EVA2CLIPGLU(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class EVA2CLIPModel(nn.Module):
 
     def __init__(
@@ -340,6 +349,7 @@ class EVA2CLIPModel(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLM4VModel(ChatGLMModel):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -352,6 +362,7 @@ class GLM4VModel(ChatGLMModel):
                                     prefix=f"{prefix}.vision")
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLM4VProcessor:
     """
     This model doesn't define its own HF processor,
@@ -415,6 +426,7 @@ class GLM4VProcessor:
         )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLM4VProcessingInfo(BaseProcessingInfo):
 
     def get_hf_config(self):
@@ -445,6 +457,7 @@ class GLM4VProcessingInfo(BaseProcessingInfo):
         return self.get_num_image_tokens() + 2
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLM4VDummyInputsBuilder(BaseDummyInputsBuilder[GLM4VProcessingInfo]):
 
     def get_dummy_text(self, mm_counts: Mapping[str, int]) -> str:
@@ -473,6 +486,7 @@ class GLM4VDummyInputsBuilder(BaseDummyInputsBuilder[GLM4VProcessingInfo]):
         }
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLM4VMultiModalProcessor(BaseMultiModalProcessor[GLM4VProcessingInfo]):
 
     def _hf_processor_applies_updates(
@@ -520,6 +534,7 @@ class GLM4VMultiModalProcessor(BaseMultiModalProcessor[GLM4VProcessingInfo]):
 @MULTIMODAL_REGISTRY.register_processor(GLM4VMultiModalProcessor,
                                         info=GLM4VProcessingInfo,
                                         dummy_inputs=GLM4VDummyInputsBuilder)
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class GLM4VForCausalLM(ChatGLMBaseModel, SupportsLoRA, SupportsPP,
                        SupportsMultiModal):
 

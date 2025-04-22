@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Dict, Optional, TypeVar
@@ -11,6 +12,7 @@ from vllm.utils import LRUCache
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AdapterModel(ABC):
 
     def __init__(self, model_id=None):
@@ -26,6 +28,7 @@ class AdapterModel(ABC):
 T = TypeVar('T')
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AdapterLRUCache(LRUCache[int, T]):
 
     def __init__(self, capacity: int, deactivate_fn: Callable[[int], object]):
@@ -38,6 +41,7 @@ class AdapterLRUCache(LRUCache[int, T]):
         return super()._on_remove(key, value)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class AdapterModelManager(ABC):
 
     def __init__(

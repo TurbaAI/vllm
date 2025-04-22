@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import datetime
 import json
@@ -106,6 +107,7 @@ def _detect_cloud_provider() -> str:
     return "UNKNOWN"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UsageContext(str, Enum):
     UNKNOWN_CONTEXT = "UNKNOWN_CONTEXT"
     LLM_CLASS = "LLM_CLASS"
@@ -115,6 +117,7 @@ class UsageContext(str, Enum):
     ENGINE_CONTEXT = "ENGINE_CONTEXT"
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UsageMessage:
     """Collect platform information and send it to the usage stats server."""
 

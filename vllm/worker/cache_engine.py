@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """CacheEngine class for managing the KV cache."""
 from typing import List
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import torch
 
@@ -13,6 +14,7 @@ from vllm.utils import (STR_DTYPE_TO_TORCH_DTYPE, LayerBlockType,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CacheEngine:
     """Manages the KV cache.
 

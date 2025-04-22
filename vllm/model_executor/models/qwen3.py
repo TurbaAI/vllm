@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Copyright 2024 The Qwen team.
 # Copyright 2023 The vLLM team.
@@ -51,6 +52,7 @@ from .utils import AutoWeightsLoader, PPMissingLayer, maybe_prefix
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3Attention(nn.Module):
 
     def __init__(self,
@@ -146,6 +148,7 @@ class Qwen3Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3DecoderLayer(nn.Module):
 
     def __init__(
@@ -236,6 +239,7 @@ ALL_DECODER_LAYER_TYPES = {
         "intermediate_tensors": 0,
         "inputs_embeds": 0,
     })
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3Model(Qwen2Model):
 
     def __init__(self, *, vllm_config: VllmConfig, prefix: str = ""):
@@ -244,6 +248,7 @@ class Qwen3Model(Qwen2Model):
                          decoder_layer_type=Qwen3DecoderLayer)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen3ForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

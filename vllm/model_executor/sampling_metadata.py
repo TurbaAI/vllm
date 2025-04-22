@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from array import array
 from dataclasses import dataclass
@@ -16,6 +17,7 @@ _SAMPLING_EPS = 1e-5
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SequenceGroupToSample:
     # |---------- N-1 iteration --------|
     # |---------------- N iteration ---------------------|
@@ -74,6 +76,7 @@ def gen_seq_group_to_sample_builder(num_seqs: int):
     )
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SamplingMetadataCache:
     """Used to cache SamplingMetadata objects between scheduler iterations"""
 
@@ -93,6 +96,7 @@ class SamplingMetadataCache:
             cache.reset()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SamplingMetadata:
     """Metadata for input sequences. Used in sampler.
 
@@ -369,6 +373,7 @@ def _prepare_seq_groups(
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class SamplingTensors:
     """Tensors for sampling."""
 

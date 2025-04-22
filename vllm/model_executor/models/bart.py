@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Derived from BART implementation posted on HuggingFace; license below:
 #
@@ -59,6 +60,7 @@ def get_bsz_seq_len(input_ids):
         return shp[:2]
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartLearnedPositionalEmbedding(VocabParallelEmbedding):
     """
     This module learns positional embeddings up to a fixed maximum size.
@@ -80,6 +82,7 @@ class BartLearnedPositionalEmbedding(VocabParallelEmbedding):
         return super().forward(positions + self.offset)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartScaledWordEmbedding(VocabParallelEmbedding):
     """
     This module overrides VocabParallelEmbedding's 
@@ -97,6 +100,7 @@ class BartScaledWordEmbedding(VocabParallelEmbedding):
         return super().forward(input_ids) * self.embed_scale
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartParallelLMHead(ParallelLMHead):
     """
     This module overrides ParallelLMHead's
@@ -116,6 +120,7 @@ class BartParallelLMHead(ParallelLMHead):
         return super().forward(input_ids) / self.embed_scale
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartEncoderAttention(nn.Module):
 
     def __init__(
@@ -195,6 +200,7 @@ class BartEncoderAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartDecoderSelfAttention(nn.Module):
 
     def __init__(
@@ -274,6 +280,7 @@ class BartDecoderSelfAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartCrossAttention(nn.Module):
 
     def __init__(
@@ -353,6 +360,7 @@ class BartCrossAttention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartEncoderLayer(nn.Module):
 
     def __init__(
@@ -429,6 +437,7 @@ class BartEncoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartDecoderLayer(nn.Module):
 
     def __init__(
@@ -530,6 +539,7 @@ class BartDecoderLayer(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartEncoder(nn.Module):
     """
     Transformer encoder consisting of *config.encoder_layers*
@@ -609,6 +619,7 @@ class BartEncoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartDecoder(nn.Module):
     """
     Transformer decoder consisting of *config.decoder_layers* layers.
@@ -697,6 +708,7 @@ class BartDecoder(nn.Module):
         return hidden_states
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartModel(nn.Module, SupportsQuant):
     _tied_weights_keys = [
         "encoder.embed_tokens.weight", "decoder.embed_tokens.weight"
@@ -763,6 +775,7 @@ class BartModel(nn.Module, SupportsQuant):
         return decoder_outputs
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BartForConditionalGeneration(nn.Module, SupportsV0Only, SupportsQuant):
     packed_modules_mapping = {"qkv_proj": ["q_proj", "k_proj", "v_proj"]}
     base_model_prefix = "model"

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from abc import ABC, abstractmethod
 from typing import Final, Generic, Optional, Protocol, TypeVar, Union
@@ -17,6 +18,7 @@ logger = init_logger(__name__)
 _C = TypeVar("_C", bound=PretrainedConfig)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionEncoderInfo(ABC, Generic[_C]):
 
     def __init__(self, vision_config: _C) -> None:
@@ -46,6 +48,7 @@ class VisionEncoderInfo(ABC, Generic[_C]):
         raise NotImplementedError
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VisionLanguageConfig(Protocol):
     vision_config: Final[PretrainedConfig]
 

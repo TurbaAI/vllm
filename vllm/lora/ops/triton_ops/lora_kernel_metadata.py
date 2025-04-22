@@ -2,6 +2,7 @@
 """
 LoRA kernels metadata preparation utilities.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from dataclasses import dataclass
 from typing import Tuple, Union
@@ -10,6 +11,7 @@ import torch
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAKernelMeta:
     token_lora_mapping: torch.Tensor
     token_indices_sorted_by_lora_ids: torch.Tensor

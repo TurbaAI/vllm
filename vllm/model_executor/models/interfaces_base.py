@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import (TYPE_CHECKING, Optional, Protocol, Type, Union, overload,
                     runtime_checkable)
@@ -31,6 +32,7 @@ T_co = TypeVar("T_co", default=torch.Tensor, covariant=True)
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VllmModel(Protocol[T_co]):
     """The interface required for all models in vLLM."""
 
@@ -92,6 +94,7 @@ def is_vllm_model(
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VllmModelForTextGeneration(VllmModel[T], Protocol[T]):
     """The interface required for all generative models in vLLM."""
 
@@ -138,6 +141,7 @@ def is_text_generation_model(
 
 
 @runtime_checkable
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class VllmModelForPooling(VllmModel[T], Protocol[T]):
     """The interface required for all pooling models in vLLM."""
 

@@ -11,12 +11,14 @@ For example, when the KV cache is quantized to FP8-E4M3 (currently only
 possible on ROCm), the model can be optionally augmented with KV cache
 scaling factors.
 """
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 from typing import Dict, Optional
 
 from pydantic import BaseModel, ConfigDict, ValidationInfo, model_validator
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class KVCacheQuantSchema(BaseModel):
     dtype: str
     # Each key is a TP rank. Each value is a dictionary mapping a TP rank's
@@ -65,6 +67,7 @@ class KVCacheQuantSchema(BaseModel):
         return self
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class QuantParamSchema(BaseModel):
     # TODO: Generalize and extend with more fields
     # (e.g. weights/activations params) once functionality is enabled

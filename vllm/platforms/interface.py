@@ -4,6 +4,7 @@ import platform
 import random
 from platform import uname
 from typing import TYPE_CHECKING, NamedTuple, Optional, Tuple, Union
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 import torch
@@ -33,6 +34,7 @@ def in_wsl() -> bool:
     return "microsoft" in " ".join(uname()).lower()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class _Backend(enum.Enum):
     FLASH_ATTN = enum.auto()
     FLASH_ATTN_VLLM_V1 = enum.auto()
@@ -51,6 +53,7 @@ class _Backend(enum.Enum):
     NO_ATTENTION = enum.auto()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class PlatformEnum(enum.Enum):
     CUDA = enum.auto()
     ROCM = enum.auto()
@@ -63,6 +66,7 @@ class PlatformEnum(enum.Enum):
     UNSPECIFIED = enum.auto()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class CpuArchEnum(enum.Enum):
     X86 = enum.auto()
     ARM = enum.auto()
@@ -71,6 +75,7 @@ class CpuArchEnum(enum.Enum):
     UNKNOWN = enum.auto()
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class DeviceCapability(NamedTuple):
     major: int
     minor: int
@@ -88,6 +93,7 @@ class DeviceCapability(NamedTuple):
         return self.major * 10 + self.minor
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Platform:
     _enum: PlatformEnum
     device_name: str
@@ -405,6 +411,7 @@ class Platform:
         """Raises if this request is unsupported on this platform"""
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class UnspecifiedPlatform(Platform):
     _enum = PlatformEnum.UNSPECIFIED
     device_type = ""

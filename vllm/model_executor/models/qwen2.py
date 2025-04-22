@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 # Adapted from
 # https://github.com/huggingface/transformers/blob/v4.28.0/src/transformers/models/qwen2/modeling_qwen2.py
@@ -61,6 +62,7 @@ from .utils import (AutoWeightsLoader, PPMissingLayer, WeightsMapper,
 logger = init_logger(__name__)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2MLP(nn.Module):
 
     def __init__(
@@ -98,6 +100,7 @@ class Qwen2MLP(nn.Module):
         return x
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2Attention(nn.Module):
 
     def __init__(self,
@@ -179,6 +182,7 @@ class Qwen2Attention(nn.Module):
         return output
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2DecoderLayer(nn.Module):
 
     def __init__(
@@ -261,6 +265,7 @@ class Qwen2DecoderLayer(nn.Module):
         "intermediate_tensors": 0,
         "inputs_embeds": 0,
     })
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2Model(nn.Module):
 
     def __init__(self,
@@ -411,6 +416,7 @@ class Qwen2Model(nn.Module):
         return loaded_params
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2ForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [
@@ -496,6 +502,7 @@ class Qwen2ForCausalLM(nn.Module, SupportsLoRA, SupportsPP):
         return loader.load_weights(weights)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class Qwen2EmbeddingModel(nn.Module, SupportsLoRA, SupportsPP):
     packed_modules_mapping = {
         "qkv_proj": [

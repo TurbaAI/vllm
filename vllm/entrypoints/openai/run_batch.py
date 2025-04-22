@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import asyncio
 import tempfile
@@ -108,6 +109,7 @@ def parse_args():
 _BAR_FORMAT = "{desc}: {percentage:3.0f}% Completed | {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]\n"  # noqa: E501
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BatchProgressTracker:
 
     def __init__(self):

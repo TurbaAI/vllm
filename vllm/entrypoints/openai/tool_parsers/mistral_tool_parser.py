@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import json
 import re
@@ -28,6 +29,7 @@ logger = init_logger(__name__)
 ALPHANUMERIC = ascii_letters + digits
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MistralToolCall(ToolCall):
     id: str = Field(
         default_factory=lambda: MistralToolCall.generate_random_id())
@@ -40,6 +42,7 @@ class MistralToolCall(ToolCall):
 
 
 @ToolParserManager.register_module("mistral")
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class MistralToolParser(ToolParser):
     """
     Tool call parser for Mistral 7B Instruct v0.3, intended for use with the

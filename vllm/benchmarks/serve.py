@@ -26,6 +26,7 @@ from collections.abc import AsyncGenerator
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Optional
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import numpy as np
 from tqdm.asyncio import tqdm
@@ -42,6 +43,7 @@ MILLISECONDS_TO_SECONDS_CONVERSION = 1000
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class BenchmarkMetrics:
     completed: int
     total_input: int

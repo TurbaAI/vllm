@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import copy
 import math
@@ -41,6 +42,7 @@ _GLOBAL_LORA_ID = 0
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LongContextLoRAContext:
     """Context for lora adapters that support long context."""
     # The scaling factors to support long context lora fine tuned models.
@@ -58,6 +60,7 @@ def get_lora_id():
     return _GLOBAL_LORA_ID
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAModel(AdapterModel):
     """A LoRA fine-tuned model."""
 
@@ -301,6 +304,7 @@ class LoRAModel(AdapterModel):
             weights_mapper=weights_mapper)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRAModelManager(AdapterModelManager):
     """A manager that manages multiple LoRA-fine-tuned models."""
 
@@ -701,6 +705,7 @@ class LoRAModelManager(AdapterModelManager):
         return get_adapter(adapter_id, self._registered_adapters)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LoRALRUCache(AdapterLRUCache[LoRAModel]):
 
     def __init__(self, capacity: int, deactivate_lora_fn: Callable[[int],
@@ -708,6 +713,7 @@ class LoRALRUCache(AdapterLRUCache[LoRAModel]):
         super().__init__(capacity, deactivate_lora_fn)
 
 
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LRUCacheLoRAModelManager(LoRAModelManager):
     """A model manager that manages multiple LoRAs with LRU cache."""
 

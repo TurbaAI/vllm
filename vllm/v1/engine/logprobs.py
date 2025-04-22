@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
 
 import itertools
 from collections.abc import Iterable
@@ -18,6 +19,7 @@ NONES = itertools.repeat(None)
 
 
 @dataclass
+@decorate_all_methods(profile_function) # added by auto-decorator-script
 class LogprobsProcessor:
 
     # Tokenizer for this request,
