@@ -1,6 +1,4 @@
 # SPDX-License-Identifier: Apache-2.0
-from vllm.my_utils import decorate_all_methods, profile_function # added by auto-decorator-script
-
 import dataclasses
 from abc import ABC, abstractmethod
 from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional, Type,
@@ -145,7 +143,6 @@ class ModelRunnerInputBase(BroadcastableModelInput):
     pass
 
 
-@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelRunnerInputBuilderBase(ABC, Generic[T]):
     """A builder to create ModelRunnerInputBase objects.
   """
@@ -249,8 +246,6 @@ class ModelRunnerBase(ABC, Generic[T]):
 
         return self.generators
 
-
-@decorate_all_methods(profile_function) # added by auto-decorator-script
 class ModelRunnerWrapperBase:
     """
     The whole point of this class is to lazily initialize the model_runner.
@@ -266,7 +261,6 @@ class ModelRunnerWrapperBase:
         return getattr(self.model_runner, attr)
 
 
-@decorate_all_methods(profile_function) # added by auto-decorator-script
 class InputProcessingError(Exception):
     """This exception is raised when an error occurs preparing the inputs for
     a single sequence group.

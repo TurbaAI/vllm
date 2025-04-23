@@ -21,14 +21,14 @@ def profile_function(name=None):
 def decorate_all_methods(decorator_factory):
     def decorate(cls):
         for attr_name, attr_value in cls.__dict__.items():
-            if callable(attr_value):
-                decorated = decorator_factory()(attr_value)
-            elif isinstance(attr_value, staticmethod):
-                original_func = attr_value.__func__
-                decorated = staticmethod(decorator_factory()(original_func))
-            elif isinstance(attr_value, classmethod):
+            #elif isinstance(attr_value, staticmethod):
+            #    original_func = attr_value.__func__
+            #    decorated = staticmethod(decorator_factory()(original_func))
+            if isinstance(attr_value, classmethod):
                 original_func = attr_value.__func__
                 decorated = classmethod(decorator_factory()(original_func))
+            elif callable(attr_value) and not isinstance(attr_value, staticmethod):
+                decorated = decorator_factory()(attr_value)
             else:
                 continue
             setattr(cls, attr_name, decorated)

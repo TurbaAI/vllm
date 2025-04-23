@@ -1060,7 +1060,7 @@ def apply_image_repeat(
 
 
 def main(args):
-    model = "gemma3"
+    model = "llava"
     if model not in model_example_map:
         raise ValueError(f"Model type {model} is not supported.")
 
@@ -1077,7 +1077,7 @@ def main(args):
     def trace_handler(prof):
         print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=-1))
         prof.export_chrome_trace(
-            f"examples/offline_inference/basic/my_examples/final/Multi-modal LLMs/{str_name}"
+            f"examples/offline_inference/basic/my_examples/final/Multi-modal LLMs/8GPU/{str_name}"
             + str(prof.step_num)
             + ".json"
         )
@@ -1086,6 +1086,7 @@ def main(args):
     engine_args["enforce_eager"] = True
     engine_args["disable_async_output_proc"] = True
     engine_args["trust_remote_code"] = True
+    engine_args["tensor_parallel_size"] = 8
 
     llm = LLM(**engine_args)
 

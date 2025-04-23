@@ -17,15 +17,15 @@ hf = os.getenv("TOKEN")
 login(token=hf)
 
 
-model_name = "meta-llama/Llama-3.2-1B-Instruct"
+model_name = "deepseek-ai/deepseek-llm-7b-chat"
 parts = model_name.split("/")
-str_name = f"(llama 1gpu) {parts[0]}-{parts[1]}_"
+str_name = f"(DeepSeek-V1) {parts[0]}-{parts[1]}_"
 
 
 def trace_handler(prof):
     print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=-1))
     prof.export_chrome_trace(
-        f"examples/offline_inference/basic/my_examples/final/Transformer-like LLM/{str_name}"
+        f"examples/offline_inference/basic/my_examples/final/Transformer-like LLM/8GPU/{str_name}"
         + str(prof.step_num)
         + ".json"
     )
@@ -41,7 +41,7 @@ def main(args: dict):
     args["enforce_eager"] = True
     args["disable_async_output_proc"] = True
     args["trust_remote_code"] = True
-    args["tensor_parallel_size"] = 1  # 8
+    args["tensor_parallel_size"] = 8
 
     # Create an LLM
     llm = LLM(**args)

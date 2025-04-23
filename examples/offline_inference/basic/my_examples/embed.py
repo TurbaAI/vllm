@@ -18,15 +18,15 @@ hf = os.getenv("TOKEN")
 login(token=hf)
 
 
-model_name = "intfloat/multilingual-e5-large"
+model_name = "sentence-transformers/all-roberta-large-v1"
 parts = model_name.split("/")
-str_name = f"(XLM-RoBERTa-based) {parts[0]}-{parts[1]}_"
+str_name = f"(RoBERTa-based) {parts[0]}-{parts[1]}_"
 
 
 def trace_handler(prof):
     print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=-1))
     prof.export_chrome_trace(
-        f"examples/offline_inference/basic/my_examples/final/Embedding Models/{str_name}"
+        f"examples/offline_inference/basic/my_examples/final/Embedding Models/8GPU/{str_name}"
         + str(prof.step_num)
         + ".json"
     )
@@ -84,6 +84,7 @@ if __name__ == "__main__":
         enforce_eager=True,
         disable_async_output_proc=True,
         trust_remote_code=True,
+        tensor_parallel_size=8
     )
     args = parser.parse_args()
     main(args)
